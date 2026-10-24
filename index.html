@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='%230f0721'/%3E%3Cpath d='M256 96 C 167 96 96 167 96 256 C 96 344 167 416 256 416 C 309 416 356 390 384 350 C 275 350 186 261 186 152 C 186 131 190 111 198 92 C 217 93 236 96 256 96 Z' fill='url(%23g)'/%3E%3Cpolygon points='380,140 395,175 430,190 395,205 380,240 365,205 330,190 365,175' fill='%23fef08a'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='%230f0721'/%3E%3Ccircle cx='256' cy='256' r='210' fill='none' stroke='url(%23g)' stroke-width='8' opacity='0.3'/%3E%3Cpath d='M256 96 C 167 96 96 167 96 256 C 96 344 167 416 256 416 C 309 416 356 390 384 350 C 275 350 186 261 186 152 C 186 131 190 111 198 92 C 217 93 236 96 256 96 Z' fill='url(%23g)'/%3E%3Cpolygon points='380,140 395,175 430,190 395,205 380,240 365,205 330,190 365,175' fill='%23fef08a'/%3E%3C/svg%3E">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -63,7 +63,6 @@
 
   <!-- HEPSİ GÖRÜNÜR 7'Lİ KATEGORİ MENÜSÜ (2 SIRA) -->
   <nav class="mb-5 space-y-2 text-[11px] font-semibold">
-    <!-- 1. Sıra (4 Adet) -->
     <div class="grid grid-cols-4 gap-1.5">
       <button onclick="setTab('kahve')" id="tab-kahve" class="py-2.5 rounded-2xl border glass-tab-active flex flex-col items-center gap-1 transition">
         <i class="fa-solid fa-mug-hot text-base"></i> <span>Kahve</span>
@@ -78,7 +77,6 @@
         <i class="fa-solid fa-star-and-crescent text-base"></i> <span>Burçlar</span>
       </button>
     </div>
-    <!-- 2. Sıra (3 Adet) -->
     <div class="grid grid-cols-3 gap-1.5">
       <button onclick="setTab('uyum')" id="tab-uyum" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
         <i class="fa-solid fa-heart-pulse text-base"></i> <span>Aşk Uyumu</span>
@@ -101,7 +99,7 @@
           <i class="fa-solid fa-camera-retro"></i>
         </div>
         <span class="text-sm font-semibold text-amber-200">Fincan ve Tabak Fotoğraflarını Seç</span>
-        <span id="upload-status" class="text-xs text-purple-300 mt-1">1 - 4 adet fincan/tabak fotoğrafı yükle</span>
+        <span id="upload-status" class="text-xs text-purple-300 mt-1">1 - 4 adet fotoğraf yükleyebilirsin</span>
       </label>
       <div id="preview-grid" class="hidden grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-amber-500/20"></div>
     </div>
@@ -164,7 +162,7 @@
             <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
               <img id="tarot-img-3" src="" class="w-full h-full object-cover">
               <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
-                <span id="tarot-name-3" class="cinzel text-[10px] text-amber-200 font-bold block leading-tight"></span>
+                <span id="tarot-name-3" class="cinzel text-[10px] text-amber-300 font-bold block leading-tight"></span>
               </div>
             </div>
           </div>
@@ -330,8 +328,8 @@
       <button onclick="shareWhatsAppFull()" class="py-3 rounded-xl bg-green-500/20 border border-green-500/40 text-green-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
         <i class="fa-brands fa-whatsapp"></i> Tam Paylaş
       </button>
-      <button onclick="generateStoryCard()" class="py-3 rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
-        <i class="fa-solid fa-camera-retro"></i> Story Kartı İndir
+      <button onclick="generateStoryCard()" class="py-3 rounded-xl bg-gradient-to-r from-purple-600/40 to-amber-500/40 border border-amber-400/50 text-amber-200 flex items-center justify-center gap-1.5 active:scale-95 transition shadow-lg">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Lüks Story İndir
       </button>
       <button onclick="copyFortune()" class="py-3 rounded-xl bg-white/10 border border-white/20 text-gray-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
         <i class="fa-solid fa-copy"></i> Kopyala
@@ -529,7 +527,6 @@
       btn.classList.remove('opacity-50');
     }
 
-    // ÇOKLU ANAHTAR & KOTA YÖNETİMLİ GOOGLE INTERACTIONS API
     async function callGemini(prompt, images = []) {
       const rawKeys = localStorage.getItem('gemini_api_key') || '';
       const apiKeys = rawKeys.split(',').map(k => k.trim()).filter(Boolean);
@@ -551,31 +548,16 @@
         inputPayload = prompt;
       }
 
-      // Kota aşımına karşı denenecek modeller sırası
-      const modelsToTry = [
-        "gemini-3.8-flash",
-        "gemini-3.5-flash-lite",
-        "gemini-3.1-flash-lite",
-        "gemini-2.5-flash-lite"
-      ];
-
+      const modelsToTry = ["gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite"];
       let lastErrorMsg = "";
 
-      // Sırayla her API anahtarını ve modeli dener
       for (const key of apiKeys) {
         for (const modelName of modelsToTry) {
           try {
             const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "x-goog-api-key": key
-              },
-              body: JSON.stringify({
-                model: modelName,
-                input: inputPayload,
-                store: false
-              })
+              headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+              body: JSON.stringify({ model: modelName, input: inputPayload, store: false })
             });
 
             const data = await response.json();
@@ -601,9 +583,7 @@
               }
             } else {
               lastErrorMsg = data.error?.message || JSON.stringify(data);
-              // Eğer rate limit ise bir sonraki anahtara/modele geçer
               if (lastErrorMsg.includes("Rate limit") || lastErrorMsg.includes("429")) {
-                console.warn(`Model ${modelName} kotalı, alternatif deneniyor...`);
                 continue;
               }
             }
@@ -614,11 +594,10 @@
       }
 
       document.getElementById('loading').classList.add('hidden');
-      alert("Kota / Bağlantı Uyarısı:\n" + lastErrorMsg + "\n\nİpucu: Ayarlardan 2. bir ücretsiz API anahtarı ekleyerek sınırı ikiye katlayabilirsiniz!");
+      alert("Kota / Bağlantı Uyarısı:\n" + lastErrorMsg + "\n\nİpucu: Ayarlardan yeni bir ücretsiz API anahtarı ekleyerek devam edebilirsiniz!");
       throw new Error(lastErrorMsg);
     }
 
-    // FAL FONKSİYONLARI
     async function readCoffeeFortune() {
       if (!optimizedImages.length) { alert("Lütfen en az 1 fincan veya tabak fotoğrafı seçin!"); return; }
       const name = document.getElementById('user-name').value || "Mehmet";
@@ -672,7 +651,6 @@
       const s2 = document.getElementById('match-sign-2').value;
       const persona = getPersonaPrompt();
       const prompt = `${persona} ${s1} burcu ile ${s2} burcunun aşk ve evlilik uyumunu derinlemesine analiz et.
-      Lütfen şu formatta cevap ver:
       - 💘 Aşk Uyum Yüzdesi: % (Net bir yüzde ver)
       - 🔥 Cinsel ve Duygusal Çekim
       - ⚡ Olası Fırtınalar ve Engeller
@@ -726,59 +704,151 @@
       }
     }
 
+    // ==========================================
+    // YENİ NESİL LÜKS INSTAGRAM STORY KARTI MOTORU
+    // ==========================================
     function generateStoryCard() {
       const canvas = document.getElementById('story-canvas');
       const ctx = canvas.getContext('2d');
 
-      const grad = ctx.createLinearGradient(0, 0, 1080, 1920);
-      grad.addColorStop(0, '#190a34');
-      grad.addColorStop(0.5, '#0d071a');
-      grad.addColorStop(1, '#05020a');
-      ctx.fillStyle = grad;
+      // 1. Kozmik Arka Plan & Yıldız Tozu
+      const bg = ctx.createRadialGradient(540, 960, 50, 540, 960, 1000);
+      bg.addColorStop(0, '#2d1052');
+      bg.addColorStop(0.5, '#120726');
+      bg.addColorStop(1, '#05020c');
+      ctx.fillStyle = bg;
       ctx.fillRect(0, 0, 1080, 1920);
 
+      // Rastgele parıldayan minik yıldızlar
+      ctx.fillStyle = '#fef08a';
+      const stars = [
+        [150, 200, 3], [850, 250, 2.5], [200, 600, 2], [900, 750, 3.5],
+        [120, 1200, 2], [920, 1350, 3], [250, 1650, 2.5], [820, 1700, 2],
+        [540, 150, 4], [540, 1780, 3.5]
+      ];
+      stars.forEach(([x, y, r]) => {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.shadowColor = '#f59e0b';
+        ctx.shadowBlur = 12;
+        ctx.fill();
+      });
+      ctx.shadowBlur = 0; // Sıfırla
+
+      // 2. Art Deco Altın Çift Kenarlık & Köşe Süsleri
       ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 14;
-      ctx.strokeRect(50, 50, 980, 1820);
+      ctx.lineWidth = 6;
+      ctx.strokeRect(60, 60, 960, 1800);
+
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(80, 80, 920, 1760);
+
+      // Köşe Elmasları
+      const corners = [[60, 60], [1020, 60], [60, 1860], [1020, 1860]];
+      corners.forEach(([cx, cy]) => {
+        ctx.fillStyle = '#fbbf24';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // 3. Üst Logo & Rozet
+      ctx.fillStyle = 'rgba(245, 158, 11, 0.15)';
+      ctx.beginPath();
+      ctx.roundRect(340, 180, 400, 70, 35);
+      ctx.fill();
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
       ctx.fillStyle = '#fbbf24';
-      ctx.font = 'bold 54px serif';
+      ctx.font = 'bold 30px "Cinzel", serif';
       ctx.textAlign = 'center';
-      ctx.fillText('✨ FALIMA BAK ✨', 540, 220);
+      ctx.fillText('✦ KOZMİK KEHANET ✦', 540, 226);
 
+      // Ana Logo
+      ctx.font = 'bold 64px "Cinzel", serif';
+      ctx.fillStyle = '#fef08a';
+      ctx.shadowColor = 'rgba(245, 158, 11, 0.6)';
+      ctx.shadowBlur = 20;
+      ctx.fillText('FALIMA BAK', 540, 340);
+      ctx.shadowBlur = 0;
+
+      // Fal Başlığı
       ctx.fillStyle = '#cbd5e1';
-      ctx.font = '36px sans-serif';
-      ctx.fillText(document.getElementById('fortune-title').innerText, 540, 300);
+      ctx.font = '32px sans-serif';
+      const title = document.getElementById('fortune-title').innerText.replace(':', '');
+      ctx.fillText(title, 540, 405);
 
+      // 4. Parşömen Kart Alanı (Orta Kutu)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.035)';
+      ctx.beginPath();
+      ctx.roundRect(120, 480, 840, 1050, 30);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.3)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Mistik Tırnak İşareti
+      ctx.fillStyle = 'rgba(245, 158, 11, 0.25)';
+      ctx.font = 'bold 180px serif';
+      ctx.fillText('“', 220, 640);
+
+      // 5. Falın En Çarpıcı Kısmını Seç ve Şık Tipografiyle Yerleştir
       ctx.fillStyle = '#f8fafc';
-      ctx.font = '38px sans-serif';
-      ctx.textAlign = 'left';
+      ctx.font = '40px sans-serif';
+      ctx.textAlign = 'center';
 
       const cleanText = currentFortune.replace(/[*#_~]/g, '');
-      const words = cleanText.substring(0, 750).split(' ');
+      // İlk 350-400 karakterlik en can alıcı kısmı al
+      let snippet = cleanText.substring(0, 420);
+      // Cümle sonunu temiz bitir
+      const lastPeriod = snippet.lastIndexOf('.');
+      if (lastPeriod > 200) {
+        snippet = snippet.substring(0, lastPeriod + 1);
+      } else {
+        snippet += '...';
+      }
+
+      // Çok satırlı metin yazımı (Otomatik Satır Bölme)
+      const words = snippet.split(' ');
       let line = '';
-      let y = 450;
+      let y = 680;
+      const lineHeight = 65;
+      const maxLineWidth = 720;
+
       for (let n = 0; n < words.length; n++) {
         const testLine = line + words[n] + ' ';
         const metrics = ctx.measureText(testLine);
-        if (metrics.width > 860 && n > 0) {
-          ctx.fillText(line, 110, y);
+        if (metrics.width > maxLineWidth && n > 0) {
+          ctx.fillText(line, 540, y);
           line = words[n] + ' ';
-          y += 62;
-          if (y > 1550) break;
+          y += lineHeight;
+          if (y > 1400) break;
         } else {
           line = testLine;
         }
       }
-      ctx.fillText(line + '...', 110, y);
+      ctx.fillText(line, 540, y);
 
-      ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 36px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('🔮 cowboytr.github.io/falima-bak', 540, 1750);
+      // Kapanış Tırnağı
+      ctx.fillStyle = 'rgba(245, 158, 11, 0.25)';
+      ctx.font = 'bold 180px serif';
+      ctx.fillText('”', 860, y + 100);
 
+      // 6. Alt Çağrı (Call To Action & URL)
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'italic 28px sans-serif';
+      ctx.fillText('Senin kaderinde neler gizli?', 540, 1630);
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 34px sans-serif';
+      ctx.fillText('🔮 cowboytr.github.io/falima-bak', 540, 1700);
+
+      // 7. Galeriye İndir
       const link = document.createElement('a');
-      link.download = 'falima-bak-story.png';
+      link.download = 'falima-bak-kehanet.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
     }
