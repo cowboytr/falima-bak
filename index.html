@@ -3,160 +3,379 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Falıma Bak</title>
+  <title>Falıma Bak - Mistik Yaşam & Fal</title>
+  <meta name="theme-color" content="#0d071a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Özel Mistik Altın Hilal Logo (Favicon & App Icon) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='%230f0721'/%3E%3Ccircle cx='256' cy='256' r='210' fill='none' stroke='url(%23g)' stroke-width='8' opacity='0.3'/%3E%3Cpath d='M256 96 C 167 96 96 167 96 256 C 96 344 167 416 256 416 C 309 416 356 390 384 350 C 275 350 186 261 186 152 C 186 131 190 111 198 92 C 217 93 236 96 256 96 Z' fill='url(%23g)'/%3E%3Cpolygon points='380,140 395,175 430,190 395,205 380,240 365,205 330,190 365,175' fill='%23fef08a'/%3E%3Cpolygon points='310,270 318,290 338,298 318,306 310,326 302,306 282,298 302,290' fill='%23fef08a'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%230f0721'/%3E%3Ccircle cx='256' cy='256' r='210' fill='none' stroke='%23f59e0b' stroke-width='10' opacity='0.3'/%3E%3Cpath d='M256 96 C 167 96 96 167 96 256 C 96 344 167 416 256 416 C 309 416 356 390 384 350 C 275 350 186 261 186 152 C 186 131 190 111 198 92 Z' fill='%23f59e0b'/%3E%3C/svg%3E">
+
+  <!-- Tailwind & Icons & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { background: radial-gradient(circle at top, #1e1138 0%, #0a0614 100%); min-height: 100vh; color: #e2e8f0; font-family: system-ui, -apple-system, sans-serif; }
-    .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-    .gold-glow { text-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
+    body {
+      background: radial-gradient(ellipse at 50% -20%, #2e1065 0%, #0d071a 55%, #05020a 100%);
+      min-height: 100vh;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .cinzel { font-family: 'Cinzel', serif; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(245, 158, 11, 0.18);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    .glass-tab-active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.15));
+      border-color: rgba(245, 158, 11, 0.6);
+      color: #fbbf24;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* 3D Tarot Kart Efektleri */
+    .tarot-perspective { perspective: 1000px; }
+    .tarot-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .tarot-inner.flipped { transform: rotateY(180deg); }
+    .tarot-front, .tarot-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 0.875rem;
+    }
+    .tarot-back { transform: rotateY(180deg); }
   </style>
 </head>
-<body class="p-4 max-w-md mx-auto pb-24">
+<body class="p-4 max-w-md mx-auto pb-28 selection:bg-amber-500/30">
 
   <!-- Üst Bar & Logo -->
-  <header class="flex justify-between items-center mb-6 pt-2">
-    <div>
-      <h1 class="text-2xl font-black tracking-wider text-amber-400 gold-glow flex items-center gap-2">
-        <i class="fa-solid fa-moon"></i> FALIMA BAK
-      </h1>
-      <p class="text-xs text-purple-300">Yapay Zeka Destekli Sezgisel Falınız</p>
+  <header class="flex justify-between items-center mb-6 pt-3">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl glass-card flex items-center justify-center border border-amber-400/40 shadow-lg shadow-amber-500/10">
+        <i class="fa-solid fa-moon text-2xl text-amber-400 animate-pulse"></i>
+      </div>
+      <div>
+        <h1 class="cinzel text-2xl font-black tracking-wider gold-gradient-text">FALIMA BAK</h1>
+        <p class="text-[11px] text-purple-300 font-medium tracking-wide">Mistik Yaşam & Fal Rehberi</p>
+      </div>
     </div>
-    <button onclick="openSettings()" class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-amber-400 hover:bg-white/10">
-      <i class="fa-solid fa-gear"></i>
+    <button onclick="openSettings()" class="w-11 h-11 rounded-2xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
+      <i class="fa-solid fa-sliders text-base"></i>
     </button>
   </header>
 
-  <!-- Kategori Butonları -->
-  <nav class="grid grid-cols-3 gap-2 mb-6 text-xs font-semibold">
-    <button onclick="setTab('kahve')" id="tab-kahve" class="py-2.5 rounded-xl border border-amber-500/40 bg-amber-500/20 text-amber-300 flex flex-col items-center gap-1 transition">
-      <i class="fa-solid fa-mug-hot text-base"></i> Kahve Falı
+  <!-- 4'lü Kategori Menüsü -->
+  <nav class="grid grid-cols-4 gap-1.5 mb-6 text-[11px] font-semibold">
+    <button onclick="setTab('kahve')" id="tab-kahve" class="py-3 rounded-2xl border glass-tab-active flex flex-col items-center gap-1.5 transition">
+      <i class="fa-solid fa-mug-hot text-base"></i> <span>Kahve</span>
     </button>
-    <button onclick="setTab('tarot')" id="tab-tarot" class="py-2.5 rounded-xl border border-white/10 glass-card text-gray-300 flex flex-col items-center gap-1 transition">
-      <i class="fa-solid fa-wand-magic-sparkles text-base"></i> Tarot
+    <button onclick="setTab('tarot')" id="tab-tarot" class="py-3 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1.5 transition">
+      <i class="fa-solid fa-wand-sparkles text-base"></i> <span>Tarot</span>
     </button>
-    <button onclick="setTab('ruya')" id="tab-ruya" class="py-2.5 rounded-xl border border-white/10 glass-card text-gray-300 flex flex-col items-center gap-1 transition">
-      <i class="fa-solid fa-cloud-moon text-base"></i> Rüya Tabiri
+    <button onclick="setTab('astro')" id="tab-astro" class="py-3 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1.5 transition">
+      <i class="fa-solid fa-star-and-crescent text-base"></i> <span>Burçlar</span>
+    </button>
+    <button onclick="setTab('ruya')" id="tab-ruya" class="py-3 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1.5 transition">
+      <i class="fa-solid fa-cloud-moon text-base"></i> <span>Rüya</span>
     </button>
   </nav>
 
-  <!-- BÖLÜM 1: KAHVE FALI (ÇOKLU FOTOĞRAF DESTEKLİ) -->
+  <!-- ================= 1. KAHVE FALI MODÜLÜ ================= -->
   <section id="section-kahve" class="space-y-4">
-    <div class="glass-card rounded-2xl p-4 text-center border-dashed border-2 border-purple-500/30">
-      <!-- multiple özelliği eklendi -->
-      <input type="file" id="cup-photo" accept="image/*" multiple class="hidden" onchange="previewImages(event)">
+    <div class="glass-card rounded-3xl p-5 text-center relative overflow-hidden">
+      <div class="absolute -top-12 -right-12 w-28 h-28 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+      <input type="file" id="cup-photo" accept="image/*" multiple class="hidden" onchange="handleMultipleImages(event)">
       <label for="cup-photo" class="cursor-pointer flex flex-col items-center py-4">
-        <div id="image-placeholder" class="w-20 h-20 rounded-full bg-purple-900/40 flex items-center justify-center text-amber-400 text-3xl mb-3 shadow-inner">
-          <i class="fa-solid fa-camera-retro"></i>
+        <div id="image-placeholder" class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-purple-600/30 border border-amber-400/30 flex items-center justify-center text-amber-400 text-3xl mb-3 shadow-inner group">
+          <i class="fa-solid fa-camera-retro group-hover:scale-110 transition"></i>
         </div>
-        <span class="text-sm font-medium text-purple-200">Fincan ve Tabak Fotoğraflarını Seç</span>
-        <span class="text-xs text-amber-400 mt-1 font-semibold">Birden fazla fotoğraf seçebilirsin (1-4 adet)</span>
+        <span class="text-sm font-semibold text-amber-200">Fincan ve Tabak Fotoğraflarını Seç</span>
+        <span id="upload-status" class="text-xs text-purple-300 mt-1">Farklı açılardan 1 - 4 adet fotoğraf yükleyebilirsin</span>
       </label>
 
-      <!-- Çoklu Önizleme Alanı -->
-      <div id="preview-grid" class="hidden grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-white/10"></div>
+      <!-- Çoklu Önizleme -->
+      <div id="preview-grid" class="hidden grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-amber-500/20"></div>
     </div>
 
-    <input type="text" id="user-name" placeholder="Adınız (Örn: Mehmet)" class="w-full glass-card rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400">
-    <button onclick="readCoffeeFortune()" id="btn-kahve" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 font-bold text-gray-900 shadow-lg shadow-amber-500/20 active:scale-98 transition flex items-center justify-center gap-2">
+    <input type="text" id="user-name" placeholder="Adınız (Örn: Mehmet)" class="w-full glass-card rounded-2xl px-4 py-3.5 text-sm placeholder-gray-500 text-amber-100 focus:outline-none focus:border-amber-400 transition">
+    
+    <button onclick="readCoffeeFortune()" id="btn-kahve" class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 font-bold text-slate-950 shadow-xl shadow-amber-500/25 active:scale-98 transition flex items-center justify-center gap-2 cinzel text-sm tracking-wider">
       <i class="fa-solid fa-sparkles"></i> Falıma Bak Gülfem Abla
     </button>
   </section>
 
-  <!-- BÖLÜM 2: TAROT FALI -->
+  <!-- ================= 2. 3D TAROT MODÜLÜ ================= -->
   <section id="section-tarot" class="hidden space-y-4">
-    <div class="glass-card rounded-2xl p-4 text-center">
-      <p class="text-xs text-purple-200 mb-3">İçinden bir niyet tut ve kartları aç:</p>
-      <div class="flex justify-center gap-2 mb-4">
-        <div class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
-          <i class="fa-solid fa-eye text-amber-400 text-xl mb-1"></i>
-          <span class="text-[10px] text-gray-300">1. Geçmiş</span>
+    <div class="glass-card rounded-3xl p-5 text-center">
+      <p class="cinzel text-xs text-amber-300 tracking-wider mb-1">KISMET KARTLARI</p>
+      <p class="text-xs text-gray-300 mb-4">Bir dilek tut ve sırasıyla 3 kartın üzerine dokun:</p>
+      
+      <!-- 3 Adet Kart -->
+      <div class="grid grid-cols-3 gap-2.5 mb-5">
+        <!-- Kart 1 -->
+        <div class="tarot-perspective h-40 cursor-pointer" onclick="flipTarot(1)">
+          <div id="tarot-card-1" class="tarot-inner">
+            <div class="tarot-front glass-card border-amber-400/40 bg-gradient-to-b from-purple-950 to-slate-950 flex flex-col items-center justify-center p-2">
+              <i class="fa-solid fa-eye text-amber-400 text-2xl mb-2"></i>
+              <span class="cinzel text-[10px] text-amber-300 font-bold">I. GEÇMİŞ</span>
+              <span class="text-[9px] text-gray-400 mt-1">Dokun Aç</span>
+            </div>
+            <div class="tarot-back glass-card border-2 border-amber-400 bg-gradient-to-b from-amber-950 to-purple-950 flex flex-col items-center justify-center p-2 text-center">
+              <i id="tarot-icon-1" class="text-amber-400 text-2xl mb-1"></i>
+              <span id="tarot-name-1" class="cinzel text-[10px] text-amber-200 font-bold leading-tight"></span>
+            </div>
+          </div>
         </div>
-        <div class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
-          <i class="fa-solid fa-hourglass-half text-amber-400 text-xl mb-1"></i>
-          <span class="text-[10px] text-gray-300">2. Şimdi</span>
+
+        <!-- Kart 2 -->
+        <div class="tarot-perspective h-40 cursor-pointer" onclick="flipTarot(2)">
+          <div id="tarot-card-2" class="tarot-inner">
+            <div class="tarot-front glass-card border-amber-400/40 bg-gradient-to-b from-purple-950 to-slate-950 flex flex-col items-center justify-center p-2">
+              <i class="fa-solid fa-hourglass-half text-amber-400 text-2xl mb-2"></i>
+              <span class="cinzel text-[10px] text-amber-300 font-bold">II. ŞİMDİ</span>
+              <span class="text-[9px] text-gray-400 mt-1">Dokun Aç</span>
+            </div>
+            <div class="tarot-back glass-card border-2 border-amber-400 bg-gradient-to-b from-amber-950 to-purple-950 flex flex-col items-center justify-center p-2 text-center">
+              <i id="tarot-icon-2" class="text-amber-400 text-2xl mb-1"></i>
+              <span id="tarot-name-2" class="cinzel text-[10px] text-amber-200 font-bold leading-tight"></span>
+            </div>
+          </div>
         </div>
-        <div class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
-          <i class="fa-solid fa-star text-amber-400 text-xl mb-1"></i>
-          <span class="text-[10px] text-gray-300">3. Gelecek</span>
+
+        <!-- Kart 3 -->
+        <div class="tarot-perspective h-40 cursor-pointer" onclick="flipTarot(3)">
+          <div id="tarot-card-3" class="tarot-inner">
+            <div class="tarot-front glass-card border-amber-400/40 bg-gradient-to-b from-purple-950 to-slate-950 flex flex-col items-center justify-center p-2">
+              <i class="fa-solid fa-star text-amber-400 text-2xl mb-2"></i>
+              <span class="cinzel text-[10px] text-amber-300 font-bold">III. GELECEK</span>
+              <span class="text-[9px] text-gray-400 mt-1">Dokun Aç</span>
+            </div>
+            <div class="tarot-back glass-card border-2 border-amber-400 bg-gradient-to-b from-amber-950 to-purple-950 flex flex-col items-center justify-center p-2 text-center">
+              <i id="tarot-icon-3" class="text-amber-400 text-2xl mb-1"></i>
+              <span id="tarot-name-3" class="cinzel text-[10px] text-amber-200 font-bold leading-tight"></span>
+            </div>
+          </div>
         </div>
       </div>
-      <button onclick="readTarotFortune()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 font-bold text-white shadow-lg active:scale-98 transition">
-        Kartları Yorumla
+
+      <button onclick="readTarotFortune()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-800 font-bold text-white shadow-xl shadow-purple-900/40 active:scale-98 transition cinzel text-sm tracking-wider">
+        Kartların Gizemini Yorumla
       </button>
     </div>
   </section>
 
-  <!-- BÖLÜM 3: RÜYA TABİRİ -->
+  <!-- ================= 3. ASTROLOJİ & BURÇLAR ================= -->
+  <section id="section-astro" class="hidden space-y-4">
+    <div class="glass-card rounded-3xl p-5">
+      <div class="text-center mb-4">
+        <h3 class="cinzel text-xs text-amber-300 tracking-wider">GÖKYÜZÜ TRANSİTLERİ</h3>
+        <p class="text-xs text-gray-300">Burcunu seç ve günlük mistik kehanetini öğren:</p>
+      </div>
+
+      <!-- 12 Burç Rozeti -->
+      <div class="grid grid-cols-4 gap-2 mb-4 text-center">
+        <button onclick="selectZodiac('Koç', '♈')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♈</span><span class="text-[10px] mt-1 text-gray-300">Koç</span>
+        </button>
+        <button onclick="selectZodiac('Boğa', '♉')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♉</span><span class="text-[10px] mt-1 text-gray-300">Boğa</span>
+        </button>
+        <button onclick="selectZodiac('İkizler', '♊')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♊</span><span class="text-[10px] mt-1 text-gray-300">İkizler</span>
+        </button>
+        <button onclick="selectZodiac('Yengeç', '♋')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♋</span><span class="text-[10px] mt-1 text-gray-300">Yengeç</span>
+        </button>
+        <button onclick="selectZodiac('Aslan', '♌')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♌</span><span class="text-[10px] mt-1 text-gray-300">Aslan</span>
+        </button>
+        <button onclick="selectZodiac('Başak', '♍')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♍</span><span class="text-[10px] mt-1 text-gray-300">Başak</span>
+        </button>
+        <button onclick="selectZodiac('Terazi', '♎')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♎</span><span class="text-[10px] mt-1 text-gray-300">Terazi</span>
+        </button>
+        <button onclick="selectZodiac('Akrep', '♏')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♏</span><span class="text-[10px] mt-1 text-gray-300">Akrep</span>
+        </button>
+        <button onclick="selectZodiac('Yay', '♐')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♐</span><span class="text-[10px] mt-1 text-gray-300">Yay</span>
+        </button>
+        <button onclick="selectZodiac('Oğlak', '♑')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♑</span><span class="text-[10px] mt-1 text-gray-300">Oğlak</span>
+        </button>
+        <button onclick="selectZodiac('Kova', '♒')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♒</span><span class="text-[10px] mt-1 text-gray-300">Kova</span>
+        </button>
+        <button onclick="selectZodiac('Balık', '♓')" class="zodiac-btn p-2.5 rounded-xl border border-white/10 glass-card hover:border-amber-400 transition flex flex-col items-center">
+          <span class="text-lg text-amber-400">♓</span><span class="text-[10px] mt-1 text-gray-300">Balık</span>
+        </button>
+      </div>
+
+      <div id="selected-zodiac-banner" class="text-center py-2 text-xs text-amber-300 font-semibold mb-2">
+        Lütfen yukarıdan burcunu seç
+      </div>
+
+      <button onclick="readAstrology()" id="btn-astro" disabled class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-600 to-indigo-700 font-bold text-white shadow-xl opacity-50 active:scale-98 transition cinzel text-sm tracking-wider">
+        Yıldız Haritamı Yorumla
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= 4. RÜYA TABİRİ ================= -->
   <section id="section-ruya" class="hidden space-y-4">
-    <div class="glass-card rounded-2xl p-4 space-y-3">
-      <p class="text-xs text-purple-200">Gördüğün rüyayı en ince ayrıntısına kadar anlat:</p>
-      <textarea id="dream-text" rows="5" placeholder="Rüyamda deniz kenarında uçan beyaz bir kuş görüyordum..." class="w-full glass-card rounded-xl p-3 text-sm focus:outline-none focus:border-amber-400"></textarea>
-      <button onclick="readDreamFortune()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-bold text-white shadow-lg active:scale-98 transition">
+    <div class="glass-card rounded-3xl p-5 space-y-3">
+      <div class="text-center mb-1">
+        <h3 class="cinzel text-xs text-amber-300 tracking-wider">BİLİNÇALTI REHBERİ</h3>
+        <p class="text-xs text-gray-300">Gördüğün rüyayı en ince ayrıntısına kadar anlat:</p>
+      </div>
+      <textarea id="dream-text" rows="5" placeholder="Rüyamda berrak bir deniz kenarında uçan beyaz bir kuş görüyordum..." class="w-full glass-card rounded-2xl p-4 text-sm placeholder-gray-500 text-amber-100 focus:outline-none focus:border-amber-400 transition"></textarea>
+      <button onclick="readDreamFortune()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-800 font-bold text-white shadow-xl shadow-indigo-900/40 active:scale-98 transition cinzel text-sm tracking-wider">
         Rüyamı Çözümle
       </button>
     </div>
   </section>
 
-  <!-- FAL SONUÇ ALANI -->
-  <div id="result-container" class="hidden mt-6 glass-card rounded-2xl p-5 border border-amber-400/30 relative">
-    <div class="flex justify-between items-center mb-3">
-      <h3 class="font-bold text-amber-400 text-sm flex items-center gap-2">
-        <i class="fa-solid fa-scroll"></i> Falcı Gülfem Diyor Ki:
+  <!-- ================= FAL SONUÇ KARTI ================= -->
+  <div id="result-container" class="hidden mt-6 glass-card rounded-3xl p-6 border border-amber-400/40 relative shadow-2xl">
+    <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+      <h3 class="cinzel font-bold text-amber-400 text-sm flex items-center gap-2">
+        <i class="fa-solid fa-scroll text-amber-400"></i> <span id="fortune-title">Gülfem Abla Diyor Ki:</span>
       </h3>
-      <button onclick="toggleVoice()" id="btn-voice" class="text-xs px-3 py-1.5 rounded-full bg-amber-400/20 text-amber-300 flex items-center gap-1">
+      <button onclick="toggleVoice()" id="btn-voice" class="text-xs px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-amber-600/30 border border-amber-400/40 text-amber-300 flex items-center gap-1.5 active:scale-95 transition">
         <i class="fa-solid fa-volume-high"></i> <span id="voice-text">Sesli Dinle</span>
       </button>
     </div>
-    <div id="fortune-output" class="text-sm leading-relaxed text-gray-200 whitespace-pre-wrap"></div>
+    <div id="fortune-output" class="text-[13px] leading-relaxed text-slate-200 whitespace-pre-wrap font-normal"></div>
   </div>
 
   <!-- YÜKLENİYOR MODALI -->
-  <div id="loading" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center z-50">
-    <div class="w-16 h-16 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-    <p id="loading-msg" class="text-amber-300 font-bold tracking-wide animate-pulse">Gülfem abla fotoğrafları inceliyor...</p>
-    <p class="text-xs text-gray-400 mt-1">Fincan ve tabaktaki sırlar açığa çıkıyor...</p>
+  <div id="loading" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6 text-center">
+    <div class="relative w-20 h-20 mb-4">
+      <div class="w-20 h-20 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
+      <i class="fa-solid fa-moon absolute inset-0 m-auto text-amber-400 text-xl animate-pulse"></i>
+    </div>
+    <p id="loading-msg" class="cinzel text-amber-300 font-bold text-sm tracking-wider">Mistik Enerji Taranıyor...</p>
+    <p class="text-xs text-purple-300 mt-1">Gülfem abla sırları açığa çıkarıyor...</p>
   </div>
 
   <script>
-    let uploadedImages = [];
+    let optimizedImages = [];
     let currentFortune = "";
+    let selectedZodiacSign = null;
 
+    // Tarot Kart Havuzu
+    const tarotDeck = [
+      { name: "GÜNEŞ", icon: "fa-solid fa-sun" },
+      { name: "AY", icon: "fa-solid fa-moon" },
+      { name: "YILDIZ", icon: "fa-solid fa-star" },
+      { name: "BÜYÜCÜ", icon: "fa-solid fa-hat-wizard" },
+      { name: "AŞIKLAR", icon: "fa-solid fa-heart" },
+      { name: "KADER ÇARKI", icon: "fa-solid fa-dharmachakra" },
+      { name: "GÜÇ", icon: "fa-solid fa-shield-halved" },
+      { name: "İMPARATORİÇE", icon: "fa-solid fa-crown" },
+      { name: "AZİZ", icon: "fa-solid fa-book-bible" }
+    ];
+    let chosenTarot = [null, null, null];
+
+    // Sekmeler Arası Geçiş
     function setTab(tab) {
-      ['kahve', 'tarot', 'ruya'].forEach(t => {
+      ['kahve', 'tarot', 'astro', 'ruya'].forEach(t => {
         document.getElementById(`section-${t}`).classList.add('hidden');
-        document.getElementById(`tab-${t}`).className = "py-2.5 rounded-xl border border-white/10 glass-card text-gray-300 flex flex-col items-center gap-1 transition";
+        document.getElementById(`tab-${t}`).className = "py-3 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1.5 transition";
       });
       document.getElementById(`section-${tab}`).classList.remove('hidden');
-      document.getElementById(`tab-${tab}`).className = "py-2.5 rounded-xl border border-amber-500/40 bg-amber-500/20 text-amber-300 flex flex-col items-center gap-1 transition";
+      document.getElementById(`tab-${tab}`).className = "py-3 rounded-2xl border glass-tab-active flex flex-col items-center gap-1.5 transition";
     }
 
-    // Çoklu Fotoğraf Seçimi & Önizleme
-    function previewImages(event) {
-      const files = Array.from(event.target.files);
-      if (!files.length) return;
-
-      uploadedImages = [];
-      const previewGrid = document.getElementById('preview-grid');
-      previewGrid.innerHTML = "";
-      previewGrid.classList.remove('hidden');
-      document.getElementById('image-placeholder').classList.add('hidden');
-
-      files.forEach((file, index) => {
+    // Fotoğraf Sıkıştırma (Jet Hızı)
+    function compressImage(file) {
+      return new Promise((resolve) => {
         const reader = new FileReader();
-        reader.onload = function(e) {
-          uploadedImages.push(e.target.result.split(',')[1]);
-          
-          const img = document.createElement('img');
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxDim = 950;
+            let w = img.width, h = img.height;
+            if (w > h && w > maxDim) { h = Math.round((h * maxDim) / w); w = maxDim; }
+            else if (h > maxDim) { w = Math.round((w * maxDim) / h); h = maxDim; }
+            canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve({ base64: canvas.toDataURL('image/jpeg', 0.72).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.72) });
+          };
           img.src = e.target.result;
-          img.className = "w-full h-32 object-cover rounded-xl border border-amber-400/40 shadow";
-          previewGrid.appendChild(img);
         };
         reader.readAsDataURL(file);
       });
     }
 
-    // Google'ın belirttiği kesin modelle çalışan API fonksiyonu
+    async function handleMultipleImages(event) {
+      const files = Array.from(event.target.files);
+      if (!files.length) return;
+      optimizedImages = [];
+      const grid = document.getElementById('preview-grid');
+      grid.innerHTML = "";
+      grid.classList.remove('hidden');
+      document.getElementById('image-placeholder').classList.add('hidden');
+      document.getElementById('upload-status').innerText = "Fotoğraflar hızla optimize ediliyor...";
+
+      for (const file of files) {
+        const res = await compressImage(file);
+        optimizedImages.push(res.base64);
+        const img = document.createElement('img');
+        img.src = res.preview;
+        img.className = "w-full h-28 object-cover rounded-xl border border-amber-400/30 shadow";
+        grid.appendChild(img);
+      }
+      document.getElementById('upload-status').innerText = `✨ ${optimizedImages.length} fotoğraf incelenmeye hazır!`;
+    }
+
+    // 3D Tarot Çevirme
+    function flipTarot(num) {
+      const cardEl = document.getElementById(`tarot-card-${num}`);
+      if (cardEl.classList.contains('flipped')) return;
+
+      const randomCard = tarotDeck[Math.floor(Math.random() * tarotDeck.length)];
+      chosenTarot[num - 1] = randomCard.name;
+
+      document.getElementById(`tarot-name-${num}`).innerText = randomCard.name;
+      document.getElementById(`tarot-icon-${num}`).className = randomCard.icon + " text-amber-400 text-2xl mb-1";
+      cardEl.classList.add('flipped');
+    }
+
+    // Burç Seçimi
+    function selectZodiac(name, symbol) {
+      selectedZodiacSign = name;
+      document.querySelectorAll('.zodiac-btn').forEach(b => b.classList.remove('border-amber-400', 'bg-amber-500/20'));
+      event.currentTarget.classList.add('border-amber-400', 'bg-amber-500/20');
+      document.getElementById('selected-zodiac-banner').innerHTML = `Seçilen Burç: <span class="text-amber-400 font-bold">${symbol} ${name}</span>`;
+      const btn = document.getElementById('btn-astro');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+    }
+
+    // Google API Motoru (Kesintisiz Bağlantı)
     async function callGemini(prompt, images = []) {
       const apiKey = (localStorage.getItem('gemini_api_key') || '').trim();
       if (!apiKey) {
@@ -166,82 +385,105 @@
 
       document.getElementById('loading').classList.remove('hidden');
 
-      // Google'ın hata mesajında belirttiği güncel modeller
-      const modelsToTry = [
-        'gemini-3.8-flash',
-        'gemini-2.0-flash',
-        'gemini-2.5-flash'
-      ];
-
       const parts = [{ text: prompt }];
-      images.forEach(base64 => {
-        parts.push({
-          inlineData: {
-            mimeType: "image/jpeg",
-            data: base64
-          }
-        });
+      images.forEach(b64 => {
+        parts.push({ inlineData: { mimeType: "image/jpeg", data: b64 } });
       });
 
-      let lastError = "";
+      const models = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+      let lastErr = "";
 
-      for (const model of modelsToTry) {
+      for (const model of models) {
         for (const ver of ['v1beta', 'v1']) {
           try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 28000);
+
             const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${apiKey}`;
             const response = await fetch(url, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ contents: [{ parts }] })
+              body: JSON.stringify({ contents: [{ parts }] }),
+              signal: controller.signal
             });
 
+            clearTimeout(timeoutId);
             const data = await response.json();
+
             if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
               document.getElementById('loading').classList.add('hidden');
               return data.candidates[0].content.parts[0].text;
             } else {
-              lastError = data.error?.message || JSON.stringify(data);
+              lastErr = data.error?.message || "Model yanıt vermedi.";
             }
           } catch (e) {
-            lastError = e.message;
+            lastErr = e.name === 'AbortError' ? "Bağlantı zaman aşımına uğradı." : e.message;
           }
         }
       }
 
       document.getElementById('loading').classList.add('hidden');
-      alert("Hata: " + lastError);
-      throw new Error(lastError);
+      alert("Hata: " + lastErr);
+      throw new Error(lastErr);
     }
 
+    // 1. Kahve Falı
     async function readCoffeeFortune() {
-      if (uploadedImages.length === 0) {
-        alert("Lütfen en az bir fincan veya tabak fotoğrafı seçin!");
-        return;
-      }
+      if (!optimizedImages.length) { alert("Lütfen en az 1 fincan veya tabak fotoğrafı seçin!"); return; }
       const name = document.getElementById('user-name').value || "Mehmet";
-      const prompt = `Sen 'Falıma Bak' uygulamasının efsanevi, sezgileri çok güçlü baş falcısı 'Falcı Gülfem'sin. Kullanıcının adı: ${name}. 
-      Sana yüklenen tüm fincan ve tabak fotoğraflarını dikkatle incele. Telve şekillerini, gölgeleri, çıkan yolları ve sembolleri detaylıca gör.
-      Falını şu 4 başlık altında topla:
-      1. 🌟 Genel Enerjin ve İç Dünyan
-      2. ❤️ Aşk ve İlişkiler (Fincandaki harfler, yollar ve kalp sembolleri)
-      3. 💼 İş, Para ve Gelecek Kısmetlerin
-      4. 🔮 Fincanın En Belirgin Alameti (Fotoğraflarda gördüğün net 1-2 şekli söyle)
-      Çok samimi, sıcak, "canım benim", "güzel kalplim" diyen gerçek bir Türk falcısı gibi konuş.`;
+      const prompt = `Sen 'Falıma Bak'ın baş falcısı Falcı Gülfem'sin. Kullanıcının adı: ${name}. 
+      Yüklenen tüm fincan ve tabak fotoğraflarını incele. Gördüğün telve şekillerini gerçekçi, samimi ve mistik bir dille yorumla.
+      Falını 4 bölüme ayır:
+      1. 🌟 Genel Enerjin ve Ruh Halin
+      2. ❤️ Aşk ve Kalp Meseleleri (Fincandaki harfler, yollar, kısmetler)
+      3. 💼 İş, Para ve Gelecek Kapıları
+      4. 🔮 Fincanın En Belirgin Alameti (Gördüğün şekli net söyle)
+      Sıcak, samimi, "canım benim", "güzel kalplim" diyen gerçek bir Türk falcısı ol.`;
 
-      const text = await callGemini(prompt, uploadedImages);
+      document.getElementById('fortune-title').innerText = `Gülfem Abla (${name} İçin Yorumluyor):`;
+      const text = await callGemini(prompt, optimizedImages);
       showResult(text);
     }
 
+    // 2. Tarot Falı
     async function readTarotFortune() {
-      const prompt = `Sen 'Falıma Bak'ın Tarot Kahinisin. Kullanıcı için geçmiş, şimdi ve gelecek kartlarını çek ve mistik, derin bir tarot açılımı yap.`;
+      if (chosenTarot.includes(null)) {
+        alert("Lütfen önce yukarıdaki 3 karta tek tek dokunup kartlarını aç!");
+        return;
+      }
+      const prompt = `Sen 'Falıma Bak'ın Tarot Kahinisin. Kullanıcı şu 3 kartı seçti:
+      1. Kart (Geçmiş): ${chosenTarot[0]}
+      2. Kart (Şimdi): ${chosenTarot[1]}
+      3. Kart (Gelecek): ${chosenTarot[2]}
+      Bu kartların mistik anlamlarını derinlemesine açıkla ve bir hikaye gibi birleştirerek kullanıcının hayatına uyarlayarak detaylı yorumla.`;
+
+      document.getElementById('fortune-title').innerText = "Tarot Kahini Diyor Ki:";
       const text = await callGemini(prompt);
       showResult(text);
     }
 
+    // 3. Astroloji & Burç
+    async function readAstrology() {
+      if (!selectedZodiacSign) { alert("Lütfen bir burç seçin!"); return; }
+      const prompt = `Sen 'Falıma Bak'ın Baş Astroloğusun. Burç: ${selectedZodiacSign}.
+      Bugünün gökyüzü transitlerini ve gezegen enerjilerini dikkate alarak şu başlıklarda mistik bir günlük burç yorumu hazırla:
+      - 🌌 Gökyüzü Enerjisi ve Günün Teması
+      - ❤️ Aşk ve İlişki Transitleri
+      - 💼 Kariyer ve Para Fırsatları
+      - 🍀 Günün Şanslı Rengi ve Uğurlu Sayısı
+      Mistik, motive edici ve akıcı bir dil kullan.`;
+
+      document.getElementById('fortune-title').innerText = `${selectedZodiacSign} Burcu Günlük Analizi:`;
+      const text = await callGemini(prompt);
+      showResult(text);
+    }
+
+    // 4. Rüya Tabiri
     async function readDreamFortune() {
       const dream = document.getElementById('dream-text').value;
       if (!dream) { alert("Lütfen rüyanızı yazın!"); return; }
-      const prompt = `Sen 'Falıma Bak'ın Rüya Tabircisisin. Kullanıcının şu rüyasını derinlemesine tabir et: "${dream}"`;
+      const prompt = `Sen 'Falıma Bak'ın Rüya Tabircisisin. Kullanıcının şu rüyasını derin sembolik ve psikolojik yönüyle yorumla: "${dream}"`;
+      document.getElementById('fortune-title').innerText = "Rüya Tabircisi Diyor Ki:";
       const text = await callGemini(prompt);
       showResult(text);
     }
@@ -253,6 +495,7 @@
       document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
     }
 
+    // Sesli Okuma (TTS)
     function toggleVoice() {
       if (!('speechSynthesis' in window)) { alert("Cihazınız ses özelliğini desteklemiyor."); return; }
       if (window.speechSynthesis.speaking) {
@@ -270,7 +513,7 @@
 
     function openSettings() {
       const current = localStorage.getItem('gemini_api_key') || "";
-      const key = prompt("Google Gemini API Anahtarınızı yapıştırın:\n(Ücretsiz aldığın ...tvuc ile biten anahtar)", current);
+      const key = prompt("Google Gemini API Anahtarınızı yapıştırın:\n(Ücretsiz aldığın anahtar)", current);
       if (key !== null && key.trim() !== "") {
         localStorage.setItem('gemini_api_key', key.trim());
         alert("API Anahtarınız başarıyla kaydedildi!");
