@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Falıma Bak</title>
-  <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -41,18 +40,21 @@
     </button>
   </nav>
 
-  <!-- BÖLÜM 1: KAHVE FALI -->
+  <!-- BÖLÜM 1: KAHVE FALI (ÇOKLU FOTOĞRAF DESTEKLİ) -->
   <section id="section-kahve" class="space-y-4">
     <div class="glass-card rounded-2xl p-4 text-center border-dashed border-2 border-purple-500/30">
-      <input type="file" id="cup-photo" accept="image/*" class="hidden" onchange="previewImage(event)">
+      <!-- multiple özelliği eklendi -->
+      <input type="file" id="cup-photo" accept="image/*" multiple class="hidden" onchange="previewImages(event)">
       <label for="cup-photo" class="cursor-pointer flex flex-col items-center py-4">
         <div id="image-placeholder" class="w-20 h-20 rounded-full bg-purple-900/40 flex items-center justify-center text-amber-400 text-3xl mb-3 shadow-inner">
-          <i class="fa-solid fa-camera"></i>
+          <i class="fa-solid fa-camera-retro"></i>
         </div>
-        <img id="image-preview" class="hidden w-48 h-48 object-cover rounded-xl mb-3 border border-amber-400/50 shadow-lg">
-        <span class="text-sm font-medium text-purple-200">Fincan veya Tabak Fotoğrafı Yükle</span>
-        <span class="text-xs text-gray-400 mt-1">Kameradan çek veya galeriden seç</span>
+        <span class="text-sm font-medium text-purple-200">Fincan ve Tabak Fotoğraflarını Seç</span>
+        <span class="text-xs text-amber-400 mt-1 font-semibold">Birden fazla fotoğraf seçebilirsin (1-4 adet)</span>
       </label>
+
+      <!-- Çoklu Önizleme Alanı -->
+      <div id="preview-grid" class="hidden grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-white/10"></div>
     </div>
 
     <input type="text" id="user-name" placeholder="Adınız (Örn: Mehmet)" class="w-full glass-card rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400">
@@ -64,17 +66,17 @@
   <!-- BÖLÜM 2: TAROT FALI -->
   <section id="section-tarot" class="hidden space-y-4">
     <div class="glass-card rounded-2xl p-4 text-center">
-      <p class="text-xs text-purple-200 mb-3">İçinden bir niyet tut ve 3 kart seç:</p>
+      <p class="text-xs text-purple-200 mb-3">İçinden bir niyet tut ve kartları aç:</p>
       <div class="flex justify-center gap-2 mb-4">
-        <div id="card-1" class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
+        <div class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
           <i class="fa-solid fa-eye text-amber-400 text-xl mb-1"></i>
           <span class="text-[10px] text-gray-300">1. Geçmiş</span>
         </div>
-        <div id="card-2" class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
+        <div class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
           <i class="fa-solid fa-hourglass-half text-amber-400 text-xl mb-1"></i>
           <span class="text-[10px] text-gray-300">2. Şimdi</span>
         </div>
-        <div id="card-3" class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
+        <div class="w-24 h-36 rounded-xl border-2 border-amber-400/30 bg-purple-950 flex flex-col items-center justify-center shadow-md">
           <i class="fa-solid fa-star text-amber-400 text-xl mb-1"></i>
           <span class="text-[10px] text-gray-300">3. Gelecek</span>
         </div>
@@ -112,12 +114,12 @@
   <!-- YÜKLENİYOR MODALI -->
   <div id="loading" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center z-50">
     <div class="w-16 h-16 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-    <p id="loading-msg" class="text-amber-300 font-bold tracking-wide animate-pulse">Fincandaki gizemler çözülüyor...</p>
-    <p class="text-xs text-gray-400 mt-1">Gülfem abla telveleri inceliyor...</p>
+    <p id="loading-msg" class="text-amber-300 font-bold tracking-wide animate-pulse">Gülfem abla fotoğrafları inceliyor...</p>
+    <p class="text-xs text-gray-400 mt-1">Fincan ve tabaktaki sırlar açığa çıkıyor...</p>
   </div>
 
   <script>
-    let base64Image = null;
+    let uploadedImages = [];
     let currentFortune = "";
 
     function setTab(tab) {
@@ -129,23 +131,33 @@
       document.getElementById(`tab-${tab}`).className = "py-2.5 rounded-xl border border-amber-500/40 bg-amber-500/20 text-amber-300 flex flex-col items-center gap-1 transition";
     }
 
-    function previewImage(event) {
-      const file = event.target.files[0];
-      if (file) {
+    // Çoklu Fotoğraf Seçimi & Önizleme
+    function previewImages(event) {
+      const files = Array.from(event.target.files);
+      if (!files.length) return;
+
+      uploadedImages = [];
+      const previewGrid = document.getElementById('preview-grid');
+      previewGrid.innerHTML = "";
+      previewGrid.classList.remove('hidden');
+      document.getElementById('image-placeholder').classList.add('hidden');
+
+      files.forEach((file, index) => {
         const reader = new FileReader();
         reader.onload = function(e) {
-          base64Image = e.target.result.split(',')[1];
-          document.getElementById('image-placeholder').classList.add('hidden');
-          const preview = document.getElementById('image-preview');
-          preview.src = e.target.result;
-          preview.classList.remove('hidden');
+          uploadedImages.push(e.target.result.split(',')[1]);
+          
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.className = "w-full h-32 object-cover rounded-xl border border-amber-400/40 shadow";
+          previewGrid.appendChild(img);
         };
         reader.readAsDataURL(file);
-      }
+      });
     }
 
-    // Google API'den Hesabına Tanımlı Aktif Modeli Dinamik Olarak Bulan Fonksiyon
-    async function callGemini(prompt, imageBase64 = null) {
+    // Google'ın belirttiği kesin modelle çalışan API fonksiyonu
+    async function callGemini(prompt, images = []) {
       const apiKey = (localStorage.getItem('gemini_api_key') || '').trim();
       if (!apiKey) {
         openSettings();
@@ -153,95 +165,75 @@
       }
 
       document.getElementById('loading').classList.remove('hidden');
-      document.getElementById('loading-msg').innerText = "Falcımız hazırlanıyor...";
 
-      try {
-        let activeModelName = null;
-        let apiVersion = "v1beta";
+      // Google'ın hata mesajında belirttiği güncel modeller
+      const modelsToTry = [
+        'gemini-3.8-flash',
+        'gemini-2.0-flash',
+        'gemini-2.5-flash'
+      ];
 
-        // Google'dan bu anahtar için hangi modellerin açık olduğunu öğreniyoruz
+      const parts = [{ text: prompt }];
+      images.forEach(base64 => {
+        parts.push({
+          inlineData: {
+            mimeType: "image/jpeg",
+            data: base64
+          }
+        });
+      });
+
+      let lastError = "";
+
+      for (const model of modelsToTry) {
         for (const ver of ['v1beta', 'v1']) {
           try {
-            const listRes = await fetch(`https://generativelanguage.googleapis.com/${ver}/models?key=${apiKey}`);
-            const listData = await listRes.json();
+            const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${apiKey}`;
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ contents: [{ parts }] })
+            });
 
-            if (listData.models && listData.models.length > 0) {
-              const usable = listData.models.filter(m => 
-                m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent')
-              );
-              // Öncelikli olarak flash modelini, yoksa ilk uygun modeli al
-              const flash = usable.find(m => m.name.toLowerCase().includes('flash')) || usable[0];
-              if (flash) {
-                activeModelName = flash.name.replace('models/', '');
-                apiVersion = ver;
-                break;
-              }
+            const data = await response.json();
+            if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+              document.getElementById('loading').classList.add('hidden');
+              return data.candidates[0].content.parts[0].text;
+            } else {
+              lastError = data.error?.message || JSON.stringify(data);
             }
-          } catch(e) {
-            console.warn(`Ver ${ver} tarama hatası:`, e);
+          } catch (e) {
+            lastError = e.message;
           }
         }
-
-        if (!activeModelName) {
-          activeModelName = "gemini-2.0-flash";
-        }
-
-        document.getElementById('loading-msg').innerText = "Fincan inceleniyor...";
-
-        const parts = [{ text: prompt }];
-        if (imageBase64) {
-          parts.push({
-            inlineData: {
-              mimeType: "image/jpeg",
-              data: imageBase64
-            }
-          });
-        }
-
-        const url = `https://generativelanguage.googleapis.com/${apiVersion}/models/${activeModelName}:generateContent?key=${apiKey}`;
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts }] })
-        });
-
-        const data = await response.json();
-        document.getElementById('loading').classList.add('hidden');
-
-        if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
-          return data.candidates[0].content.parts[0].text;
-        } else {
-          const errMsg = data.error?.message || JSON.stringify(data);
-          throw new Error(errMsg);
-        }
-      } catch (err) {
-        document.getElementById('loading').classList.add('hidden');
-        alert("Bağlantı Hatası: " + err.message);
-        throw err;
       }
+
+      document.getElementById('loading').classList.add('hidden');
+      alert("Hata: " + lastError);
+      throw new Error(lastError);
     }
 
     async function readCoffeeFortune() {
-      if (!base64Image) {
-        alert("Lütfen önce bir fincan veya tabak fotoğrafı yükleyin!");
+      if (uploadedImages.length === 0) {
+        alert("Lütfen en az bir fincan veya tabak fotoğrafı seçin!");
         return;
       }
       const name = document.getElementById('user-name').value || "Mehmet";
-      const prompt = `Sen 'Falıma Bak' uygulamasının mistik ve tecrübeli baş falcısı 'Falcı Gülfem'sin. Kullanıcının adı: ${name}. 
-      Sana gönderilen fincan fotoğrafını derinlemesine incele. Gördüğün telve şekillerini gerçek bir kahve falcısı samimiyetiyle ve mistik bir dille yorumla.
-      Falını şu 4 bölüme ayır:
-      1. 🌟 Genel Enerjin ve Ruh Halin
-      2. ❤️ Aşk ve İlişkiler (Fincandaki harfler/şekiller)
-      3. 💼 İş, Para ve Kısmet Kapıları
-      4. 🔮 Fincanın En Belirgin Alameti (Gördüğün şekli net söyle)
-      Sıcak, samimi, "canım benim", "güzel kalplim" diyen gerçekçi bir Türk kahvesi falcısı gibi konuş.`;
+      const prompt = `Sen 'Falıma Bak' uygulamasının efsanevi, sezgileri çok güçlü baş falcısı 'Falcı Gülfem'sin. Kullanıcının adı: ${name}. 
+      Sana yüklenen tüm fincan ve tabak fotoğraflarını dikkatle incele. Telve şekillerini, gölgeleri, çıkan yolları ve sembolleri detaylıca gör.
+      Falını şu 4 başlık altında topla:
+      1. 🌟 Genel Enerjin ve İç Dünyan
+      2. ❤️ Aşk ve İlişkiler (Fincandaki harfler, yollar ve kalp sembolleri)
+      3. 💼 İş, Para ve Gelecek Kısmetlerin
+      4. 🔮 Fincanın En Belirgin Alameti (Fotoğraflarda gördüğün net 1-2 şekli söyle)
+      Çok samimi, sıcak, "canım benim", "güzel kalplim" diyen gerçek bir Türk falcısı gibi konuş.`;
 
-      const text = await callGemini(prompt, base64Image);
+      const text = await callGemini(prompt, uploadedImages);
       showResult(text);
     }
 
     async function readTarotFortune() {
-      const prompt = `Sen 'Falıma Bak'ın Tarot Kahinisin. Kullanıcı geçmiş, şimdi ve gelecek için 3 kart çekti. Onlar için rastgele 3 tarot kartı seç ve derin mistik bir yorum yap.`;
+      const prompt = `Sen 'Falıma Bak'ın Tarot Kahinisin. Kullanıcı için geçmiş, şimdi ve gelecek kartlarını çek ve mistik, derin bir tarot açılımı yap.`;
       const text = await callGemini(prompt);
       showResult(text);
     }
@@ -249,7 +241,7 @@
     async function readDreamFortune() {
       const dream = document.getElementById('dream-text').value;
       if (!dream) { alert("Lütfen rüyanızı yazın!"); return; }
-      const prompt = `Sen 'Falıma Bak'ın Rüya Tabircisisin. Kullanıcının şu rüyasını hem geleneksel sembollerle hem de derin psikolojik yönüyle yorumla: "${dream}"`;
+      const prompt = `Sen 'Falıma Bak'ın Rüya Tabircisisin. Kullanıcının şu rüyasını derinlemesine tabir et: "${dream}"`;
       const text = await callGemini(prompt);
       showResult(text);
     }
