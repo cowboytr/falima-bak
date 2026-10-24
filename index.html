@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <link rel="manifest" href="manifest.json">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Falıma Bak - Mistik Yaşam & Fal</title>
   <meta name="theme-color" content="#0d071a">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='%230f0721'/%3E%3Ccircle cx='256' cy='256' r='210' fill='none' stroke='url(%23g)' stroke-width='8' opacity='0.3'/%3E%3Cpath d='M256 96 C 167 96 96 167 96 256 C 96 344 167 416 256 416 C 309 416 356 390 384 350 C 275 350 186 261 186 152 C 186 131 190 111 198 92 C 217 93 236 96 256 96 Z' fill='url(%23g)'/%3E%3Cpolygon points='380,140 395,175 430,190 395,205 380,240 365,205 330,190 365,175' fill='%23fef08a'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -46,7 +41,7 @@
       <button onclick="toggleHistoryModal()" title="Fal Geçmişi" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
         <i class="fa-solid fa-clock-rotate-left text-sm"></i>
       </button>
-      <button onclick="openSettings()" title="Ayarlar" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
+      <button onclick="openSettingsModal()" title="Ayarlar" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
         <i class="fa-solid fa-sliders text-sm"></i>
       </button>
     </div>
@@ -62,7 +57,7 @@
     </div>
   </div>
 
-  <!-- HEPSİ GÖRÜNÜR 7'Lİ KATEGORİ MENÜSÜ (2 SIRA) -->
+  <!-- HEPSİ GÖRÜNÜR 7'Lİ KATEGORİ MENÜSÜ -->
   <nav class="mb-5 space-y-2 text-[11px] font-semibold">
     <div class="grid grid-cols-4 gap-1.5">
       <button onclick="setTab('kahve')" id="tab-kahve" class="py-2.5 rounded-2xl border glass-tab-active flex flex-col items-center gap-1 transition">
@@ -348,6 +343,38 @@
     <p class="text-xs text-purple-300 mt-1">Sırlar bir bir açığa çıkıyor...</p>
   </div>
 
+  <!-- AYARLAR & ÖZEL İKON İNDİRME MODALI -->
+  <div id="settings-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
+    <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4">
+      <div class="flex justify-between items-center border-b border-white/10 pb-3">
+        <h4 class="cinzel text-sm text-amber-300 font-bold flex items-center gap-2">
+          <i class="fa-solid fa-sliders"></i> Uygulama Ayarları
+        </h4>
+        <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- ÖZEL İKON MOTORU BUTONU -->
+      <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-400/30 text-center space-y-2">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-purple-950 border border-amber-400/60 flex items-center justify-center shadow-lg">
+          <i class="fa-solid fa-moon text-amber-400 text-2xl"></i>
+        </div>
+        <p class="text-[11px] text-gray-300">"Falıma Bak"ın resmi 512x512 lüks logosunu doğrudan cihazına kaydet:</p>
+        <button onclick="downloadOfficialAppIcon()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 font-bold text-gray-900 text-xs shadow-md active:scale-95 transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-download"></i> Resmi İkonu İndir (icon.png)
+        </button>
+      </div>
+
+      <div>
+        <label class="block text-xs text-gray-300 mb-1 font-semibold">Gemini API Anahtarı:</label>
+        <textarea id="api-key-input" rows="3" placeholder="AIzaSy..." class="w-full glass-card rounded-xl p-2.5 text-xs text-amber-200 focus:outline-none focus:border-amber-400"></textarea>
+      </div>
+
+      <button onclick="saveApiKeys()" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 font-bold text-white text-xs transition">
+        Ayarları Kaydet
+      </button>
+    </div>
+  </div>
+
   <!-- FAL GEÇMİŞİ MODALI -->
   <div id="history-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-5 w-full max-w-sm max-h-[80vh] flex flex-col">
@@ -362,8 +389,13 @@
   </div>
 
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
+  <canvas id="icon-canvas" width="512" height="512" class="hidden"></canvas>
 
   <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+
     let optimizedImages = [];
     let palmImageBase64 = null;
     let currentFortune = "";
@@ -397,6 +429,86 @@
       { name: "XXI - DÜNYA", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg" }
     ];
     let chosenTarotCards = [null, null, null];
+
+    // ==========================================
+    // ÖZEL 512x512 İKON ÇİZİCİ VE İNDİRİCİ
+    // ==========================================
+    function downloadOfficialAppIcon() {
+      const canvas = document.getElementById('icon-canvas');
+      const ctx = canvas.getContext('2d');
+
+      // 1. Gece Mavisi / Mor Kozmik Zemin
+      const grad = ctx.createRadialGradient(256, 256, 40, 256, 256, 280);
+      grad.addColorStop(0, '#3b1277');
+      grad.addColorStop(0.55, '#170836');
+      grad.addColorStop(1, '#080314');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 512, 512);
+
+      // 2. Altın Çemberler
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.arc(256, 256, 230, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(256, 256, 214, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // 3. Parıldayan Hilal (Altın Yaldız)
+      ctx.fillStyle = '#fbbf24';
+      ctx.shadowColor = 'rgba(245, 158, 11, 0.8)';
+      ctx.shadowBlur = 25;
+      ctx.beginPath();
+      ctx.arc(256, 256, 140, 0.5 * Math.PI, 1.5 * Math.PI, true);
+      ctx.arc(295, 256, 120, 1.45 * Math.PI, 0.55 * Math.PI, false);
+      ctx.closePath();
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // 4. Merkezdeki 8 Köşeli Mistik Yıldız
+      ctx.fillStyle = '#fef08a';
+      ctx.shadowColor = '#f59e0b';
+      ctx.shadowBlur = 18;
+
+      function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+        let rot = Math.PI / 2 * 3;
+        let x = cx;
+        let y = cy;
+        let step = Math.PI / spikes;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - outerRadius);
+        for (let i = 0; i < spikes; i++) {
+          x = cx + Math.cos(rot) * outerRadius;
+          y = cy + Math.sin(rot) * outerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+          x = cx + Math.cos(rot) * innerRadius;
+          y = cy + Math.sin(rot) * innerRadius;
+          ctx.lineTo(x, y);
+          rot += step;
+        }
+        ctx.lineTo(cx, cy - outerRadius);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      drawStar(315, 220, 8, 48, 18);
+      drawStar(170, 320, 4, 18, 7);
+      drawStar(360, 340, 4, 15, 6);
+      ctx.shadowBlur = 0;
+
+      // 5. icon.png Olarak Galeriye İndir
+      const link = document.createElement('a');
+      link.download = 'icon.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      alert("Harika! 'icon.png' başarıyla cihazına indirildi!");
+    }
 
     function setPersona(persona) {
       currentPersona = persona;
@@ -533,7 +645,7 @@
       const apiKeys = rawKeys.split(',').map(k => k.trim()).filter(Boolean);
 
       if (apiKeys.length === 0) {
-        openSettings();
+        openSettingsModal();
         throw new Error("Lütfen ayarlar simgesine tıklayıp en az bir API anahtarı girin.");
       }
 
@@ -705,14 +817,10 @@
       }
     }
 
-    // ==========================================
-    // YENİ NESİL LÜKS INSTAGRAM STORY KARTI MOTORU
-    // ==========================================
     function generateStoryCard() {
       const canvas = document.getElementById('story-canvas');
       const ctx = canvas.getContext('2d');
 
-      // 1. Kozmik Arka Plan & Yıldız Tozu
       const bg = ctx.createRadialGradient(540, 960, 50, 540, 960, 1000);
       bg.addColorStop(0, '#2d1052');
       bg.addColorStop(0.5, '#120726');
@@ -720,7 +828,6 @@
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, 1080, 1920);
 
-      // Rastgele parıldayan minik yıldızlar
       ctx.fillStyle = '#fef08a';
       const stars = [
         [150, 200, 3], [850, 250, 2.5], [200, 600, 2], [900, 750, 3.5],
@@ -734,9 +841,8 @@
         ctx.shadowBlur = 12;
         ctx.fill();
       });
-      ctx.shadowBlur = 0; // Sıfırla
+      ctx.shadowBlur = 0;
 
-      // 2. Art Deco Altın Çift Kenarlık & Köşe Süsleri
       ctx.strokeStyle = '#f59e0b';
       ctx.lineWidth = 6;
       ctx.strokeRect(60, 60, 960, 1800);
@@ -745,7 +851,6 @@
       ctx.lineWidth = 2;
       ctx.strokeRect(80, 80, 920, 1760);
 
-      // Köşe Elmasları
       const corners = [[60, 60], [1020, 60], [60, 1860], [1020, 1860]];
       corners.forEach(([cx, cy]) => {
         ctx.fillStyle = '#fbbf24';
@@ -754,7 +859,6 @@
         ctx.fill();
       });
 
-      // 3. Üst Logo & Rozet
       ctx.fillStyle = 'rgba(245, 158, 11, 0.15)';
       ctx.beginPath();
       ctx.roundRect(340, 180, 400, 70, 35);
@@ -768,7 +872,6 @@
       ctx.textAlign = 'center';
       ctx.fillText('✦ KOZMİK KEHANET ✦', 540, 226);
 
-      // Ana Logo
       ctx.font = 'bold 64px "Cinzel", serif';
       ctx.fillStyle = '#fef08a';
       ctx.shadowColor = 'rgba(245, 158, 11, 0.6)';
@@ -776,13 +879,11 @@
       ctx.fillText('FALIMA BAK', 540, 340);
       ctx.shadowBlur = 0;
 
-      // Fal Başlığı
       ctx.fillStyle = '#cbd5e1';
       ctx.font = '32px sans-serif';
       const title = document.getElementById('fortune-title').innerText.replace(':', '');
       ctx.fillText(title, 540, 405);
 
-      // 4. Parşömen Kart Alanı (Orta Kutu)
       ctx.fillStyle = 'rgba(255, 255, 255, 0.035)';
       ctx.beginPath();
       ctx.roundRect(120, 480, 840, 1050, 30);
@@ -791,20 +892,16 @@
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Mistik Tırnak İşareti
       ctx.fillStyle = 'rgba(245, 158, 11, 0.25)';
       ctx.font = 'bold 180px serif';
       ctx.fillText('“', 220, 640);
 
-      // 5. Falın En Çarpıcı Kısmını Seç ve Şık Tipografiyle Yerleştir
       ctx.fillStyle = '#f8fafc';
       ctx.font = '40px sans-serif';
       ctx.textAlign = 'center';
 
       const cleanText = currentFortune.replace(/[*#_~]/g, '');
-      // İlk 350-400 karakterlik en can alıcı kısmı al
       let snippet = cleanText.substring(0, 420);
-      // Cümle sonunu temiz bitir
       const lastPeriod = snippet.lastIndexOf('.');
       if (lastPeriod > 200) {
         snippet = snippet.substring(0, lastPeriod + 1);
@@ -812,7 +909,6 @@
         snippet += '...';
       }
 
-      // Çok satırlı metin yazımı (Otomatik Satır Bölme)
       const words = snippet.split(' ');
       let line = '';
       let y = 680;
@@ -833,12 +929,10 @@
       }
       ctx.fillText(line, 540, y);
 
-      // Kapanış Tırnağı
       ctx.fillStyle = 'rgba(245, 158, 11, 0.25)';
       ctx.font = 'bold 180px serif';
       ctx.fillText('”', 860, y + 100);
 
-      // 6. Alt Çağrı (Call To Action & URL)
       ctx.fillStyle = '#94a3b8';
       ctx.font = 'italic 28px sans-serif';
       ctx.fillText('Senin kaderinde neler gizli?', 540, 1630);
@@ -847,7 +941,6 @@
       ctx.font = 'bold 34px sans-serif';
       ctx.fillText('🔮 cowboytr.github.io/falima-bak', 540, 1700);
 
-      // 7. Galeriye İndir
       const link = document.createElement('a');
       link.download = 'falima-bak-kehanet.png';
       link.href = canvas.toDataURL('image/png');
@@ -934,16 +1027,24 @@
       }
     }
 
-    function openSettings() {
+    function openSettingsModal() {
       const current = localStorage.getItem('gemini_api_key') || "";
-      const key = prompt("Google Gemini API Anahtarınızı girin:\n(Birden fazla anahtarı virgülle ayırarak yazabilirsiniz:\nANAHTAR1, ANAHTAR2)", current);
-      if (key !== null && key.trim() !== "") {
-        localStorage.setItem('gemini_api_key', key.trim());
-        alert("API Anahtarı havuzunuz başarıyla kaydedildi!");
-      }
+      document.getElementById('api-key-input').value = current;
+      document.getElementById('settings-modal').classList.remove('hidden');
     }
-  </script>if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+
+    function closeSettingsModal() {
+      document.getElementById('settings-modal').classList.add('hidden');
+    }
+
+    function saveApiKeys() {
+      const val = document.getElementById('api-key-input').value.trim();
+      if (val) {
+        localStorage.setItem('gemini_api_key', val);
+        alert("API Anahtarınız kaydedildi!");
+      }
+      closeSettingsModal();
+    }
+  </script>
 </body>
 </html>
