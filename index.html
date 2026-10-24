@@ -19,10 +19,8 @@
     body { background: radial-gradient(ellipse at 50% -20%, #2e1065 0%, #0d071a 55%, #05020a 100%); min-height: 100vh; color: #f1f5f9; font-family: 'Plus Jakarta Sans', sans-serif; }
     .cinzel { font-family: 'Cinzel', serif; }
     .glass-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(245, 158, 11, 0.2); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6); }
-    .glass-tab-active { background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.18)); border-color: rgba(245, 158, 11, 0.8); color: #fbbf24; box-shadow: 0 0 18px rgba(245, 158, 11, 0.25); }
+    .glass-tab-active { background: linear-gradient(135deg, rgba(245, 158, 11, 0.32), rgba(217, 119, 6, 0.2)); border-color: rgba(245, 158, 11, 0.85); color: #fbbf24; box-shadow: 0 0 16px rgba(245, 158, 11, 0.3); }
     .gold-gradient-text { background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .tarot-perspective { perspective: 1200px; }
     .tarot-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
     .tarot-inner.flipped { transform: rotateY(180deg); }
@@ -53,7 +51,7 @@
     </div>
   </header>
 
-  <!-- Falcı Karakteri Seçim Çubuğu (Persona) -->
+  <!-- Falcı Karakteri Seçim Çubuğu -->
   <div class="glass-card rounded-2xl p-2.5 mb-4 flex items-center justify-between text-xs">
     <span class="text-[11px] text-gray-400 font-medium ml-1">Falcın:</span>
     <div class="flex gap-1.5">
@@ -63,29 +61,35 @@
     </div>
   </div>
 
-  <!-- Kaydırılabilir 7'li Kategori Menüsü -->
-  <nav class="flex gap-2 overflow-x-auto no-scrollbar mb-5 pb-1 text-[11px] font-semibold">
-    <button onclick="setTab('kahve')" id="tab-kahve" class="shrink-0 px-4 py-2.5 rounded-2xl border glass-tab-active flex items-center gap-1.5 transition">
-      <i class="fa-solid fa-mug-hot"></i> Kahve
-    </button>
-    <button onclick="setTab('tarot')" id="tab-tarot" class="shrink-0 px-4 py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex items-center gap-1.5 transition">
-      <i class="fa-solid fa-wand-sparkles"></i> Tarot
-    </button>
-    <button onclick="setTab('el')" id="tab-el" class="shrink-0 px-4 py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex items-center gap-1.5 transition">
-      <i class="fa-solid fa-hand"></i> El Falı
-    </button>
-    <button onclick="setTab('astro')" id="tab-astro" class="shrink-0 px-4 py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex items-center gap-1.5 transition">
-      <i class="fa-solid fa-star-and-crescent"></i> Burçlar
-    </button>
-    <button onclick="setTab('uyum')" id="tab-uyum" class="shrink-0 px-4 py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex items-center gap-1.5 transition">
-      <i class="fa-solid fa-heart-pulse"></i> Aşk Uyumu
-    </button>
-    <button onclick="setTab('ruya')" id="tab-ruya" class="shrink-0 px-4 py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex items-center gap-1.5 transition">
-      <i class="fa-solid fa-cloud-moon"></i> Rüya
-    </button>
-    <button onclick="setTab('niyet')" id="tab-niyet" class="shrink-0 px-4 py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex items-center gap-1.5 transition">
-      <i class="fa-solid fa-cookie-bite"></i> Niyet
-    </button>
+  <!-- HEPSİ GÖRÜNÜR 7'Lİ KATEGORİ MENÜSÜ (2 SIRA) -->
+  <nav class="mb-5 space-y-2 text-[11px] font-semibold">
+    <!-- 1. Sıra (4 Adet) -->
+    <div class="grid grid-cols-4 gap-1.5">
+      <button onclick="setTab('kahve')" id="tab-kahve" class="py-2.5 rounded-2xl border glass-tab-active flex flex-col items-center gap-1 transition">
+        <i class="fa-solid fa-mug-hot text-base"></i> <span>Kahve</span>
+      </button>
+      <button onclick="setTab('tarot')" id="tab-tarot" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
+        <i class="fa-solid fa-wand-sparkles text-base"></i> <span>Tarot</span>
+      </button>
+      <button onclick="setTab('el')" id="tab-el" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
+        <i class="fa-solid fa-hand text-base"></i> <span>El Falı</span>
+      </button>
+      <button onclick="setTab('astro')" id="tab-astro" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
+        <i class="fa-solid fa-star-and-crescent text-base"></i> <span>Burçlar</span>
+      </button>
+    </div>
+    <!-- 2. Sıra (3 Adet) -->
+    <div class="grid grid-cols-3 gap-1.5">
+      <button onclick="setTab('uyum')" id="tab-uyum" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
+        <i class="fa-solid fa-heart-pulse text-base"></i> <span>Aşk Uyumu</span>
+      </button>
+      <button onclick="setTab('ruya')" id="tab-ruya" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
+        <i class="fa-solid fa-cloud-moon text-base"></i> <span>Rüya</span>
+      </button>
+      <button onclick="setTab('niyet')" id="tab-niyet" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
+        <i class="fa-solid fa-cookie-bite text-base"></i> <span>Niyet Taşı</span>
+      </button>
+    </div>
   </nav>
 
   <!-- 1. KAHVE FALI MODÜLÜ -->
@@ -107,7 +111,7 @@
     </button>
   </section>
 
-  <!-- 2. RESİMLİ 3D TAROT MODÜLÜ -->
+  <!-- 2. TAROT MODÜLÜ -->
   <section id="section-tarot" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center">
       <div class="flex justify-center gap-2 mb-4 text-xs font-medium">
@@ -144,7 +148,7 @@
             <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
               <img id="tarot-img-2" src="" class="w-full h-full object-cover">
               <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
-                <span id="tarot-name-2" class="cinzel text-[10px] text-amber-300 font-bold block leading-tight"></span>
+                <span id="tarot-name-2" class="cinzel text-[10px] text-amber-200 font-bold block leading-tight"></span>
               </div>
             </div>
           </div>
@@ -160,7 +164,7 @@
             <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
               <img id="tarot-img-3" src="" class="w-full h-full object-cover">
               <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
-                <span id="tarot-name-3" class="cinzel text-[10px] text-amber-300 font-bold block leading-tight"></span>
+                <span id="tarot-name-3" class="cinzel text-[10px] text-amber-200 font-bold block leading-tight"></span>
               </div>
             </div>
           </div>
@@ -173,7 +177,7 @@
     </div>
   </section>
 
-  <!-- 3. YENİ: EL FALI (AVUÇ İÇİ ANALİZİ) -->
+  <!-- 3. EL FALI MODÜLÜ -->
   <section id="section-el" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center relative overflow-hidden">
       <input type="file" id="palm-photo" accept="image/*" class="hidden" onchange="previewPalmImage(event)">
@@ -183,7 +187,7 @@
         </div>
         <img id="palm-preview" class="hidden w-48 h-48 object-cover rounded-2xl mb-3 border-2 border-amber-400/50 shadow-lg">
         <span class="text-sm font-semibold text-amber-200">Avuç İçi Fotoğrafını Çek veya Seç</span>
-        <span class="text-xs text-purple-300 mt-1">Avucunu düz tut ve aydınlık bir ortamda çek</span>
+        <span class="text-xs text-purple-300 mt-1">Avucunu aydınlık bir ortamda düz tut</span>
       </label>
     </div>
     <button onclick="readPalmFortune()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-700 to-purple-800 font-bold text-white shadow-xl shadow-amber-900/30 active:scale-98 transition cinzel text-sm tracking-wider">
@@ -221,12 +225,12 @@
     </div>
   </section>
 
-  <!-- 5. YENİ: AŞK VE BURÇ UYUMU (SİNASTRİ) -->
+  <!-- 5. AŞK VE BURÇ UYUMU -->
   <section id="section-uyum" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 space-y-4">
       <div class="text-center">
         <h3 class="cinzel text-xs text-amber-300 tracking-wider">KOZMİK AŞK UYUMU</h3>
-        <p class="text-xs text-gray-300 mt-1">İki burcun manyetik çekimini ve aşk kaderini keşfet:</p>
+        <p class="text-xs text-gray-300 mt-1">İki burcun manyetik çekimini keşfet:</p>
       </div>
 
       <div class="grid grid-cols-2 gap-3">
@@ -286,11 +290,11 @@
     </div>
   </section>
 
-  <!-- 7. YENİ: GÜNÜN MİSTİK KURABİYESİ & NİYET -->
+  <!-- 7. GÜNÜN MİSTİK KURABİYESİ -->
   <section id="section-niyet" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-6 text-center space-y-4">
       <h3 class="cinzel text-xs text-amber-300 tracking-wider">GÜNÜN KOZMİK NİYETİ</h3>
-      <p class="text-xs text-gray-300">Kozmik niyet taşını kırmak ve bugünün kehanetini açmak için taşa dokun:</p>
+      <p class="text-xs text-gray-300">Kozmik niyet taşını kırmak için taşa dokun:</p>
       
       <div onclick="crackCookie()" class="w-32 h-32 mx-auto rounded-3xl bg-gradient-to-tr from-amber-500/20 via-purple-600/30 to-amber-400/20 border-2 border-amber-400/50 flex flex-col items-center justify-center cursor-pointer shadow-xl hover:scale-105 active:scale-95 transition group">
         <i id="cookie-icon" class="fa-solid fa-gem text-4xl text-amber-400 group-hover:rotate-12 transition"></i>
@@ -304,7 +308,7 @@
     </div>
   </section>
 
-  <!-- ================= FAL SONUÇ KARTI ================= -->
+  <!-- FAL SONUÇ KARTI -->
   <div id="result-container" class="hidden mt-6 glass-card rounded-3xl p-6 border border-amber-400/40 relative shadow-2xl">
     <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
       <h3 class="cinzel font-bold text-amber-400 text-sm flex items-center gap-2">
@@ -317,10 +321,8 @@
       </div>
     </div>
 
-    <!-- Fal Metni -->
     <div id="fortune-output" class="text-[15px] sm:text-base leading-relaxed text-slate-200 whitespace-pre-wrap font-normal"></div>
 
-    <!-- 4'lü Aksiyon Barı (Paylaşım, Story, Ses, Kopyala) -->
     <div class="grid grid-cols-2 gap-2 mt-6 pt-4 border-t border-white/10 text-xs font-semibold">
       <button onclick="toggleVoice()" id="btn-voice" class="py-3 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
         <i class="fa-solid fa-volume-high"></i> <span id="voice-text">Sesli Oku</span>
@@ -371,7 +373,6 @@
     let currentTarotSpread = 'genel';
     let currentPersona = 'gulfem';
 
-    // 22 Büyük Arkana
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
       { name: "I - BÜYÜCÜ", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
@@ -398,7 +399,6 @@
     ];
     let chosenTarotCards = [null, null, null];
 
-    // Persona Seçimi
     function setPersona(persona) {
       currentPersona = persona;
       ['gulfem', 'melchior', 'ece'].forEach(p => {
@@ -419,13 +419,12 @@
     function setTab(tab) {
       ['kahve', 'tarot', 'el', 'astro', 'uyum', 'ruya', 'niyet'].forEach(t => {
         document.getElementById(`section-${t}`).classList.add('hidden');
-        document.getElementById(`tab-${t}`).className = "shrink-0 px-4 py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex items-center gap-1.5 transition";
+        document.getElementById(`tab-${t}`).className = "py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition";
       });
       document.getElementById(`section-${tab}`).classList.remove('hidden');
-      document.getElementById(`tab-${tab}`).className = "shrink-0 px-4 py-2.5 rounded-2xl border glass-tab-active flex items-center gap-1.5 transition";
+      document.getElementById(`tab-${tab}`).className = "py-2.5 rounded-2xl border glass-tab-active flex flex-col items-center gap-1 transition";
     }
 
-    // Görsel Sıkıştırma (Jet Hızı)
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -530,12 +529,14 @@
       btn.classList.remove('opacity-50');
     }
 
-    // Google API Çağrısı (Interactions Engine)
+    // ÇOKLU ANAHTAR & KOTA YÖNETİMLİ GOOGLE INTERACTIONS API
     async function callGemini(prompt, images = []) {
-      const apiKey = (localStorage.getItem('gemini_api_key') || '').trim();
-      if (!apiKey) {
+      const rawKeys = localStorage.getItem('gemini_api_key') || '';
+      const apiKeys = rawKeys.split(',').map(k => k.trim()).filter(Boolean);
+
+      if (apiKeys.length === 0) {
         openSettings();
-        throw new Error("Lütfen önce ayarlar simgesine tıklayıp Gemini API anahtarınızı girin.");
+        throw new Error("Lütfen ayarlar simgesine tıklayıp en az bir API anahtarı girin.");
       }
 
       document.getElementById('loading').classList.remove('hidden');
@@ -550,51 +551,71 @@
         inputPayload = prompt;
       }
 
-      try {
-        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-goog-api-key": apiKey
-          },
-          body: JSON.stringify({
-            model: "gemini-3.8-flash",
-            input: inputPayload,
-            store: false
-          })
-        });
+      // Kota aşımına karşı denenecek modeller sırası
+      const modelsToTry = [
+        "gemini-3.8-flash",
+        "gemini-3.5-flash-lite",
+        "gemini-3.1-flash-lite",
+        "gemini-2.5-flash-lite"
+      ];
 
-        const data = await response.json();
-        document.getElementById('loading').classList.add('hidden');
+      let lastErrorMsg = "";
 
-        if (!response.ok) {
-          throw new Error(data.error?.message || JSON.stringify(data));
-        }
+      // Sırayla her API anahtarını ve modeli dener
+      for (const key of apiKeys) {
+        for (const modelName of modelsToTry) {
+          try {
+            const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "x-goog-api-key": key
+              },
+              body: JSON.stringify({
+                model: modelName,
+                input: inputPayload,
+                store: false
+              })
+            });
 
-        let resultText = data.output_text || "";
-        if (!resultText && data.steps && Array.isArray(data.steps)) {
-          for (const step of data.steps) {
-            if (step.content && Array.isArray(step.content)) {
-              for (const c of step.content) {
-                if (c.text) resultText += (resultText ? "\n\n" : "") + c.text;
+            const data = await response.json();
+
+            if (response.ok) {
+              let resultText = data.output_text || "";
+              if (!resultText && data.steps && Array.isArray(data.steps)) {
+                for (const step of data.steps) {
+                  if (step.content && Array.isArray(step.content)) {
+                    for (const c of step.content) {
+                      if (c.text) resultText += (resultText ? "\n\n" : "") + c.text;
+                    }
+                  } else if (step.text) {
+                    resultText += (resultText ? "\n\n" : "") + step.text;
+                  }
+                }
               }
-            } else if (step.text) {
-              resultText += (resultText ? "\n\n" : "") + step.text;
+
+              if (resultText) {
+                document.getElementById('loading').classList.add('hidden');
+                saveToHistory(resultText);
+                return resultText;
+              }
+            } else {
+              lastErrorMsg = data.error?.message || JSON.stringify(data);
+              // Eğer rate limit ise bir sonraki anahtara/modele geçer
+              if (lastErrorMsg.includes("Rate limit") || lastErrorMsg.includes("429")) {
+                console.warn(`Model ${modelName} kotalı, alternatif deneniyor...`);
+                continue;
+              }
             }
+          } catch (e) {
+            lastErrorMsg = e.message;
           }
         }
-
-        if (resultText) {
-          saveToHistory(resultText);
-          return resultText;
-        } else {
-          throw new Error("Fal metni alınamadı.");
-        }
-      } catch (err) {
-        document.getElementById('loading').classList.add('hidden');
-        alert("Bağlantı Hatası: " + err.message);
-        throw err;
       }
+
+      document.getElementById('loading').classList.add('hidden');
+      alert("Kota / Bağlantı Uyarısı:\n" + lastErrorMsg + "\n\nİpucu: Ayarlardan 2. bir ücretsiz API anahtarı ekleyerek sınırı ikiye katlayabilirsiniz!");
+      throw new Error(lastErrorMsg);
     }
 
     // FAL FONKSİYONLARI
@@ -652,7 +673,7 @@
       const persona = getPersonaPrompt();
       const prompt = `${persona} ${s1} burcu ile ${s2} burcunun aşk ve evlilik uyumunu derinlemesine analiz et.
       Lütfen şu formatta cevap ver:
-      - 💘 Aşk Uyum Yüzdesi: % (Net bir yüzde ver, örn %88)
+      - 💘 Aşk Uyum Yüzdesi: % (Net bir yüzde ver)
       - 🔥 Cinsel ve Duygusal Çekim
       - ⚡ Olası Fırtınalar ve Engeller
       - 🗝️ İlişkiyi Sonsuz Kılacak Kozmik Tavsiye`;
@@ -692,29 +713,23 @@
       document.getElementById('fortune-output').style.fontSize = currentFontSize + 'px';
     }
 
-    // GÜNCELLENMİŞ EKSİKSİZ TAM METİN PAYLAŞIMI
     async function shareWhatsAppFull() {
       const shareTitle = document.getElementById('fortune-title').innerText;
       const fullShareText = `🔮 Falıma Bak'tan Kehanetim Çıktı!\n\n👑 ${shareTitle}\n\n${currentFortune}\n\n✨ Sen de falına baktır: https://cowboytr.github.io/falima-bak/`;
 
       if (navigator.share) {
         try {
-          await navigator.share({
-            title: 'Falıma Bak Kehaneti',
-            text: fullShareText
-          });
+          await navigator.share({ title: 'Falıma Bak Kehaneti', text: fullShareText });
         } catch (err) {}
       } else {
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(fullShareText)}`, '_blank');
       }
     }
 
-    // INSTAGRAM STORY KARTI OLUŞTURUCU (Canvas)
     function generateStoryCard() {
       const canvas = document.getElementById('story-canvas');
       const ctx = canvas.getContext('2d');
 
-      // Arka Plan
       const grad = ctx.createLinearGradient(0, 0, 1080, 1920);
       grad.addColorStop(0, '#190a34');
       grad.addColorStop(0.5, '#0d071a');
@@ -722,12 +737,10 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 1080, 1920);
 
-      // Altın Çerçeve
       ctx.strokeStyle = '#f59e0b';
       ctx.lineWidth = 14;
       ctx.strokeRect(50, 50, 980, 1820);
 
-      // Başlık
       ctx.fillStyle = '#fbbf24';
       ctx.font = 'bold 54px serif';
       ctx.textAlign = 'center';
@@ -737,7 +750,6 @@
       ctx.font = '36px sans-serif';
       ctx.fillText(document.getElementById('fortune-title').innerText, 540, 300);
 
-      // Metin Özeti
       ctx.fillStyle = '#f8fafc';
       ctx.font = '38px sans-serif';
       ctx.textAlign = 'left';
@@ -760,20 +772,17 @@
       }
       ctx.fillText(line + '...', 110, y);
 
-      // Alt Bilgi
       ctx.fillStyle = '#f59e0b';
       ctx.font = 'bold 36px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('🔮 cowboytr.github.io/falima-bak', 540, 1750);
 
-      // İndir
       const link = document.createElement('a');
       link.download = 'falima-bak-story.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
     }
 
-    // SES MOTORU (Android Uyumlu)
     let isSpeaking = false;
     function toggleVoice() {
       if (!('speechSynthesis' in window)) { alert("Cihazınız ses sentezini desteklemiyor."); return; }
@@ -856,10 +865,10 @@
 
     function openSettings() {
       const current = localStorage.getItem('gemini_api_key') || "";
-      const key = prompt("Google Gemini API Anahtarınızı yapıştırın:\n(Ücretsiz aldığın anahtar)", current);
+      const key = prompt("Google Gemini API Anahtarınızı girin:\n(Birden fazla anahtarı virgülle ayırarak yazabilirsiniz:\nANAHTAR1, ANAHTAR2)", current);
       if (key !== null && key.trim() !== "") {
         localStorage.setItem('gemini_api_key', key.trim());
-        alert("API Anahtarınız başarıyla kaydedildi!");
+        alert("API Anahtarı havuzunuz başarıyla kaydedildi!");
       }
     }
   </script>
