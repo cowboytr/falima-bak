@@ -9,9 +9,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <!-- Özel Mistik Altın Hilal Logo -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='%230f0721'/%3E%3Ccircle cx='256' cy='256' r='210' fill='none' stroke='url(%23g)' stroke-width='8' opacity='0.3'/%3E%3Cpath d='M256 96 C 167 96 96 167 96 256 C 96 344 167 416 256 416 C 309 416 356 390 384 350 C 275 350 186 261 186 152 C 186 131 190 111 198 92 C 217 93 236 96 256 96 Z' fill='url(%23g)'/%3E%3Cpolygon points='380,140 395,175 430,190 395,205 380,240 365,205 330,190 365,175' fill='%23fef08a'/%3E%3C/svg%3E">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%230f0721'/%3E%3Ccircle cx='256' cy='256' r='210' fill='none' stroke='%23f59e0b' stroke-width='10' opacity='0.3'/%3E%3Cpath d='M256 96 C 167 96 96 167 96 256 C 96 344 167 416 256 416 C 309 416 356 390 384 350 C 275 350 186 261 186 152 C 186 131 190 111 198 92 C 217 93 236 96 256 96 Z' fill='%23f59e0b'/%3E%3C/svg%3E">
+  <!-- Logo -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='%230f0721'/%3E%3Cpath d='M256 96 C 167 96 96 167 96 256 C 96 344 167 416 256 416 C 309 416 356 390 384 350 C 275 350 186 261 186 152 C 186 131 190 111 198 92 C 217 93 236 96 256 96 Z' fill='url(%23g)'/%3E%3Cpolygon points='380,140 395,175 430,190 395,205 380,240 365,205 330,190 365,175' fill='%23fef08a'/%3E%3C/svg%3E">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,13 +19,13 @@
   <style>
     body { background: radial-gradient(ellipse at 50% -20%, #2e1065 0%, #0d071a 55%, #05020a 100%); min-height: 100vh; color: #f1f5f9; font-family: 'Plus Jakarta Sans', sans-serif; }
     .cinzel { font-family: 'Cinzel', serif; }
-    .glass-card { background: rgba(255, 255, 255, 0.035); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(245, 158, 11, 0.18); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5); }
-    .glass-tab-active { background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.15)); border-color: rgba(245, 158, 11, 0.6); color: #fbbf24; box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
+    .glass-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(245, 158, 11, 0.2); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6); }
+    .glass-tab-active { background: linear-gradient(135deg, rgba(245, 158, 11, 0.28), rgba(217, 119, 6, 0.18)); border-color: rgba(245, 158, 11, 0.7); color: #fbbf24; box-shadow: 0 0 20px rgba(245, 158, 11, 0.25); }
     .gold-gradient-text { background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .tarot-perspective { perspective: 1000px; }
-    .tarot-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+    .tarot-perspective { perspective: 1200px; }
+    .tarot-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
     .tarot-inner.flipped { transform: rotateY(180deg); }
-    .tarot-front, .tarot-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 0.875rem; }
+    .tarot-front, .tarot-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 0.875rem; overflow: hidden; }
     .tarot-back { transform: rotateY(180deg); }
   </style>
 </head>
@@ -40,15 +39,20 @@
       </div>
       <div>
         <h1 class="cinzel text-2xl font-black tracking-wider gold-gradient-text">FALIMA BAK</h1>
-        <p class="text-[11px] text-purple-300 font-medium tracking-wide">Mistik Yaşam & Fal Rehberi</p>
+        <p class="text-[11px] text-purple-300 font-medium tracking-wide">Mistik Yaşam & Kehanet Rehberi</p>
       </div>
     </div>
-    <button onclick="openSettings()" class="w-11 h-11 rounded-2xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
-      <i class="fa-solid fa-sliders text-base"></i>
-    </button>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleHistoryModal()" title="Fal Geçmişi" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
+        <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+      </button>
+      <button onclick="openSettings()" title="Ayarlar" class="w-10 h-10 rounded-2xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
+        <i class="fa-solid fa-sliders text-sm"></i>
+      </button>
+    </div>
   </header>
 
-  <!-- 4'lü Kategori Menüsü -->
+  <!-- Kategori Menüsü -->
   <nav class="grid grid-cols-4 gap-1.5 mb-6 text-[11px] font-semibold">
     <button onclick="setTab('kahve')" id="tab-kahve" class="py-3 rounded-2xl border glass-tab-active flex flex-col items-center gap-1.5 transition">
       <i class="fa-solid fa-mug-hot text-base"></i> <span>Kahve</span>
@@ -68,7 +72,7 @@
   <section id="section-kahve" class="space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center relative overflow-hidden">
       <input type="file" id="cup-photo" accept="image/*" multiple class="hidden" onchange="handleMultipleImages(event)">
-      <label for="cup-photo" class="cursor-pointer flex flex-col items-center py-4">
+      <label for="cup-photo" class="cursor-pointer flex flex-col items-center py-3">
         <div id="image-placeholder" class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-purple-600/30 border border-amber-400/30 flex items-center justify-center text-amber-400 text-3xl mb-3 shadow-inner">
           <i class="fa-solid fa-camera-retro"></i>
         </div>
@@ -85,51 +89,64 @@
     </button>
   </section>
 
-  <!-- 2. 3D TAROT MODÜLÜ -->
+  <!-- 2. GERÇEK RESİMLİ 3D TAROT MODÜLÜ -->
   <section id="section-tarot" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center">
-      <p class="cinzel text-xs text-amber-300 tracking-wider mb-1">KISMET KARTLARI</p>
-      <p class="text-xs text-gray-300 mb-4">Bir dilek tut ve sırasıyla 3 kartın üzerine dokun:</p>
+      <!-- Açılım Seçimi -->
+      <div class="flex justify-center gap-2 mb-4 text-xs font-medium">
+        <button onclick="setTarotSpread('genel')" id="spread-genel" class="px-3 py-1.5 rounded-xl border border-amber-400/50 bg-amber-500/20 text-amber-300">Genel Açılım</button>
+        <button onclick="setTarotSpread('ask')" id="spread-ask" class="px-3 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400">Aşk & Kalp</button>
+        <button onclick="setTarotSpread('kariyer')" id="spread-kariyer" class="px-3 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400">İş & Para</button>
+      </div>
+
+      <p id="tarot-subtitle" class="text-xs text-purple-200 mb-4">Bir niyet tut ve sırayla 3 karta dokunarak kaderini aç:</p>
       
-      <div class="grid grid-cols-3 gap-2.5 mb-5">
-        <div class="tarot-perspective h-40 cursor-pointer" onclick="flipTarot(1)">
+      <!-- 3 Kart Yuvası -->
+      <div class="grid grid-cols-3 gap-2 mb-5">
+        <div class="tarot-perspective h-48 cursor-pointer" onclick="flipTarot(1)">
           <div id="tarot-card-1" class="tarot-inner">
-            <div class="tarot-front glass-card border-amber-400/40 bg-gradient-to-b from-purple-950 to-slate-950 flex flex-col items-center justify-center p-2">
-              <i class="fa-solid fa-eye text-amber-400 text-2xl mb-2"></i>
-              <span class="cinzel text-[10px] text-amber-300 font-bold">I. GEÇMİŞ</span>
-              <span class="text-[9px] text-gray-400 mt-1">Dokun Aç</span>
+            <div class="tarot-front glass-card border border-amber-400/40 bg-gradient-to-b from-purple-950 via-slate-900 to-black flex flex-col items-center justify-center p-2 text-center shadow-lg">
+              <i class="fa-solid fa-gem text-amber-400 text-2xl mb-2 animate-bounce"></i>
+              <span id="card-pos-1" class="cinzel text-[10px] text-amber-300 font-bold">1. GEÇMİŞ</span>
+              <span class="text-[9px] text-gray-400 mt-2 bg-white/5 px-2 py-0.5 rounded-full">Dokun Aç</span>
             </div>
-            <div class="tarot-back glass-card border-2 border-amber-400 bg-gradient-to-b from-amber-950 to-purple-950 flex flex-col items-center justify-center p-2 text-center">
-              <i id="tarot-icon-1" class="text-amber-400 text-2xl mb-1"></i>
-              <span id="tarot-name-1" class="cinzel text-[10px] text-amber-200 font-bold leading-tight"></span>
+            <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
+              <img id="tarot-img-1" src="" class="w-full h-full object-cover">
+              <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
+                <span id="tarot-name-1" class="cinzel text-[10px] text-amber-300 font-bold block leading-tight"></span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="tarot-perspective h-40 cursor-pointer" onclick="flipTarot(2)">
+        <div class="tarot-perspective h-48 cursor-pointer" onclick="flipTarot(2)">
           <div id="tarot-card-2" class="tarot-inner">
-            <div class="tarot-front glass-card border-amber-400/40 bg-gradient-to-b from-purple-950 to-slate-950 flex flex-col items-center justify-center p-2">
-              <i class="fa-solid fa-hourglass-half text-amber-400 text-2xl mb-2"></i>
-              <span class="cinzel text-[10px] text-amber-300 font-bold">II. ŞİMDİ</span>
-              <span class="text-[9px] text-gray-400 mt-1">Dokun Aç</span>
+            <div class="tarot-front glass-card border border-amber-400/40 bg-gradient-to-b from-purple-950 via-slate-900 to-black flex flex-col items-center justify-center p-2 text-center shadow-lg">
+              <i class="fa-solid fa-hourglass-half text-amber-400 text-2xl mb-2 animate-bounce"></i>
+              <span id="card-pos-2" class="cinzel text-[10px] text-amber-300 font-bold">2. ŞİMDİ</span>
+              <span class="text-[9px] text-gray-400 mt-2 bg-white/5 px-2 py-0.5 rounded-full">Dokun Aç</span>
             </div>
-            <div class="tarot-back glass-card border-2 border-amber-400 bg-gradient-to-b from-amber-950 to-purple-950 flex flex-col items-center justify-center p-2 text-center">
-              <i id="tarot-icon-2" class="text-amber-400 text-2xl mb-1"></i>
-              <span id="tarot-name-2" class="cinzel text-[10px] text-amber-200 font-bold leading-tight"></span>
+            <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
+              <img id="tarot-img-2" src="" class="w-full h-full object-cover">
+              <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
+                <span id="tarot-name-2" class="cinzel text-[10px] text-amber-300 font-bold block leading-tight"></span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="tarot-perspective h-40 cursor-pointer" onclick="flipTarot(3)">
+        <div class="tarot-perspective h-48 cursor-pointer" onclick="flipTarot(3)">
           <div id="tarot-card-3" class="tarot-inner">
-            <div class="tarot-front glass-card border-amber-400/40 bg-gradient-to-b from-purple-950 to-slate-950 flex flex-col items-center justify-center p-2">
-              <i class="fa-solid fa-star text-amber-400 text-2xl mb-2"></i>
-              <span class="cinzel text-[10px] text-amber-300 font-bold">III. GELECEK</span>
-              <span class="text-[9px] text-gray-400 mt-1">Dokun Aç</span>
+            <div class="tarot-front glass-card border border-amber-400/40 bg-gradient-to-b from-purple-950 via-slate-900 to-black flex flex-col items-center justify-center p-2 text-center shadow-lg">
+              <i class="fa-solid fa-star text-amber-400 text-2xl mb-2 animate-bounce"></i>
+              <span id="card-pos-3" class="cinzel text-[10px] text-amber-300 font-bold">3. GELECEK</span>
+              <span class="text-[9px] text-gray-400 mt-2 bg-white/5 px-2 py-0.5 rounded-full">Dokun Aç</span>
             </div>
-            <div class="tarot-back glass-card border-2 border-amber-400 bg-gradient-to-b from-amber-950 to-purple-950 flex flex-col items-center justify-center p-2 text-center">
-              <i id="tarot-icon-3" class="text-amber-400 text-2xl mb-1"></i>
-              <span id="tarot-name-3" class="cinzel text-[10px] text-amber-200 font-bold leading-tight"></span>
+            <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
+              <img id="tarot-img-3" src="" class="w-full h-full object-cover">
+              <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
+                <span id="tarot-name-3" class="cinzel text-[10px] text-amber-300 font-bold block leading-tight"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -185,17 +202,36 @@
     </div>
   </section>
 
-  <!-- FAL SONUÇ KARTI -->
+  <!-- FAL SONUÇ KARTI (BÜYÜTÜLEBİLİR YAZI & SES & PAYLAŞIM) -->
   <div id="result-container" class="hidden mt-6 glass-card rounded-3xl p-6 border border-amber-400/40 relative shadow-2xl">
+    <!-- Üst Kontrol Barı -->
     <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
       <h3 class="cinzel font-bold text-amber-400 text-sm flex items-center gap-2">
         <i class="fa-solid fa-scroll text-amber-400"></i> <span id="fortune-title">Gülfem Abla Diyor Ki:</span>
       </h3>
-      <button onclick="toggleVoice()" id="btn-voice" class="text-xs px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-amber-600/30 border border-amber-400/40 text-amber-300 flex items-center gap-1.5 active:scale-95 transition">
-        <i class="fa-solid fa-volume-high"></i> <span id="voice-text">Sesli Dinle</span>
+      <!-- Font Büyüt/Küçült -->
+      <div class="flex items-center gap-1 bg-white/5 rounded-xl px-2 py-1">
+        <button onclick="changeFontSize(-1)" class="text-xs px-1 text-gray-300 hover:text-amber-400 font-bold">A-</button>
+        <span class="text-[10px] text-gray-500">|</span>
+        <button onclick="changeFontSize(1)" class="text-xs px-1 text-gray-300 hover:text-amber-400 font-bold">A+</button>
+      </div>
+    </div>
+
+    <!-- Fal Metni (Büyük & Rahat Okunan Font) -->
+    <div id="fortune-output" class="text-[15px] sm:text-base leading-relaxed text-slate-200 whitespace-pre-wrap font-normal"></div>
+
+    <!-- Alt Butonlar: Ses, Paylaş, Kopyala -->
+    <div class="grid grid-cols-3 gap-2 mt-6 pt-4 border-t border-white/10 text-xs font-semibold">
+      <button onclick="toggleVoice()" id="btn-voice" class="py-2.5 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
+        <i class="fa-solid fa-volume-high"></i> <span id="voice-text">Sesli Oku</span>
+      </button>
+      <button onclick="shareWhatsApp()" class="py-2.5 rounded-xl bg-green-500/20 border border-green-500/40 text-green-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
+        <i class="fa-brands fa-whatsapp"></i> Paylaş
+      </button>
+      <button onclick="copyFortune()" class="py-2.5 rounded-xl bg-white/10 border border-white/20 text-gray-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
+        <i class="fa-solid fa-copy"></i> Kopyala
       </button>
     </div>
-    <div id="fortune-output" class="text-[13px] leading-relaxed text-slate-200 whitespace-pre-wrap font-normal"></div>
   </div>
 
   <!-- YÜKLENİYOR MODALI -->
@@ -208,23 +244,52 @@
     <p class="text-xs text-purple-300 mt-1">Gülfem abla sırları açığa çıkarıyor...</p>
   </div>
 
+  <!-- FAL GEÇMİŞİ MODALI -->
+  <div id="history-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
+    <div class="glass-card rounded-3xl p-5 w-full max-w-sm max-h-[80vh] flex flex-col">
+      <div class="flex justify-between items-center mb-3 pb-2 border-b border-white/10">
+        <h4 class="cinzel text-sm text-amber-300 font-bold flex items-center gap-2">
+          <i class="fa-solid fa-clock-rotate-left"></i> Fal Geçmişiniz
+        </h4>
+        <button onclick="toggleHistoryModal()" class="text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="history-list" class="overflow-y-auto space-y-2 flex-1 text-xs"></div>
+    </div>
+  </div>
+
   <script>
     let optimizedImages = [];
     let currentFortune = "";
     let selectedZodiacSign = null;
+    let currentFontSize = 15;
+    let currentTarotSpread = 'genel';
 
-    const tarotDeck = [
-      { name: "GÜNEŞ", icon: "fa-solid fa-sun" },
-      { name: "AY", icon: "fa-solid fa-moon" },
-      { name: "YILDIZ", icon: "fa-solid fa-star" },
-      { name: "BÜYÜCÜ", icon: "fa-solid fa-hat-wizard" },
-      { name: "AŞIKLAR", icon: "fa-solid fa-heart" },
-      { name: "KADER ÇARKI", icon: "fa-solid fa-dharmachakra" },
-      { name: "GÜÇ", icon: "fa-solid fa-shield-halved" },
-      { name: "İMPARATORİÇE", icon: "fa-solid fa-crown" },
-      { name: "AZİZ", icon: "fa-solid fa-book-bible" }
+    // 22 BÜYÜK ARKANA - ORİJİNAL RIDER-WAITE GÖRSELLERİ
+    const fullTarotDeck = [
+      { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
+      { name: "I - BÜYÜCÜ", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
+      { name: "II - AZİZE", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg" },
+      { name: "III - İMPARATORİÇE", img: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg" },
+      { name: "IV - İMPARATOR", img: "https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg" },
+      { name: "V - AZİZ", img: "https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg" },
+      { name: "VI - AŞIKLAR", img: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_06_Lovers.jpg" },
+      { name: "VII - ARABA", img: "https://upload.wikimedia.org/wikipedia/commons/9/9b/RWS_Tarot_07_Chariot.jpg" },
+      { name: "VIII - GÜÇ", img: "https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg" },
+      { name: "IX - ERMİŞ", img: "https://upload.wikimedia.org/wikipedia/commons/4/4d/RWS_Tarot_09_Hermit.jpg" },
+      { name: "X - KADER ÇARKI", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg" },
+      { name: "XI - ADALET", img: "https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_11_Justice.jpg" },
+      { name: "XII - ASILAN ADAM", img: "https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg" },
+      { name: "XIII - ÖLÜM", img: "https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg" },
+      { name: "XIV - DENGE", img: "https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg" },
+      { name: "XV - ŞEYTAN", img: "https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg" },
+      { name: "XVI - YIKILAN KULE", img: "https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg" },
+      { name: "XVII - YILDIZ", img: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg" },
+      { name: "XVIII - AY", img: "https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg" },
+      { name: "XIX - GÜNEŞ", img: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg" },
+      { name: "XX - MAHKEME", img: "https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg" },
+      { name: "XXI - DÜNYA", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg" }
     ];
-    let chosenTarot = [null, null, null];
+    let chosenTarotCards = [null, null, null];
 
     function setTab(tab) {
       ['kahve', 'tarot', 'astro', 'ruya'].forEach(t => {
@@ -235,6 +300,61 @@
       document.getElementById(`tab-${tab}`).className = "py-3 rounded-2xl border glass-tab-active flex flex-col items-center gap-1.5 transition";
     }
 
+    // Tarot Açılım Seçimi
+    function setTarotSpread(type) {
+      currentTarotSpread = type;
+      ['genel', 'ask', 'kariyer'].forEach(s => {
+        document.getElementById(`spread-${s}`).className = "px-3 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400";
+      });
+      document.getElementById(`spread-${type}`).className = "px-3 py-1.5 rounded-xl border border-amber-400/50 bg-amber-500/20 text-amber-300";
+
+      // Kart pozisyon isimlerini güncelle
+      if (type === 'genel') {
+        document.getElementById('card-pos-1').innerText = "1. GEÇMİŞ";
+        document.getElementById('card-pos-2').innerText = "2. ŞİMDİ";
+        document.getElementById('card-pos-3').innerText = "3. GELECEK";
+      } else if (type === 'ask') {
+        document.getElementById('card-pos-1').innerText = "1. SENİN KALBİN";
+        document.getElementById('card-pos-2').innerText = "2. KARŞI TARAF";
+        document.getElementById('card-pos-3').innerText = "3. İLİŞKİ KISMETİ";
+      } else if (type === 'kariyer') {
+        document.getElementById('card-pos-1').innerText = "1. MEVCUT DURUM";
+        document.getElementById('card-pos-2').innerText = "2. ENGELLER/FIRSAT";
+        document.getElementById('card-pos-3').innerText = "3. MADDİ BAŞARI";
+      }
+
+      // Kartları sıfırla
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById(`tarot-card-${i}`).classList.remove('flipped');
+        chosenTarotCards[i - 1] = null;
+      }
+    }
+
+    function flipTarot(num) {
+      const cardEl = document.getElementById(`tarot-card-${num}`);
+      if (cardEl.classList.contains('flipped')) return;
+
+      // Rastgele daha önce seçilmemiş bir kart seç
+      let availableCards = fullTarotDeck.filter(c => !chosenTarotCards.some(x => x && x.name === c.name));
+      const picked = availableCards[Math.floor(Math.random() * availableCards.length)];
+      chosenTarotCards[num - 1] = picked;
+
+      document.getElementById(`tarot-name-${num}`).innerText = picked.name;
+      document.getElementById(`tarot-img-${num}`).src = picked.img;
+      cardEl.classList.add('flipped');
+    }
+
+    function selectZodiac(name, symbol) {
+      selectedZodiacSign = name;
+      document.querySelectorAll('.zodiac-btn').forEach(b => b.classList.remove('border-amber-400', 'bg-amber-500/20'));
+      event.currentTarget.classList.add('border-amber-400', 'bg-amber-500/20');
+      document.getElementById('selected-zodiac-banner').innerHTML = `Seçilen Burç: <span class="text-amber-400 font-bold">${symbol} ${name}</span>`;
+      const btn = document.getElementById('btn-astro');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+    }
+
+    // Fotoğraf Sıkıştırma
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -249,7 +369,7 @@
             canvas.width = w; canvas.height = h;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
-            resolve({ base64: canvas.toDataURL('image/jpeg', 0.7).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.7) });
+            resolve({ base64: canvas.toDataURL('image/jpeg', 0.72).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.72) });
           };
           img.src = e.target.result;
         };
@@ -278,29 +398,7 @@
       document.getElementById('upload-status').innerText = `✨ ${optimizedImages.length} fotoğraf incelenmeye hazır!`;
     }
 
-    function flipTarot(num) {
-      const cardEl = document.getElementById(`tarot-card-${num}`);
-      if (cardEl.classList.contains('flipped')) return;
-
-      const randomCard = tarotDeck[Math.floor(Math.random() * tarotDeck.length)];
-      chosenTarot[num - 1] = randomCard.name;
-
-      document.getElementById(`tarot-name-${num}`).innerText = randomCard.name;
-      document.getElementById(`tarot-icon-${num}`).className = randomCard.icon + " text-amber-400 text-2xl mb-1";
-      cardEl.classList.add('flipped');
-    }
-
-    function selectZodiac(name, symbol) {
-      selectedZodiacSign = name;
-      document.querySelectorAll('.zodiac-btn').forEach(b => b.classList.remove('border-amber-400', 'bg-amber-500/20'));
-      event.currentTarget.classList.add('border-amber-400', 'bg-amber-500/20');
-      document.getElementById('selected-zodiac-banner').innerHTML = `Seçilen Burç: <span class="text-amber-400 font-bold">${symbol} ${name}</span>`;
-      const btn = document.getElementById('btn-astro');
-      btn.disabled = false;
-      btn.classList.remove('opacity-50');
-    }
-
-    // YENİ GOOGLE INTERACTIONS API MOTORU
+    // Google Interactions API
     async function callGemini(prompt, images = []) {
       const apiKey = (localStorage.getItem('gemini_api_key') || '').trim();
       if (!apiKey) {
@@ -310,26 +408,15 @@
 
       document.getElementById('loading').classList.remove('hidden');
 
-      // Google'ın güncel Interactions formatı
       let inputPayload;
       if (images.length > 0) {
         inputPayload = [{ type: "text", text: prompt }];
         images.forEach(b64 => {
-          inputPayload.push({
-            type: "image",
-            data: b64,
-            mime_type: "image/jpeg"
-          });
+          inputPayload.push({ type: "image", data: b64, mime_type: "image/jpeg" });
         });
       } else {
         inputPayload = prompt;
       }
-
-      const bodyData = {
-        model: "gemini-3.8-flash",
-        input: inputPayload,
-        store: false
-      };
 
       try {
         const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
@@ -338,18 +425,20 @@
             "Content-Type": "application/json",
             "x-goog-api-key": apiKey
           },
-          body: JSON.stringify(bodyData)
+          body: JSON.stringify({
+            model: "gemini-3.8-flash",
+            input: inputPayload,
+            store: false
+          })
         });
 
         const data = await response.json();
         document.getElementById('loading').classList.add('hidden');
 
         if (!response.ok) {
-          const errDetail = data.error?.message || JSON.stringify(data);
-          throw new Error(errDetail);
+          throw new Error(data.error?.message || JSON.stringify(data));
         }
 
-        // Çıktıyı al (output_text veya steps üzerinden)
         let resultText = data.output_text || "";
         if (!resultText && data.steps && Array.isArray(data.steps)) {
           for (const step of data.steps) {
@@ -364,9 +453,10 @@
         }
 
         if (resultText) {
+          saveToHistory(resultText);
           return resultText;
         } else {
-          throw new Error("Fal metni alınamadı: " + JSON.stringify(data));
+          throw new Error("Fal metni alınamadı.");
         }
       } catch (err) {
         document.getElementById('loading').classList.add('hidden');
@@ -379,13 +469,13 @@
       if (!optimizedImages.length) { alert("Lütfen en az 1 fincan veya tabak fotoğrafı seçin!"); return; }
       const name = document.getElementById('user-name').value || "Mehmet";
       const prompt = `Sen 'Falıma Bak'ın baş falcısı Falcı Gülfem'sin. Kullanıcının adı: ${name}. 
-      Yüklenen tüm fincan ve tabak fotoğraflarını incele. Gördüğün telve şekillerini gerçekçi, samimi ve mistik bir dille yorumla.
+      Yüklenen fincan ve tabak fotoğraflarını derinlemesine incele. Gördüğün telve sembollerini (kuş, yol, deve, kalp, harfler vb.) gerçek bir falcı samimiyetiyle yorumla.
       Falını 4 bölüme ayır:
       1. 🌟 Genel Enerjin ve Ruh Halin
-      2. ❤️ Aşk ve Kalp Meseleleri (Fincandaki harfler, yollar, kısmetler)
+      2. ❤️ Aşk ve Kalp Meseleleri (Fincandaki harfler ve yollar)
       3. 💼 İş, Para ve Gelecek Kapıları
-      4. 🔮 Fincanın En Belirgin Alameti (Gördüğün şekli net söyle)
-      Sıcak, samimi, "canım benim", "güzel kalplim" diyen gerçek bir Türk falcısı ol.`;
+      4. 🔮 Fincanın En Belirgin Alameti (Fotoğrafta gördüğün net 1-2 şekli söyle)
+      Sıcak, içten, 'canım benim', 'güzel kalplim' diyen gerçekçi bir Türk kahvesi falcısı ol.`;
 
       document.getElementById('fortune-title').innerText = `Gülfem Abla (${name} İçin Yorumluyor):`;
       const text = await callGemini(prompt, optimizedImages);
@@ -393,31 +483,25 @@
     }
 
     async function readTarotFortune() {
-      if (chosenTarot.includes(null)) {
-        alert("Lütfen önce yukarıdaki 3 karta tek tek dokunup kartlarını aç!");
+      if (chosenTarotCards.includes(null)) {
+        alert("Lütfen önce yukarıdaki 3 karta tek tek dokunup kaderini aç!");
         return;
       }
-      const prompt = `Sen 'Falıma Bak'ın Tarot Kahinisin. Kullanıcı şu 3 kartı seçti:
-      1. Kart (Geçmiş): ${chosenTarot[0]}
-      2. Kart (Şimdi): ${chosenTarot[1]}
-      3. Kart (Gelecek): ${chosenTarot[2]}
-      Bu kartların mistik anlamlarını derinlemesine açıkla ve bir hikaye gibi birleştirerek kullanıcının hayatına uyarlayarak detaylı yorumla.`;
+      let spreadDesc = currentTarotSpread === 'ask' ? "Aşk ve İlişki Açılımı" : (currentTarotSpread === 'kariyer' ? "Kariyer ve Para Açılımı" : "Genel Geçmiş-Şimdi-Gelecek Açılımı");
+      const prompt = `Sen 'Falıma Bak'ın Tarot Kahinisin. Kullanıcı '${spreadDesc}' yaptı. Seçtiği 3 Rider-Waite kartı:
+      1. Kart: ${chosenTarotCards[0].name}
+      2. Kart: ${chosenTarotCards[1].name}
+      3. Kart: ${chosenTarotCards[2].name}
+      Bu kartların mistik sembollerini detaylıca açıkla, birbirleriyle ilişkisini kurarak derin ve akıcı bir kehanet yorumu hazırla.`;
 
-      document.getElementById('fortune-title').innerText = "Tarot Kahini Diyor Ki:";
+      document.getElementById('fortune-title').innerText = `Tarot Kahini (${spreadDesc}):`;
       const text = await callGemini(prompt);
       showResult(text);
     }
 
     async function readAstrology() {
       if (!selectedZodiacSign) { alert("Lütfen bir burç seçin!"); return; }
-      const prompt = `Sen 'Falıma Bak'ın Baş Astroloğusun. Burç: ${selectedZodiacSign}.
-      Bugünün gökyüzü transitlerini ve gezegen enerjilerini dikkate alarak şu başlıklarda mistik bir günlük burç yorumu hazırla:
-      - 🌌 Gökyüzü Enerjisi ve Günün Teması
-      - ❤️ Aşk ve İlişki Transitleri
-      - 💼 Kariyer ve Para Fırsatları
-      - 🍀 Günün Şanslı Rengi ve Uğurlu Sayısı
-      Mistik, motive edici ve akıcı bir dil kullan.`;
-
+      const prompt = `Sen 'Falıma Bak'ın Baş Astroloğusun. Burç: ${selectedZodiacSign}. Günün gökyüzü gezegen transitlerini dikkate alarak Aşk, Kariyer, Şanslı Rengi ve Sayısını içeren mistik bir günlük burç yorumu hazırla.`;
       document.getElementById('fortune-title').innerText = `${selectedZodiacSign} Burcu Günlük Analizi:`;
       const text = await callGemini(prompt);
       showResult(text);
@@ -439,19 +523,119 @@
       document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
     }
 
+    // Yazı Boyutu Değiştirme (A- / A+)
+    function changeFontSize(delta) {
+      currentFontSize = Math.min(22, Math.max(13, currentFontSize + delta));
+      document.getElementById('fortune-output').style.fontSize = currentFontSize + 'px';
+    }
+
+    // DAYANIKLI SES MOTORU (ANDROID DÜZELTMESİ)
+    let speechQueue = [];
+    let isSpeaking = false;
+
     function toggleVoice() {
-      if (!('speechSynthesis' in window)) { alert("Cihazınız ses özelliğini desteklemiyor."); return; }
-      if (window.speechSynthesis.speaking) {
-        window.speechSynthesis.cancel();
-        document.getElementById('voice-text').innerText = "Sesli Dinle";
+      if (!('speechSynthesis' in window)) {
+        alert("Cihazınız ses sentezini desteklemiyor.");
         return;
       }
-      const utter = new SpeechSynthesisUtterance(currentFortune);
-      utter.lang = 'tr-TR';
-      utter.rate = 0.95;
-      utter.onend = () => { document.getElementById('voice-text').innerText = "Sesli Dinle"; };
-      window.speechSynthesis.speak(utter);
+
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        document.getElementById('voice-text').innerText = "Sesli Oku";
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.resume();
+
+      // Android'in tıkanmaması için metni cümlelere bölerek okutuyoruz
+      const cleanText = currentFortune.replace(/[*#_~]/g, '');
+      const sentences = cleanText.match(/[^.!?\n]+[.!?\n]+/g) || [cleanText];
+      
+      let index = 0;
+      isSpeaking = true;
       document.getElementById('voice-text').innerText = "Durdur";
+
+      function playNextSentence() {
+        if (!isSpeaking || index >= sentences.length) {
+          isSpeaking = false;
+          document.getElementById('voice-text').innerText = "Sesli Oku";
+          return;
+        }
+
+        const utter = new SpeechSynthesisUtterance(sentences[index].trim());
+        utter.lang = 'tr-TR';
+        utter.rate = 1.0;
+        utter.pitch = 1.0;
+
+        utter.onend = () => {
+          index++;
+          playNextSentence();
+        };
+
+        utter.onerror = () => {
+          index++;
+          playNextSentence();
+        };
+
+        window.speechSynthesis.speak(utter);
+      }
+
+      playNextSentence();
+    }
+
+    // WhatsApp'ta Paylaş
+    function shareWhatsApp() {
+      const text = `🔮 Falıma Bak uygulamasında falıma baktırdım, işte çıkanlar:\n\n` + currentFortune.substring(0, 700) + '...';
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // Kopyala
+    function copyFortune() {
+      navigator.clipboard.writeText(currentFortune).then(() => {
+        alert("Fal metni panoya kopyalandı!");
+      });
+    }
+
+    // Fal Geçmişi Kaydı (LocalStorage)
+    function saveToHistory(text) {
+      let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
+      history.unshift({
+        date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+        text: text
+      });
+      if (history.length > 10) history.pop();
+      localStorage.setItem('fal_history', JSON.stringify(history));
+    }
+
+    function toggleHistoryModal() {
+      const modal = document.getElementById('history-modal');
+      const list = document.getElementById('history-list');
+      if (modal.classList.contains('hidden')) {
+        let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
+        if (history.length === 0) {
+          list.innerHTML = `<p class="text-gray-400 text-center py-4">Henüz kayıtlı bir falınız yok.</p>`;
+        } else {
+          list.innerHTML = history.map((item, idx) => `
+            <div onclick="loadPastFortune(${idx})" class="glass-card p-3 rounded-xl border border-white/10 cursor-pointer hover:border-amber-400 transition">
+              <span class="text-[10px] text-amber-400 font-bold block mb-1">${item.date}</span>
+              <p class="text-gray-300 line-clamp-2">${item.text}</p>
+            </div>
+          `).join('');
+        }
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function loadPastFortune(idx) {
+      let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
+      if (history[idx]) {
+        toggleHistoryModal();
+        showResult(history[idx].text);
+      }
     }
 
     function openSettings() {
