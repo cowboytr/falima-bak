@@ -1,0 +1,25 @@
+{
+  "name": "Falıma Bak",
+  "short_name": "Falıma Bak",
+  "description": "Yapay zeka destekli sezgisel kahve falı, tarot, el falı ve astroloji rehberi.",
+  "start_url": "./index.html",
+  "id": "/falima-bak/",
+  "display": "standalone",
+  "background_color": "#0d071a",
+  "theme_color": "#0d071a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Twemoji_1f315.svg/512px-Twemoji_1f315.svg.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Twemoji_1f315.svg/192px-Twemoji_1f315.svg.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
