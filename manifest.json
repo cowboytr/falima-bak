@@ -10,13 +10,19 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Twemoji_1f315.svg/512px-Twemoji_1f315.svg.png",
+      "src": "icon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Twemoji_1f315.svg/192px-Twemoji_1f315.svg.png",
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
