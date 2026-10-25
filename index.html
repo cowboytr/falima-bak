@@ -9,14 +9,37 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body { background: radial-gradient(ellipse at 50% -20%, #2e1065 0%, #0d071a 55%, #05020a 100%); min-height: 100vh; color: #f1f5f9; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body {
+      background: radial-gradient(ellipse at 50% -10%, #3b107a 0%, #0d071a 50%, #05020a 100%);
+      min-height: 100vh;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
     .cinzel { font-family: 'Cinzel', serif; }
-    .glass-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(245, 158, 11, 0.2); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6); }
-    .glass-tab-active { background: linear-gradient(135deg, rgba(245, 158, 11, 0.32), rgba(217, 119, 6, 0.2)); border-color: rgba(245, 158, 11, 0.85); color: #fbbf24; box-shadow: 0 0 16px rgba(245, 158, 11, 0.3); }
-    .gold-gradient-text { background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(245, 158, 11, 0.22);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+    .glass-tab-active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(217, 119, 6, 0.2));
+      border-color: rgba(245, 158, 11, 0.9);
+      color: #fbbf24;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.3);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef08a 25%, #f59e0b 60%, #b45309 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-glow {
+      filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.45));
+    }
     .tarot-perspective { perspective: 1200px; }
     .tarot-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
     .tarot-inner.flipped { transform: rotateY(180deg); }
@@ -26,41 +49,47 @@
 </head>
 <body class="p-4 max-w-md mx-auto pb-32 selection:bg-amber-500/30">
 
-  <!-- ================= ÜST BAR: LOGO, JETON VE SES ================= -->
-  <header class="flex justify-between items-center mb-4 pt-2">
-    <div class="flex items-center gap-2.5">
-      <div class="w-11 h-11 rounded-2xl glass-card flex items-center justify-center border border-amber-400/40 shadow-lg shadow-amber-500/10">
-        <i class="fa-solid fa-moon text-xl text-amber-400 animate-pulse"></i>
+  <!-- ================= 1. BÖLÜM: YENİLENMİŞ GÖRKEMLİ BAŞLIK VE LOGO ================= -->
+  <header class="text-center pt-2 mb-4 relative">
+    <!-- Altın Işık Halesi -->
+    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-48 h-20 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
+
+    <div class="inline-flex items-center justify-center gap-3 mb-1">
+      <div class="w-12 h-12 rounded-2xl glass-card flex items-center justify-center border-2 border-amber-400/60 shadow-xl shadow-amber-500/20 gold-glow">
+        <i class="fa-solid fa-moon text-2xl text-amber-300 animate-pulse"></i>
       </div>
-      <div>
-        <h1 class="cinzel text-xl font-black tracking-wider gold-gradient-text leading-tight">FALIMA BAK</h1>
-        <p class="text-[10px] text-purple-300 font-medium tracking-wide">Mistik Yaşam Ekosistemi</p>
+      <div class="text-left">
+        <h1 class="cinzel text-2xl font-black tracking-widest gold-gradient-text leading-none">FALIMA BAK</h1>
+        <p class="text-[10px] text-amber-200/70 font-semibold tracking-widest uppercase mt-1">✦ Mistik Kehanet & Fal Rehberi ✦</p>
       </div>
-    </div>
-
-    <!-- Jeton, Müzik & Ayarlar Butonları -->
-    <div class="flex items-center gap-1.5">
-      <!-- Jeton Rozeti -->
-      <button onclick="openTokenModal()" class="px-2.5 py-1.5 rounded-xl glass-card border border-amber-400/40 flex items-center gap-1 text-xs text-amber-300 font-bold active:scale-95 transition">
-        <span>🪙</span> <span id="token-balance">100</span>
-      </button>
-
-      <!-- Mistik Arka Plan Sesi -->
-      <button onclick="toggleAmbientMusic()" id="btn-ambient" title="Mistik Ambiyans Sesi" class="w-9 h-9 rounded-xl glass-card flex items-center justify-center text-gray-400 hover:text-amber-300 transition active:scale-95">
-        <i class="fa-solid fa-music text-xs"></i>
-      </button>
-
-      <!-- Profil ve Ayarlar -->
-      <button onclick="openProfileModal()" title="Profilim" class="w-9 h-9 rounded-xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
-        <i class="fa-solid fa-user-gear text-xs"></i>
-      </button>
-      <button onclick="toggleHistoryModal()" title="Fal Geçmişi" class="w-9 h-9 rounded-xl glass-card flex items-center justify-center text-amber-300 hover:text-amber-100 transition active:scale-95">
-        <i class="fa-solid fa-clock-rotate-left text-xs"></i>
-      </button>
     </div>
   </header>
 
-  <!-- ================= FALCI PERSONASI ================= -->
+  <!-- ================= 2. BÖLÜM: KULLANICI KONTROL BAR (DENGELİ YERLEŞİM) ================= -->
+  <div class="glass-card rounded-2xl p-2 mb-4 flex items-center justify-between gap-1 text-xs">
+    <!-- Jeton Rozeti -->
+    <button onclick="openTokenModal()" class="px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center gap-1.5 text-xs text-amber-300 font-bold active:scale-95 transition">
+      <span>🪙</span> <span id="token-balance">150</span> <span class="text-[10px] text-amber-400/80 font-normal">Jeton</span>
+    </button>
+
+    <!-- Mistik Müzik Düğmesi -->
+    <button onclick="toggleAmbientMusic()" id="btn-ambient" class="px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95">
+      <i id="music-icon" class="fa-solid fa-volume-xmark text-xs"></i>
+      <span id="music-text" class="text-[10px] font-semibold">Mistik Ses</span>
+    </button>
+
+    <!-- Profil ve Geçmiş -->
+    <div class="flex items-center gap-1">
+      <button onclick="openProfileModal()" title="Profilim" class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-300 hover:bg-white/10 active:scale-95 transition">
+        <i class="fa-solid fa-user text-xs"></i>
+      </button>
+      <button onclick="toggleHistoryModal()" title="Fal Geçmişi" class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-300 hover:bg-white/10 active:scale-95 transition">
+        <i class="fa-solid fa-clock-rotate-left text-xs"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= 3. BÖLÜM: FALCI PERSONASI ================= -->
   <div class="glass-card rounded-2xl p-2.5 mb-4 flex items-center justify-between text-xs">
     <span class="text-[11px] text-gray-400 font-medium ml-1">Falcın:</span>
     <div class="flex gap-1.5">
@@ -70,38 +99,51 @@
     </div>
   </div>
 
-  <!-- ================= 7'Lİ KATEGORİ MENÜSÜ ================= -->
-  <nav class="mb-5 space-y-2 text-[11px] font-semibold">
+  <!-- ================= 4. BÖLÜM: 4x2 KUSURSUZ VE SİMETRİK FAL MENÜSÜ ================= -->
+  <nav class="mb-5 space-y-1.5">
+    <!-- 1. Satır: 4 Eşit Buton -->
     <div class="grid grid-cols-4 gap-1.5">
-      <button onclick="setTab('kahve')" id="tab-kahve" class="py-2.5 rounded-2xl border glass-tab-active flex flex-col items-center gap-1 transition">
-        <i class="fa-solid fa-mug-hot text-base"></i> <span>Kahve</span>
+      <button onclick="setTab('kahve')" id="tab-kahve" class="h-16 rounded-2xl border glass-tab-active flex flex-col items-center justify-center gap-1 transition">
+        <i class="fa-solid fa-mug-hot text-lg"></i>
+        <span class="text-[11px] font-semibold">Kahve</span>
       </button>
-      <button onclick="setTab('tarot')" id="tab-tarot" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
-        <i class="fa-solid fa-wand-sparkles text-base"></i> <span>Tarot</span>
+      <button onclick="setTab('tarot')" id="tab-tarot" class="h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition">
+        <i class="fa-solid fa-wand-sparkles text-lg"></i>
+        <span class="text-[11px] font-semibold">Tarot</span>
       </button>
-      <button onclick="setTab('el')" id="tab-el" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
-        <i class="fa-solid fa-hand text-base"></i> <span>El Falı</span>
+      <button onclick="setTab('el')" id="tab-el" class="h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition">
+        <i class="fa-solid fa-hand text-lg"></i>
+        <span class="text-[11px] font-semibold">El Falı</span>
       </button>
-      <button onclick="setTab('astro')" id="tab-astro" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
-        <i class="fa-solid fa-star-and-crescent text-base"></i> <span>Burçlar</span>
+      <button onclick="setTab('astro')" id="tab-astro" class="h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition">
+        <i class="fa-solid fa-star-and-crescent text-lg"></i>
+        <span class="text-[11px] font-semibold">Burçlar</span>
       </button>
     </div>
-    <div class="grid grid-cols-3 gap-1.5">
-      <button onclick="setTab('uyum')" id="tab-uyum" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
-        <i class="fa-solid fa-heart-pulse text-base"></i> <span>Aşk Uyumu</span>
+
+    <!-- 2. Satır: 4 Eşit Buton (Birebir Aynı Ebat ve İkon Ölçüsü) -->
+    <div class="grid grid-cols-4 gap-1.5">
+      <button onclick="setTab('uyum')" id="tab-uyum" class="h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition">
+        <i class="fa-solid fa-heart-pulse text-lg"></i>
+        <span class="text-[11px] font-semibold">Aşk Uyumu</span>
       </button>
-      <button onclick="setTab('ruya')" id="tab-ruya" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
-        <i class="fa-solid fa-cloud-moon text-base"></i> <span>Rüya</span>
+      <button onclick="setTab('ruya')" id="tab-ruya" class="h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition">
+        <i class="fa-solid fa-cloud-moon text-lg"></i>
+        <span class="text-[11px] font-semibold">Rüya</span>
       </button>
-      <button onclick="setTab('niyet')" id="tab-niyet" class="py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition">
-        <i class="fa-solid fa-cookie-bite text-base"></i> <span>Niyet Taşı</span>
+      <button onclick="setTab('niyet')" id="tab-niyet" class="h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition">
+        <i class="fa-solid fa-gem text-lg"></i>
+        <span class="text-[11px] font-semibold">Niyet Taşı</span>
+      </button>
+      <button onclick="openProfileModal()" class="h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition">
+        <i class="fa-solid fa-user-pen text-lg text-amber-400"></i>
+        <span class="text-[11px] font-semibold">Profilim</span>
       </button>
     </div>
   </nav>
 
-  <!-- ================= 1. KAHVE FALI MODÜLÜ (ÇİFT FİNCAN MODLU) ================= -->
+  <!-- ================= KAHVE FALI MODÜLÜ ================= -->
   <section id="section-kahve" class="space-y-4">
-    <!-- Tek Fincan / Çift Fincan Seçimi -->
     <div class="flex justify-center gap-2 text-xs font-semibold">
       <button onclick="setCoffeeMode('tek')" id="mode-coffee-tek" class="px-4 py-1.5 rounded-xl border border-amber-400/50 bg-amber-500/20 text-amber-300">Tek Kişilik Fal</button>
       <button onclick="setCoffeeMode('cift')" id="mode-coffee-cift" class="px-4 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400">💑 Çift / Aşk Fincanı</button>
@@ -129,7 +171,7 @@
     </button>
   </section>
 
-  <!-- ================= 2. TAROT MODÜLÜ ================= -->
+  <!-- ================= TAROT MODÜLÜ ================= -->
   <section id="section-tarot" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center">
       <div class="flex justify-center gap-2 mb-4 text-xs font-medium">
@@ -195,7 +237,7 @@
     </div>
   </section>
 
-  <!-- ================= 3. EL FALI ================= -->
+  <!-- ================= EL FALI ================= -->
   <section id="section-el" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center relative overflow-hidden">
       <input type="file" id="palm-photo" accept="image/*" class="hidden" onchange="previewPalmImage(event)">
@@ -213,7 +255,7 @@
     </button>
   </section>
 
-  <!-- ================= 4. ASTROLOJİ & BURÇLAR ================= -->
+  <!-- ================= ASTROLOJİ & BURÇLAR ================= -->
   <section id="section-astro" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5">
       <div class="text-center mb-4">
@@ -243,7 +285,7 @@
     </div>
   </section>
 
-  <!-- ================= 5. AŞK VE BURÇ UYUMU ================= -->
+  <!-- ================= AŞK VE BURÇ UYUMU ================= -->
   <section id="section-uyum" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 space-y-4">
       <div class="text-center">
@@ -272,7 +314,7 @@
     </div>
   </section>
 
-  <!-- ================= 6. RÜYA TABİRİ ================= -->
+  <!-- ================= RÜYA TABİRİ ================= -->
   <section id="section-ruya" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 space-y-3">
       <div class="text-center mb-1">
@@ -286,7 +328,7 @@
     </div>
   </section>
 
-  <!-- ================= 7. GÜNÜN MİSTİK KURABİYESİ ================= -->
+  <!-- ================= GÜNÜN MİSTİK KURABİYESİ ================= -->
   <section id="section-niyet" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-6 text-center space-y-4">
       <h3 class="cinzel text-xs text-amber-300 tracking-wider">GÜNÜN KOZMİK NİYETİ</h3>
@@ -304,7 +346,7 @@
     </div>
   </section>
 
-  <!-- ================= GERÇEKÇİ SIRA & SOĞUMA SAYACI (QUEUE MODAL) ================= -->
+  <!-- ================= GERÇEKÇİ SIRA VE SOĞUMA SAYACI ================= -->
   <div id="queue-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6 text-center">
     <div class="relative w-24 h-24 mb-5">
       <div class="w-24 h-24 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
@@ -317,7 +359,6 @@
       <i class="fa-solid fa-users"></i> Sıranız: <span id="queue-number">7</span>. kişi
     </div>
 
-    <!-- Hızlı Geç Butonu -->
     <button onclick="skipQueueAndRead()" class="px-6 py-2.5 rounded-xl bg-amber-500/20 border border-amber-400/50 text-amber-300 text-xs font-bold active:scale-95 transition flex items-center gap-2">
       <i class="fa-solid fa-bolt"></i> Beklemeden Hemen Yorumla
     </button>
@@ -354,7 +395,7 @@
       </button>
     </div>
 
-    <!-- ================= CANLI CHATBOT: FALCINA SORU SOR ================= -->
+    <!-- CANLI CHATBOT: FALCINA SORU SOR -->
     <div class="mt-6 pt-5 border-t border-amber-400/20 space-y-3">
       <div class="flex items-center justify-between">
         <h4 class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
@@ -363,10 +404,8 @@
         <span class="text-[10px] text-gray-400">Ücret: 20 Jeton</span>
       </div>
 
-      <!-- Sohbet Geçmişi -->
       <div id="chat-messages" class="space-y-2 max-h-60 overflow-y-auto text-xs"></div>
 
-      <!-- Soru Giriş Kutusu -->
       <div class="flex gap-2">
         <input type="text" id="followup-question" placeholder="Örn: Abla o M harfi kim, ne zaman arar?" class="flex-1 glass-card rounded-xl px-3.5 py-2.5 text-xs text-amber-100 placeholder-gray-500 focus:outline-none focus:border-amber-400">
         <button onclick="askFollowupQuestion()" id="btn-ask-followup" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold text-xs active:scale-95 transition flex items-center gap-1">
@@ -376,7 +415,7 @@
     </div>
   </div>
 
-  <!-- ================= PROFİL & KİŞİSEL BİLGİ MODALI ================= -->
+  <!-- ================= PROFİL MODALI ================= -->
   <div id="profile-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -420,7 +459,7 @@
     </div>
   </div>
 
-  <!-- ================= JETON KAZAN / SATIN AL MODALI ================= -->
+  <!-- ================= JETON KAZAN MODALI ================= -->
   <div id="token-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 text-center">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -431,16 +470,14 @@
       </div>
 
       <div class="py-2">
-        <span class="text-3xl font-black text-amber-400" id="modal-token-display">100</span>
+        <span class="text-3xl font-black text-amber-400" id="modal-token-display">150</span>
         <span class="text-xs text-gray-400 block mt-1">Mevcut Jetonunuz</span>
       </div>
 
-      <!-- Günlük Hediye -->
       <button onclick="claimDailyReward()" id="btn-daily-claim" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition">
         <i class="fa-solid fa-gift"></i> Günlük Giriş Hediyeni Al (+50 Jeton)
       </button>
 
-      <!-- Ödüllü Reklam İzleme (Simülasyon / Google AdMob Altyapısı) -->
       <button onclick="watchRewardedAd()" id="btn-watch-ad" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-gray-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition">
         <i class="fa-solid fa-play"></i> Kısa Video İzle (+50 Jeton Kazan)
       </button>
@@ -460,6 +497,12 @@
     </div>
   </div>
 
+  <!-- GERÇEK MİSTİK SES AUDIO ELEMANI -->
+  <audio id="ambient-audio" loop preload="none">
+    <source src="https://actions.google.com/sounds/v1/ambiences/temple_bell_at_dusk.ogg" type="audio/ogg">
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_c89b257e10.mp3?filename=tibetan-singing-bowl-meditation-111161.mp3" type="audio/mpeg">
+  </audio>
+
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
 
   <script>
@@ -467,7 +510,6 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // ================= GLOBAL DEĞİŞKENLER =================
     let userTokens = parseInt(localStorage.getItem('fal_tokens') || '150');
     let optimizedImages = [];
     let palmImageBase64 = null;
@@ -479,7 +521,6 @@
     let currentCoffeeMode = 'tek';
     let pendingAction = null;
 
-    // Tarot Kart Havuzu (22 Büyük Arkana)
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
       { name: "I - BÜYÜCÜ", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
@@ -506,7 +547,6 @@
     ];
     let chosenTarotCards = [null, null, null];
 
-    // ================= JETON SİSTEMİ =================
     function updateTokenUI() {
       document.getElementById('token-balance').innerText = userTokens;
       document.getElementById('modal-token-display').innerText = userTokens;
@@ -556,7 +596,6 @@
       }, 5000);
     }
 
-    // ================= KULLANICI PROFİLİ =================
     function openProfileModal() {
       document.getElementById('profile-name').value = localStorage.getItem('profile_name') || "";
       document.getElementById('profile-relation').value = localStorage.getItem('profile_relation') || "Bekar";
@@ -580,51 +619,36 @@
       const name = localStorage.getItem('profile_name') || "Mehmet";
       const relation = localStorage.getItem('profile_relation') || "Bekar";
       const job = localStorage.getItem('profile_job') || "Çalışıyor";
-      return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek/Çalışma Durumu: ${job}. Bu bilgileri falın içinde çok doğal ve sezgisel bir şekilde hissettirerek kullan.`;
+      return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde doğal bir dille hissettir.`;
     }
 
-    // ================= WEB AUDIO API MİSTİK MÜZİK MOTORU =================
-    let audioCtx = null;
-    let isAmbientPlaying = false;
-    let osc1, osc2, gainNode;
-
+    // ================= GERÇEK DİNLENDİRİCİ MÜZİK MOTORU =================
+    let isMusicPlaying = false;
     function toggleAmbientMusic() {
+      const audio = document.getElementById('ambient-audio');
+      const icon = document.getElementById('music-icon');
+      const text = document.getElementById('music-text');
       const btn = document.getElementById('btn-ambient');
-      if (!isAmbientPlaying) {
-        try {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          osc1 = audioCtx.createOscillator();
-          osc2 = audioCtx.createOscillator();
-          gainNode = audioCtx.createGain();
 
-          osc1.type = 'sine';
-          osc1.frequency.setValueAtTime(108, audioCtx.currentTime); // Meditatif 108Hz
-
-          osc2.type = 'triangle';
-          osc2.frequency.setValueAtTime(111, audioCtx.currentTime); // 3Hz Kozmik Vuruş
-
-          gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
-
-          osc1.connect(gainNode);
-          osc2.connect(gainNode);
-          gainNode.connect(audioCtx.destination);
-
-          osc1.start();
-          osc2.start();
-          isAmbientPlaying = true;
-          btn.className = "w-9 h-9 rounded-xl glass-card flex items-center justify-center text-amber-400 bg-amber-500/20 border border-amber-400/50 transition active:scale-95";
-        } catch(e) {
-          alert("Ses motoru başlatılamadı.");
-        }
+      if (!isMusicPlaying) {
+        audio.volume = 0.4;
+        audio.play().then(() => {
+          isMusicPlaying = true;
+          icon.className = "fa-solid fa-volume-high text-xs text-amber-400";
+          text.innerText = "Müzik Açık";
+          btn.className = "px-2.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center gap-1.5 text-amber-300 transition active:scale-95";
+        }).catch(() => {
+          alert("Müzik başlatılamadı, lütfen tekrar dokunun.");
+        });
       } else {
-        if (osc1) osc1.stop();
-        if (osc2) osc2.stop();
-        isAmbientPlaying = false;
-        btn.className = "w-9 h-9 rounded-xl glass-card flex items-center justify-center text-gray-400 hover:text-amber-300 transition active:scale-95";
+        audio.pause();
+        isMusicPlaying = false;
+        icon.className = "fa-solid fa-volume-xmark text-xs";
+        text.innerText = "Mistik Ses";
+        btn.className = "px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95";
       }
     }
 
-    // ================= KAHVE FALI MODLARI (TEK / ÇİFT) =================
     function setCoffeeMode(mode) {
       currentCoffeeMode = mode;
       if (mode === 'tek') {
@@ -638,7 +662,6 @@
       }
     }
 
-    // ================= GERÇEKÇİ SIRA VE SOĞUMA SİMÜLASYONU =================
     function startQueueAndRead(actionType) {
       pendingAction = actionType;
       const modal = document.getElementById('queue-modal');
@@ -646,7 +669,6 @@
       document.getElementById('queue-number').innerText = num;
       modal.classList.remove('hidden');
 
-      // 4 saniyelik doğal soğuma ve sıra bekleme illüzyonu
       setTimeout(() => {
         if (!modal.classList.contains('hidden')) {
           skipQueueAndRead();
@@ -664,7 +686,6 @@
       else if (pendingAction === 'ruya') executeDreamFortune();
     }
 
-    // ================= PERSONA SEÇİCİ =================
     function setPersona(persona) {
       currentPersona = persona;
       ['gulfem', 'melchior', 'ece'].forEach(p => {
@@ -682,17 +703,15 @@
       return "Sen Falcı Gülfem Abla'sın. Samimi, anaç, 'canım benim', 'güzel kalplim' diyen sıcacık bir Türk kahvesi ve kısmet falcısısın.";
     }
 
-    // ================= TAB GEÇİŞLERİ =================
     function setTab(tab) {
       ['kahve', 'tarot', 'el', 'astro', 'uyum', 'ruya', 'niyet'].forEach(t => {
         document.getElementById(`section-${t}`).classList.add('hidden');
-        document.getElementById(`tab-${t}`).className = "py-2.5 rounded-2xl border border-white/10 glass-card text-gray-400 flex flex-col items-center gap-1 transition";
+        document.getElementById(`tab-${t}`).className = "h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition";
       });
       document.getElementById(`section-${tab}`).classList.remove('hidden');
-      document.getElementById(`tab-${tab}`).className = "py-2.5 rounded-2xl border glass-tab-active flex flex-col items-center gap-1 transition";
+      document.getElementById(`tab-${tab}`).className = "h-16 rounded-2xl border glass-tab-active flex flex-col items-center justify-center gap-1 transition";
     }
 
-    // ================= GÖRSEL İŞLEME =================
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -747,7 +766,6 @@
       prev.classList.remove('hidden');
     }
 
-    // ================= TAROT AÇILIMI =================
     function setTarotSpread(type) {
       currentTarotSpread = type;
       ['genel', 'ask', 'kariyer'].forEach(s => {
@@ -798,7 +816,6 @@
       btn.classList.remove('opacity-50');
     }
 
-    // ================= GEMINI API MOTORU =================
     async function callGemini(prompt, images = []) {
       const rawKeys = localStorage.getItem('gemini_api_key') || '';
       const apiKeys = rawKeys.split(',').map(k => k.trim()).filter(Boolean);
@@ -868,7 +885,6 @@
       throw new Error(lastErrorMsg);
     }
 
-    // ================= FAL ÇALIŞTIRICILARI =================
     async function executeCoffeeFortune() {
       if (!optimizedImages.length) { alert("Lütfen önce fincan fotoğrafı yükleyin!"); return; }
       if (!spendTokens(50)) return;
@@ -965,12 +981,11 @@
     function showResult(text) {
       currentFortune = text;
       document.getElementById('fortune-output').innerText = text;
-      document.getElementById('chat-messages').innerHTML = ""; // Yeni falda sohbeti sıfırla
+      document.getElementById('chat-messages').innerHTML = "";
       document.getElementById('result-container').classList.remove('hidden');
       document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // ================= CANLI CHATBOT: FALCINA SORU SOR =================
     async function askFollowupQuestion() {
       const qInput = document.getElementById('followup-question');
       const question = qInput.value.trim();
@@ -981,7 +996,6 @@
       const chatContainer = document.getElementById('chat-messages');
       const btn = document.getElementById('btn-ask-followup');
 
-      // Kullanıcı mesajını ekrana bas
       chatContainer.innerHTML += `
         <div class="text-right">
           <span class="inline-block px-3 py-1.5 rounded-xl bg-purple-600/40 border border-purple-400/30 text-amber-100">
@@ -999,7 +1013,7 @@
         const prompt = `${persona}\n${profile}\n
         ÖNCEKİ BAKTIĞIN FAL METNİ:\n"${currentFortune}"\n
         KULLANICI SANA ŞU SORUYU SORDU:\n"${question}"\n
-        Falcılık rolünü hiç bozmadan, sanki fincana/kartlara tekrar bakıyormuş gibi sıcak, samimi ve net bir cevap ver.`;
+        Falcılık rolünü hiç bozmadan sıcak, samimi ve net bir cevap ver.`;
 
         const answer = await callGemini(prompt);
         chatContainer.innerHTML += `
@@ -1017,7 +1031,6 @@
       btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Sor`;
     }
 
-    // ================= YAZI BOYUTU, PAYLAŞIM VE HİKAYE =================
     function changeFontSize(delta) {
       currentFontSize = Math.min(22, Math.max(13, currentFontSize + delta));
       document.getElementById('fortune-output').style.fontSize = currentFontSize + 'px';
