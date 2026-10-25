@@ -49,9 +49,8 @@
 </head>
 <body class="p-4 max-w-md mx-auto pb-32 selection:bg-amber-500/30">
 
-  <!-- ================= 1. BÖLÜM: YENİLENMİŞ GÖRKEMLİ BAŞLIK VE LOGO ================= -->
+  <!-- ================= 1. GÖRKEMLİ BAŞLIK VE LOGO ================= -->
   <header class="text-center pt-2 mb-4 relative">
-    <!-- Altın Işık Halesi -->
     <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-48 h-20 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
 
     <div class="inline-flex items-center justify-center gap-3 mb-1">
@@ -65,20 +64,18 @@
     </div>
   </header>
 
-  <!-- ================= 2. BÖLÜM: KULLANICI KONTROL BAR (DENGELİ YERLEŞİM) ================= -->
+  <!-- ================= 2. KULLANICI KONTROL BARI ================= -->
   <div class="glass-card rounded-2xl p-2 mb-4 flex items-center justify-between gap-1 text-xs">
-    <!-- Jeton Rozeti -->
     <button onclick="openTokenModal()" class="px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center gap-1.5 text-xs text-amber-300 font-bold active:scale-95 transition">
       <span>🪙</span> <span id="token-balance">150</span> <span class="text-[10px] text-amber-400/80 font-normal">Jeton</span>
     </button>
 
-    <!-- Mistik Müzik Düğmesi -->
-    <button onclick="toggleAmbientMusic()" id="btn-ambient" class="px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95">
+    <!-- Dahili Mistik Ses Sentezleyicisi Butonu -->
+    <button onclick="toggleAmbientMusic()" id="btn-ambient" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95">
       <i id="music-icon" class="fa-solid fa-volume-xmark text-xs"></i>
       <span id="music-text" class="text-[10px] font-semibold">Mistik Ses</span>
     </button>
 
-    <!-- Profil ve Geçmiş -->
     <div class="flex items-center gap-1">
       <button onclick="openProfileModal()" title="Profilim" class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-300 hover:bg-white/10 active:scale-95 transition">
         <i class="fa-solid fa-user text-xs"></i>
@@ -89,7 +86,7 @@
     </div>
   </div>
 
-  <!-- ================= 3. BÖLÜM: FALCI PERSONASI ================= -->
+  <!-- ================= 3. FALCI PERSONASI ================= -->
   <div class="glass-card rounded-2xl p-2.5 mb-4 flex items-center justify-between text-xs">
     <span class="text-[11px] text-gray-400 font-medium ml-1">Falcın:</span>
     <div class="flex gap-1.5">
@@ -99,9 +96,8 @@
     </div>
   </div>
 
-  <!-- ================= 4. BÖLÜM: 4x2 KUSURSUZ VE SİMETRİK FAL MENÜSÜ ================= -->
+  <!-- ================= 4. 4x2 SİMETRİK FAL MENÜSÜ ================= -->
   <nav class="mb-5 space-y-1.5">
-    <!-- 1. Satır: 4 Eşit Buton -->
     <div class="grid grid-cols-4 gap-1.5">
       <button onclick="setTab('kahve')" id="tab-kahve" class="h-16 rounded-2xl border glass-tab-active flex flex-col items-center justify-center gap-1 transition">
         <i class="fa-solid fa-mug-hot text-lg"></i>
@@ -121,7 +117,6 @@
       </button>
     </div>
 
-    <!-- 2. Satır: 4 Eşit Buton (Birebir Aynı Ebat ve İkon Ölçüsü) -->
     <div class="grid grid-cols-4 gap-1.5">
       <button onclick="setTab('uyum')" id="tab-uyum" class="h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition">
         <i class="fa-solid fa-heart-pulse text-lg"></i>
@@ -379,7 +374,6 @@
 
     <div id="fortune-output" class="text-[15px] sm:text-base leading-relaxed text-slate-200 whitespace-pre-wrap font-normal"></div>
 
-    <!-- 4'lü Aksiyon Barı -->
     <div class="grid grid-cols-2 gap-2 mt-6 pt-4 border-t border-white/10 text-xs font-semibold">
       <button onclick="toggleVoice()" id="btn-voice" class="py-3 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
         <i class="fa-solid fa-volume-high"></i> <span id="voice-text">Sesli Oku</span>
@@ -496,12 +490,6 @@
       <div id="history-list" class="overflow-y-auto space-y-2 flex-1 text-xs"></div>
     </div>
   </div>
-
-  <!-- GERÇEK MİSTİK SES AUDIO ELEMANI -->
-  <audio id="ambient-audio" loop preload="none">
-    <source src="https://actions.google.com/sounds/v1/ambiences/temple_bell_at_dusk.ogg" type="audio/ogg">
-    <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_c89b257e10.mp3?filename=tibetan-singing-bowl-meditation-111161.mp3" type="audio/mpeg">
-  </audio>
 
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
 
@@ -622,30 +610,87 @@
       return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde doğal bir dille hissettir.`;
     }
 
-    // ================= GERÇEK DİNLENDİRİCİ MÜZİK MOTORU =================
+    // ================= DAHİLİ MİSTİK KOZMİK ÇAN SES SENTEZLEYİCİSİ =================
     let isMusicPlaying = false;
+    let audioCtx = null;
+    let padOscillators = [];
+    let chimeInterval = null;
+
     function toggleAmbientMusic() {
-      const audio = document.getElementById('ambient-audio');
       const icon = document.getElementById('music-icon');
       const text = document.getElementById('music-text');
       const btn = document.getElementById('btn-ambient');
 
       if (!isMusicPlaying) {
-        audio.volume = 0.4;
-        audio.play().then(() => {
+        try {
+          if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+          }
+
+          // 1. Kozmik Arka Plan Frekansı (Lush Warm Ambient Pad)
+          const masterGain = audioCtx.createGain();
+          masterGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+          masterGain.connect(audioCtx.destination);
+
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(280, audioCtx.currentTime);
+          filter.connect(masterGain);
+
+          const harmonicFrequencies = [146.83, 220.00, 293.66];
+          padOscillators = harmonicFrequencies.map(freq => {
+            const osc = audioCtx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            osc.connect(filter);
+            osc.start();
+            return osc;
+          });
+
+          // 2. Periyodik 528Hz Kozmik Tibet Çanı Çalımı
+          function playCrystalBell() {
+            if (!isMusicPlaying || !audioCtx) return;
+            const bellHarmonics = [528, 1056, 1584];
+            const bellGain = audioCtx.createGain();
+            bellGain.gain.setValueAtTime(0.045, audioCtx.currentTime);
+            bellGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.6);
+            bellGain.connect(audioCtx.destination);
+
+            bellHarmonics.forEach(freq => {
+              const bOsc = audioCtx.createOscillator();
+              bOsc.type = 'sine';
+              bOsc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+              bOsc.connect(bellGain);
+              bOsc.start();
+              bOsc.stop(audioCtx.currentTime + 3.8);
+            });
+          }
+
+          playCrystalBell();
+          chimeInterval = setInterval(playCrystalBell, 4500);
+
           isMusicPlaying = true;
-          icon.className = "fa-solid fa-volume-high text-xs text-amber-400";
+          icon.className = "fa-solid fa-volume-high text-xs text-amber-400 animate-pulse";
           text.innerText = "Müzik Açık";
-          btn.className = "px-2.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center gap-1.5 text-amber-300 transition active:scale-95";
-        }).catch(() => {
-          alert("Müzik başlatılamadı, lütfen tekrar dokunun.");
-        });
+          btn.className = "px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center gap-1.5 text-amber-300 transition active:scale-95";
+
+        } catch (e) {
+          alert("Tarayıcınız ses sentezini desteklemiyor: " + e.message);
+        }
       } else {
-        audio.pause();
+        padOscillators.forEach(osc => {
+          try { osc.stop(); osc.disconnect(); } catch (e) {}
+        });
+        padOscillators = [];
+        if (chimeInterval) clearInterval(chimeInterval);
+
         isMusicPlaying = false;
         icon.className = "fa-solid fa-volume-xmark text-xs";
         text.innerText = "Mistik Ses";
-        btn.className = "px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95";
+        btn.className = "px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95";
       }
     }
 
