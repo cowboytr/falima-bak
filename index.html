@@ -70,10 +70,10 @@
       <span>🪙</span> <span id="token-balance">150</span> <span class="text-[10px] text-amber-400/80 font-normal">Jeton</span>
     </button>
 
-    <!-- Dahili Mistik Ses Sentezleyicisi Butonu -->
-    <button onclick="toggleAmbientMusic()" id="btn-ambient" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95">
+    <!-- Gerçek Mistik Müzik Butonu -->
+    <button onclick="toggleAmbientMusic()" id="btn-ambient" class="px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95">
       <i id="music-icon" class="fa-solid fa-volume-xmark text-xs"></i>
-      <span id="music-text" class="text-[10px] font-semibold">Mistik Ses</span>
+      <span id="music-text" class="text-[10px] font-semibold">Mistik Müzik</span>
     </button>
 
     <div class="flex items-center gap-1">
@@ -491,6 +491,12 @@
     </div>
   </div>
 
+  <!-- GERÇEK AKUSTİK MİSTİK MÜZİK KAYNAĞI -->
+  <audio id="ambient-audio" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+    <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/c/c2/Kevin_MacLeod_-_01_-_Meditation_Impromptu_01.ogg/Kevin_MacLeod_-_01_-_Meditation_Impromptu_01.ogg.mp3" type="audio/mpeg">
+  </audio>
+
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
 
   <script>
@@ -610,87 +616,30 @@
       return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde doğal bir dille hissettir.`;
     }
 
-    // ================= DAHİLİ MİSTİK KOZMİK ÇAN SES SENTEZLEYİCİSİ =================
+    // ================= GERÇEK AKUSTİK MÜZİK MOTORU =================
     let isMusicPlaying = false;
-    let audioCtx = null;
-    let padOscillators = [];
-    let chimeInterval = null;
-
     function toggleAmbientMusic() {
+      const audio = document.getElementById('ambient-audio');
       const icon = document.getElementById('music-icon');
       const text = document.getElementById('music-text');
       const btn = document.getElementById('btn-ambient');
 
       if (!isMusicPlaying) {
-        try {
-          if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          }
-          if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-          }
-
-          // 1. Kozmik Arka Plan Frekansı (Lush Warm Ambient Pad)
-          const masterGain = audioCtx.createGain();
-          masterGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-          masterGain.connect(audioCtx.destination);
-
-          const filter = audioCtx.createBiquadFilter();
-          filter.type = 'lowpass';
-          filter.frequency.setValueAtTime(280, audioCtx.currentTime);
-          filter.connect(masterGain);
-
-          const harmonicFrequencies = [146.83, 220.00, 293.66];
-          padOscillators = harmonicFrequencies.map(freq => {
-            const osc = audioCtx.createOscillator();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            osc.connect(filter);
-            osc.start();
-            return osc;
-          });
-
-          // 2. Periyodik 528Hz Kozmik Tibet Çanı Çalımı
-          function playCrystalBell() {
-            if (!isMusicPlaying || !audioCtx) return;
-            const bellHarmonics = [528, 1056, 1584];
-            const bellGain = audioCtx.createGain();
-            bellGain.gain.setValueAtTime(0.045, audioCtx.currentTime);
-            bellGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.6);
-            bellGain.connect(audioCtx.destination);
-
-            bellHarmonics.forEach(freq => {
-              const bOsc = audioCtx.createOscillator();
-              bOsc.type = 'sine';
-              bOsc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-              bOsc.connect(bellGain);
-              bOsc.start();
-              bOsc.stop(audioCtx.currentTime + 3.8);
-            });
-          }
-
-          playCrystalBell();
-          chimeInterval = setInterval(playCrystalBell, 4500);
-
+        audio.volume = 0.35;
+        audio.play().then(() => {
           isMusicPlaying = true;
           icon.className = "fa-solid fa-volume-high text-xs text-amber-400 animate-pulse";
           text.innerText = "Müzik Açık";
-          btn.className = "px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center gap-1.5 text-amber-300 transition active:scale-95";
-
-        } catch (e) {
-          alert("Tarayıcınız ses sentezini desteklemiyor: " + e.message);
-        }
-      } else {
-        padOscillators.forEach(osc => {
-          try { osc.stop(); osc.disconnect(); } catch (e) {}
+          btn.className = "px-2.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center gap-1.5 text-amber-300 transition active:scale-95";
+        }).catch(() => {
+          alert("Müziği başlatmak için lütfen ekrana bir kez daha dokunun.");
         });
-        padOscillators = [];
-        if (chimeInterval) clearInterval(chimeInterval);
-
+      } else {
+        audio.pause();
         isMusicPlaying = false;
         icon.className = "fa-solid fa-volume-xmark text-xs";
-        text.innerText = "Mistik Ses";
-        btn.className = "px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95";
+        text.innerText = "Mistik Müzik";
+        btn.className = "px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95";
       }
     }
 
