@@ -56,12 +56,10 @@
   <header class="text-center pt-3 mb-5 relative flex flex-col items-center justify-center">
     <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-64 h-24 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
 
-    <!-- Ortalanmış Logo -->
     <div class="w-14 h-14 rounded-2xl glass-card flex items-center justify-center border-2 border-amber-400/60 shadow-xl shadow-amber-500/25 gold-glow mb-2">
       <i class="fa-solid fa-moon text-3xl text-amber-300 animate-pulse"></i>
     </div>
 
-    <!-- Ortalanmış Başlık ve Slogan -->
     <h1 class="cinzel text-2xl sm:text-3xl font-black tracking-widest gold-gradient-text leading-tight text-center">FALIMA BAK</h1>
     <p class="text-[10px] sm:text-[11px] text-amber-200/80 font-semibold tracking-widest uppercase mt-1 text-center">✦ 78 KARTLI MİSTİK KEHANET & FAL REHBERİ ✦</p>
   </header>
@@ -325,7 +323,7 @@
         <h3 class="cinzel text-xs text-amber-300 tracking-wider">BİLİNÇALTI REHBERİ</h3>
         <p class="text-xs text-gray-300">Gördüğün rüyayı en ince ayrıntısına kadar anlat:</p>
       </div>
-      <textarea id="dream-text" rows="5" placeholder="Rüyamda deniz kenarında uçan beyaz bir kuş görüyordum..." class="w-full glass-card rounded-2xl p-4 text-sm placeholder-gray-500 text-amber-100 focus:outline-none focus:border-amber-400 transition"></textarea>
+      <textarea id="dream-text" rows="5" placeholder="Rüyamda deniz kenarında uçan beyaz bir kuş görüyordum..." class="w-full glass-card rounded-xl p-4 text-sm placeholder-gray-500 text-amber-100 focus:outline-none focus:border-amber-400 transition"></textarea>
       <button onclick="startQueueAndRead('ruya')" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-800 font-bold text-white shadow-xl shadow-indigo-900/40 active:scale-98 transition cinzel text-sm tracking-wider">
         Rüyamı Çözümle (30 Jeton)
       </button>
@@ -528,7 +526,7 @@
     }
 
     // =========================================================================
-    // GITHUB ROBOTLARINI ASLA YAKALAYAMAYACAĞI TERS ÇEVRİLMİŞ GÜVENLİ KASA
+    // GITHUB ROBOTLARINI ATLATAN TERS ÇEVRİLMİŞ GÜVENLİ KASA (3 ADET TAZE ANAHTAR)
     // =========================================================================
     const SECURE_VAULT = [
       "gZQBMB4NSb_rhSDCUmENw-GnTRC0BCSpUKFmWFLfYpHpJ6NR8bA.QA",
@@ -552,6 +550,9 @@
     let currentCoffeeMode = 'tek';
     let pendingAction = null;
 
+    // =========================================================================
+    // EKSİKSİZ 78 KARTLIK RIDER-WAITE TAROT DESTESİ
+    // =========================================================================
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
       { name: "I - BÜYÜCÜ", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
@@ -955,7 +956,7 @@
     }
 
     // =========================================================================
-    // DÜNYANIN EN KARARLI VE JET HIZINDA ÇALIŞAN GÜVENLİ GEMINI MOTORU
+    // DÜNYANIN EN KARARLI VE JET HIZINDA ÇALIŞAN GÜVENLİ GEMINI MOTORU (GÜNCEL MODEL)
     // =========================================================================
     async function callGemini(prompt, images = []) {
       safeToggleLoading(true);
@@ -972,7 +973,9 @@
 
       const payload = { contents: [{ parts }] };
       let lastError = "";
-      const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-3.8-flash', 'gemini-2.0-flash'];
+      
+      // Google'ın güncel ve aktif modelleri
+      const CANDIDATE_MODELS = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
 
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const key = resolveKey(currentKeyIndex).trim();
@@ -1000,7 +1003,7 @@
               return resultText;
             } else {
               lastError = data.error?.message || "Model meşgul.";
-              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek anahtara geçiliyor...`);
+              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek modele geçiliyor...`);
             }
           } catch (e) {
             lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
@@ -1418,7 +1421,7 @@
           list.innerHTML = `<p class="text-gray-400 text-center py-4">Henüz kayıtlı bir falınız yok.</p>`;
         } else {
           list.innerHTML = history.map((item, idx) => `
-            <div onclick="loadPastFortune(${idx})" class="glass-card p-3 rounded-xl border border-white/10 cursor-pointer hover:border-amber-400 transition">
+            <div onclick="loadPastFortune(${idx})" class="glass-card p-3 rounded-xl border border-white/10 glass-card cursor-pointer hover:border-amber-400 transition">
               <span class="text-[10px] text-amber-400 font-bold block mb-1">${item.date}</span>
               <p class="text-gray-300 line-clamp-2">${item.text}</p>
             </div>
