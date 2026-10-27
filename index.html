@@ -176,7 +176,7 @@
     </button>
   </section>
 
-  <!-- ================= TAROT MODÜLÜ (78 KART DESTEĞİ) ================= -->
+  <!-- ================= TAROT MODÜLÜ (78 KART) ================= -->
   <section id="section-tarot" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center">
       <div class="flex justify-center gap-2 mb-4 text-xs font-medium">
@@ -213,7 +213,7 @@
             <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
               <img id="tarot-img-2" src="" class="w-full h-full object-cover">
               <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
-                <span id="tarot-name-2" class="cinzel text-[9px] text-amber-300 font-bold block leading-tight"></span>
+                <span id="tarot-name-2" class="cinzel text-[9px] text-amber-200 font-bold block leading-tight"></span>
               </div>
             </div>
           </div>
@@ -519,18 +519,19 @@
     }
 
     // =========================================================================
-    // 7 GÜVENLİ ANAHTAR HAVUZU
+    // 7 GÜVENLİ VE BAĞIMSIZ ANAHTAR HAVUZU
     // =========================================================================
     const SYSTEM_API_KEYS = [
-      "AIza" + "SyAleDh0qMds6d0ErS_H8f0-sWjj5Yytvuc",
       "AQ.Ab8RN6Ik-gx4xQKT8K_imToW2a4s-UMWgvzziyfXdbRIWLFTXw",
       "AQ.Ab8RN6Kok5Q5YoTlQk-7K9YM5GnJR5j5RwUzcdRPmtiey37log",
       "AQ.Ab8RN6IwXnSH_dJ0FB2kmJ4QAtf5sIdD8T_u7CywY5XJ3MSYqQ",
       "AQ.Ab8RN6LHqYNSnSIxLyBhTrviDj-92M-UUeSMaQKlQMG5pW8d-Q",
       "AQ.Ab8RN6LhE4itDKA1kaYjiNHV2SRYkSfsBHr89gcNrMS_imIZ7Q",
-      "AQ.Ab8RN6KzTMMFGrjymV_kjru_Gq4GBvqf3b93AteAgNF3o3iOuQ"
+      "AQ.Ab8RN6KzTMMFGrjymV_kjru_Gq4GBvqf3b93AteAgNF3o3iOuQ",
+      "AIza" + "SyAleDh0qMds6d0ErS_H8f0-sWjj5Yytvuc"
     ];
 
+    let currentKeyIndex = 0;
     let userTokens = parseInt(localStorage.getItem('fal_tokens') || '150');
     let optimizedImages = [];
     let palmImageBase64 = null;
@@ -570,7 +571,7 @@
       { name: "XX - MAHKEME", img: "https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg" },
       { name: "XXI - DÜNYA", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg" },
 
-      // 14 DEĞNEK (ATEŞ / KARİYER & EYLEM)
+      // 14 DEĞNEK
       { name: "DEĞNEK ASI", img: "https://upload.wikimedia.org/wikipedia/commons/1/11/Wands01.jpg" },
       { name: "DEĞNEK İKİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Wands02.jpg" },
       { name: "DEĞNEK ÜÇLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wands03.jpg" },
@@ -586,7 +587,7 @@
       { name: "DEĞNEK KRALİÇESİ", img: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Wands13.jpg" },
       { name: "DEĞNEK KRALI", img: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Wands14.jpg" },
 
-      // 14 KUPA (SU / AŞK & DUYGULAR)
+      // 14 KUPA
       { name: "KUPA ASI", img: "https://upload.wikimedia.org/wikipedia/commons/3/36/Cups01.jpg" },
       { name: "KUPA İKİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/f/f8/Cups02.jpg" },
       { name: "KUPA ÜÇLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Cups03.jpg" },
@@ -602,7 +603,7 @@
       { name: "KUPA KRALİÇESİ", img: "https://upload.wikimedia.org/wikipedia/commons/6/62/Cups13.jpg" },
       { name: "KUPA KRALI", img: "https://upload.wikimedia.org/wikipedia/commons/0/04/Cups14.jpg" },
 
-      // 14 KILIÇ (HAVA / ZİHİN & MÜCADELE)
+      // 14 KILIÇ
       { name: "KILIÇ ASI", img: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Swords01.jpg" },
       { name: "KILIÇ İKİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Swords02.jpg" },
       { name: "KILIÇ ÜÇLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/0/02/Swords03.jpg" },
@@ -618,7 +619,7 @@
       { name: "KILIÇ KRALİÇESİ", img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Swords13.jpg" },
       { name: "KILIÇ KRALI", img: "https://upload.wikimedia.org/wikipedia/commons/3/33/Swords14.jpg" },
 
-      // 14 TILSIM (TOPRAK / PARA & MADDİYAT)
+      // 14 TILSIM
       { name: "TILSIM ASI", img: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Pents01.jpg" },
       { name: "TILSIM İKİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Pents02.jpg" },
       { name: "TILSIM ÜÇLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/4/42/Pents03.jpg" },
@@ -711,7 +712,6 @@
       return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde hissettirerek kullan.`;
     }
 
-    // ================= GERÇEK AKUSTİK MÜZİK MOTORU =================
     let isMusicPlaying = false;
     let globalAudio = null;
 
@@ -948,7 +948,7 @@
     }
 
     // =========================================================================
-    // GOOGLE'IN RESMİ 'x-goog-api-key' BAŞLIĞIYLA ÇALIŞAN JET HIZINDA API MOTORU
+    // DÜNYANIN EN KARARLI VE JET HIZINDA ÇALIŞAN GEMINI MOTORU (GENERATE CONTENT)
     // =========================================================================
     async function callGemini(prompt, images = []) {
       document.getElementById('loading').classList.remove('hidden');
@@ -964,51 +964,46 @@
       });
 
       const payload = { contents: [{ parts }] };
-      const models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-3.8-flash', 'gemini-2.0-flash'];
       let lastError = "";
 
-      // 7 Bağımsız Projeyi Sırayla Dene
-      for (const key of SYSTEM_API_KEYS) {
-        for (const model of models) {
-          try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 saniye tavan süre
+      // Doğrudan çalışan stabil model ve 8 saniyelik tavan süre
+      for (let attempt = 0; attempt < SYSTEM_API_KEYS.length; attempt++) {
+        const key = SYSTEM_API_KEYS[currentKeyIndex].trim();
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 saniye tavan süre
 
-            // Google'ın yeni AQ. anahtarları için şart koştuğu 'x-goog-api-key' başlığı
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'x-goog-api-key': key.trim()
-              },
-              body: JSON.stringify(payload),
-              signal: controller.signal
-            });
+          // Google AI Studio'nun AQ. anahtarları için sorunsuz REST uç noktası
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          });
 
-            clearTimeout(timeoutId);
-            const data = await response.json();
+          clearTimeout(timeoutId);
+          const data = await response.json();
 
-            if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
-              document.getElementById('loading').classList.add('hidden');
-              const resultText = data.candidates[0].content.parts[0].text;
-              saveToHistory(resultText);
-              return resultText;
-            } else {
-              lastError = data.error?.message || "Model meşgul.";
-              console.warn(`Model ${model} yanıt vermedi: ${lastError}, sonraki deneniyor...`);
-              break;
-            }
-          } catch (e) {
-            lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
-            console.warn("Hata:", lastError);
-            break;
+          if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+            document.getElementById('loading').classList.add('hidden');
+            const resultText = data.candidates[0].content.parts[0].text;
+            saveToHistory(resultText);
+            return resultText;
+          } else {
+            lastError = data.error?.message || "Model meşgul.";
+            console.warn(`Anahtar ${currentKeyIndex + 1} yanıt vermedi: ${lastError}. Sıradaki anahtara geçiliyor...`);
+            currentKeyIndex = (currentKeyIndex + 1) % SYSTEM_API_KEYS.length;
           }
+        } catch (e) {
+          lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
+          console.warn(`Hata: ${lastError}. Sıradaki anahtara geçiliyor...`);
+          currentKeyIndex = (currentKeyIndex + 1) % SYSTEM_API_KEYS.length;
         }
       }
 
       document.getElementById('loading').classList.add('hidden');
-      alert("Kozmik enerji şu an çok yoğun. Lütfen 1 dakika sonra tekrar deneyin!");
+      alert("Bağlantı Uyarısı: " + lastError);
       throw new Error(lastError);
     }
 
