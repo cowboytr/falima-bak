@@ -959,7 +959,7 @@
     }
 
     // =========================================================================
-    // EN GÜNCEL GEMINI-3.8-FLASH MOTORU
+    // KESİNTİSİZ ÇİFT MODEL VE OTOMATİK YEDEKLEME (FALLBACK) MOTORU
     // =========================================================================
     async function callGemini(prompt, images = []) {
       safeToggleLoading(true);
@@ -977,39 +977,45 @@
       const payload = { contents: [{ parts }] };
       let lastError = "";
 
+      // 503 yoğunluk hatalarını engellemek için iki alternatifli model havuzu:
+      const CANDIDATE_MODELS = ['gemini-3.5-flash-lite', 'gemini-3.8-flash'];
+
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const key = resolveKey(currentKeyIndex).trim();
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 12000);
 
-          // Google'ın talep ettiği yeni ve en son model: gemini-3.8-flash
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${key}`;
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-          });
+        for (const modelName of CANDIDATE_MODELS) {
+          try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 12000);
 
-          clearTimeout(timeoutId);
-          const data = await response.json();
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+              signal: controller.signal
+            });
 
-          if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
-            safeToggleLoading(false);
-            const resultText = data.candidates[0].content.parts[0].text;
-            saveToHistory(resultText);
-            return resultText;
-          } else {
-            lastError = data.error?.message || "Model meşgul.";
-            console.warn(`Anahtar ${currentKeyIndex + 1} başarısız oldu: ${lastError}. Sıradaki anahtara geçiliyor...`);
-            currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
+            clearTimeout(timeoutId);
+            const data = await response.json();
+
+            if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+              safeToggleLoading(false);
+              const resultText = data.candidates[0].content.parts[0].text;
+              saveToHistory(resultText);
+              return resultText;
+            } else {
+              lastError = data.error?.message || "Model meşgul.";
+              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek modele geçiliyor...`);
+            }
+          } catch (e) {
+            lastError = e.name === 'AbortError' ? "Zaman aşımı (Bağlantı gecikti)" : e.message;
+            console.warn(`[${modelName}] hata: ${lastError}.`);
           }
-        } catch (e) {
-          lastError = e.name === 'AbortError' ? "Zaman aşımı (Bağlantı gecikti)" : e.message;
-          console.warn(`Hata: ${lastError}. Sıradaki anahtara geçiliyor...`);
-          currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
         }
+
+        // Eğer iki model de bu anahtarda tıkandıysa bir sonraki anahtara geç
+        currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
       }
 
       safeToggleLoading(false);
