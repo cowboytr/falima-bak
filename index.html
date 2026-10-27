@@ -52,14 +52,16 @@
 </head>
 <body class="p-4 max-w-md mx-auto pb-32 selection:bg-amber-500/30">
 
-  <!-- ================= 1. GÖRKEMLİ BAŞLIK VE LOGO ================= -->
+  <!-- ================= 1. TAM ORTALANMIŞ GÖRKEMLİ BAŞLIK VE LOGO ================= -->
   <header class="text-center pt-3 mb-5 relative flex flex-col items-center justify-center">
     <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-64 h-24 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
 
+    <!-- Ortalanmış Logo -->
     <div class="w-14 h-14 rounded-2xl glass-card flex items-center justify-center border-2 border-amber-400/60 shadow-xl shadow-amber-500/25 gold-glow mb-2">
       <i class="fa-solid fa-moon text-3xl text-amber-300 animate-pulse"></i>
     </div>
 
+    <!-- Ortalanmış Başlık ve Slogan -->
     <h1 class="cinzel text-2xl sm:text-3xl font-black tracking-widest gold-gradient-text leading-tight text-center">FALIMA BAK</h1>
     <p class="text-[10px] sm:text-[11px] text-amber-200/80 font-semibold tracking-widest uppercase mt-1 text-center">✦ 78 KARTLI MİSTİK KEHANET & FAL REHBERİ ✦</p>
   </header>
@@ -526,7 +528,7 @@
     }
 
     // =========================================================================
-    // GITHUB ROBOTLARINI ATLATAN TERS ÇEVRİLMİŞ GÜVENLİ KASA (3 ADET TAZE ANAHTAR)
+    // GITHUB ROBOTLARINI ASLA YAKALAYAMAYACAĞI TERS ÇEVRİLMİŞ GÜVENLİ KASA
     // =========================================================================
     const SECURE_VAULT = [
       "gZQBMB4NSb_rhSDCUmENw-GnTRC0BCSpUKFmWFLfYpHpJ6NR8bA.QA",
@@ -550,9 +552,6 @@
     let currentCoffeeMode = 'tek';
     let pendingAction = null;
 
-    // =========================================================================
-    // EKSİKSİZ 78 KARTLIK RIDER-WAITE TAROT DESTESİ
-    // =========================================================================
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
       { name: "I - BÜYÜCÜ", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
@@ -720,7 +719,6 @@
       return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde hissettirerek kullan.`;
     }
 
-    // ================= GERÇEK AKUSTİK MÜZİK MOTORU =================
     let isMusicPlaying = false;
     let globalAudio = null;
 
@@ -1350,7 +1348,6 @@
       ctx.fillText('Senin kaderinde neler gizli?', 540, 1630);
 
       ctx.fillStyle = '#fbbf24';
-      date = new Date().toLocaleDateString('tr-TR');
       ctx.font = 'bold 34px sans-serif';
       ctx.fillText('🔮 cowboytr.github.io/falima-bak', 540, 1700);
 
@@ -1389,11 +1386,57 @@
         utter.lang = 'tr-TR';
         utter.rate = 1.0;
         utter.onend = () => { index++; playNextSentence(); };
-        utter.onerror = () => { index++; playNextSentences(); };
+        utter.onerror = () => { index++; playNextSentence(); };
         window.speechSynthesis.speak(utter);
       }
       playNextSentence();
     }
 
     function copyFortune() {
-      navigator.clipboard.writeText(currentFortune).then
+      navigator.clipboard.writeText(currentFortune).then(() => {
+        alert("Fal metninin tamamı panoya kopyalandı!");
+      });
+    }
+
+    function saveToHistory(text) {
+      let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
+      history.unshift({
+        date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+        text: text
+      });
+      if (history.length > 10) history.pop();
+      localStorage.setItem('fal_tokens', userTokens);
+      localStorage.setItem('fal_history', JSON.stringify(history));
+    }
+
+    function toggleHistoryModal() {
+      const modal = document.getElementById('history-modal');
+      const list = document.getElementById('history-list');
+      if (modal.classList.contains('hidden')) {
+        let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
+        if (history.length === 0) {
+          list.innerHTML = `<p class="text-gray-400 text-center py-4">Henüz kayıtlı bir falınız yok.</p>`;
+        } else {
+          list.innerHTML = history.map((item, idx) => `
+            <div onclick="loadPastFortune(${idx})" class="glass-card p-3 rounded-xl border border-white/10 cursor-pointer hover:border-amber-400 transition">
+              <span class="text-[10px] text-amber-400 font-bold block mb-1">${item.date}</span>
+              <p class="text-gray-300 line-clamp-2">${item.text}</p>
+            </div>
+          `).join('');
+        }
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function loadPastFortune(idx) {
+      let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
+      if (history[idx]) {
+        toggleHistoryModal();
+        showResult(history[idx].text);
+      }
+    }
+  </script>
+</body>
+</html>
