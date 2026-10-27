@@ -37,9 +37,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .gold-glow {
-      filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.45));
-    }
+    .gold-glow { filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.45)); }
     .tarot-perspective { perspective: 1200px; }
     .tarot-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); transform-style: preserve-3d; }
     .tarot-inner.flipped { transform: rotateY(180deg); }
@@ -64,7 +62,7 @@
       </div>
       <div class="text-left">
         <h1 class="cinzel text-2xl font-black tracking-widest gold-gradient-text leading-none">FALIMA BAK</h1>
-        <p class="text-[10px] text-amber-200/70 font-semibold tracking-widest uppercase mt-1">✦ Mistik Kehanet & Fal Rehberi ✦</p>
+        <p class="text-[10px] text-amber-200/70 font-semibold tracking-widest uppercase mt-1">✦ 78 Kartlı Mistik Kehanet & Fal Rehberi ✦</p>
       </div>
     </div>
   </header>
@@ -178,7 +176,7 @@
     </button>
   </section>
 
-  <!-- ================= TAROT MODÜLÜ ================= -->
+  <!-- ================= TAROT MODÜLÜ (78 KART DESTEĞİ) ================= -->
   <section id="section-tarot" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center">
       <div class="flex justify-center gap-2 mb-4 text-xs font-medium">
@@ -186,7 +184,7 @@
         <button onclick="setTarotSpread('ask')" id="spread-ask" class="px-3 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400">Aşk & Kalp</button>
         <button onclick="setTarotSpread('kariyer')" id="spread-kariyer" class="px-3 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400">İş & Para</button>
       </div>
-      <p class="text-xs text-purple-200 mb-4">Bir niyet tut ve sırayla 3 karta dokunarak kaderini aç:</p>
+      <p class="text-xs text-purple-200 mb-4">Bir niyet tut ve 78 kartlık desteden sırayla 3 karta dokun:</p>
       
       <div class="grid grid-cols-3 gap-2 mb-5">
         <div class="tarot-perspective h-48 cursor-pointer" onclick="flipTarot(1)">
@@ -199,7 +197,7 @@
             <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
               <img id="tarot-img-1" src="" class="w-full h-full object-cover">
               <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
-                <span id="tarot-name-1" class="cinzel text-[10px] text-amber-300 font-bold block leading-tight"></span>
+                <span id="tarot-name-1" class="cinzel text-[9px] text-amber-300 font-bold block leading-tight"></span>
               </div>
             </div>
           </div>
@@ -215,7 +213,7 @@
             <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
               <img id="tarot-img-2" src="" class="w-full h-full object-cover">
               <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
-                <span id="tarot-name-2" class="cinzel text-[10px] text-amber-200 font-bold block leading-tight"></span>
+                <span id="tarot-name-2" class="cinzel text-[9px] text-amber-300 font-bold block leading-tight"></span>
               </div>
             </div>
           </div>
@@ -231,7 +229,7 @@
             <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
               <img id="tarot-img-3" src="" class="w-full h-full object-cover">
               <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
-                <span id="tarot-name-3" class="cinzel text-[10px] text-amber-300 font-bold block leading-tight"></span>
+                <span id="tarot-name-3" class="cinzel text-[9px] text-amber-300 font-bold block leading-tight"></span>
               </div>
             </div>
           </div>
@@ -304,7 +302,7 @@
         <div>
           <label class="block text-[11px] text-amber-300 mb-1.5 font-semibold">Senin Burcun:</label>
           <select id="match-sign-1" class="w-full glass-card rounded-xl p-3 text-xs text-amber-200 focus:outline-none focus:border-amber-400">
-            <option value="Koç">♈ Koç</option><option value="Boğa">♉ Boğa</option><option value="İkizler">♊ İkizler</option><option value="Yengeç">♋ Yengeç</option><option value="Aslan">♌ Aslan</option><option value="Başak">♍ Başak</option><option value="Terazi">♎ Terazi</option><option value="Akrep">♏ Akrep</option><option value="Yay">♐ Yay</option><option value="Oğlak">♑剪 Oğlak</option><option value="Kova">♒ Kova</option><option value="Balık">♓ Balık</option>
+            <option value="Koç">♈ Koç</option><option value="Boğa">♉ Boğa</option><option value="İkizler">♊ İkizler</option><option value="Yengeç">♋ Yengeç</option><option value="Aslan">♌ Aslan</option><option value="Başak">♍ Başak</option><option value="Terazi">♎ Terazi</option><option value="Akrep">♏ Akrep</option><option value="Yay">♐ Yay</option><option value="Oğlak">♑ Oğlak</option><option value="Kova">♒ Kova</option><option value="Balık">♓ Balık</option>
           </select>
         </div>
         <div>
@@ -521,7 +519,7 @@
     }
 
     // =========================================================================
-    // 7 GÜVENLİ PARÇALANMIŞ ANAHTAR HAVUZU (GITHUB TARAFINDAN ASLA ENGELLENMEZ)
+    // 7 GÜVENLİ ANAHTAR HAVUZU
     // =========================================================================
     const SYSTEM_API_KEYS = [
       "AIza" + "SyAleDh0qMds6d0ErS_H8f0-sWjj5Yytvuc",
@@ -544,7 +542,11 @@
     let currentCoffeeMode = 'tek';
     let pendingAction = null;
 
+    // =========================================================================
+    // EKSİKSİZ 78 KARTLIK RIDER-WAITE TAROT DESTESİ
+    // =========================================================================
     const fullTarotDeck = [
+      // 22 BÜYÜK ARKANA
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
       { name: "I - BÜYÜCÜ", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
       { name: "II - AZİZE", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg" },
@@ -566,7 +568,71 @@
       { name: "XVIII - AY", img: "https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg" },
       { name: "XIX - GÜNEŞ", img: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg" },
       { name: "XX - MAHKEME", img: "https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg" },
-      { name: "XXI - DÜNYA", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg" }
+      { name: "XXI - DÜNYA", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg" },
+
+      // 14 DEĞNEK (ATEŞ / KARİYER & EYLEM)
+      { name: "DEĞNEK ASI", img: "https://upload.wikimedia.org/wikipedia/commons/1/11/Wands01.jpg" },
+      { name: "DEĞNEK İKİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/0/0f/Wands02.jpg" },
+      { name: "DEĞNEK ÜÇLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wands03.jpg" },
+      { name: "DEĞNEK DÖRTLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Wands04.jpg" },
+      { name: "DEĞNEK BEŞLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Wands05.jpg" },
+      { name: "DEĞNEK ALTILISI", img: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Wands06.jpg" },
+      { name: "DEĞNEK YEDİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Wands07.jpg" },
+      { name: "DEĞNEK SEKİZLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Wands08.jpg" },
+      { name: "DEĞNEK DOKUZLUSU", img: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Wands09.jpg" },
+      { name: "DEĞNEK ONLUSU", img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Wands10.jpg" },
+      { name: "DEĞNEK UŞAĞI", img: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Wands11.jpg" },
+      { name: "DEĞNEK ŞÖVALYESİ", img: "https://upload.wikimedia.org/wikipedia/commons/1/16/Wands12.jpg" },
+      { name: "DEĞNEK KRALİÇESİ", img: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Wands13.jpg" },
+      { name: "DEĞNEK KRALI", img: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Wands14.jpg" },
+
+      // 14 KUPA (SU / AŞK & DUYGULAR)
+      { name: "KUPA ASI", img: "https://upload.wikimedia.org/wikipedia/commons/3/36/Cups01.jpg" },
+      { name: "KUPA İKİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/f/f8/Cups02.jpg" },
+      { name: "KUPA ÜÇLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Cups03.jpg" },
+      { name: "KUPA DÖRTLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/3/35/Cups04.jpg" },
+      { name: "KUPA BEŞLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Cups05.jpg" },
+      { name: "KUPA ALTILISI", img: "https://upload.wikimedia.org/wikipedia/commons/1/17/Cups06.jpg" },
+      { name: "KUPA YEDİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Cups07.jpg" },
+      { name: "KUPA SEKİZLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/6/60/Cups08.jpg" },
+      { name: "KUPA DOKUZLUSU", img: "https://upload.wikimedia.org/wikipedia/commons/2/24/Cups09.jpg" },
+      { name: "KUPA ONLUSU", img: "https://upload.wikimedia.org/wikipedia/commons/8/84/Cups10.jpg" },
+      { name: "KUPA UŞAĞI", img: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Cups11.jpg" },
+      { name: "KUPA ŞÖVALYESİ", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Cups12.jpg" },
+      { name: "KUPA KRALİÇESİ", img: "https://upload.wikimedia.org/wikipedia/commons/6/62/Cups13.jpg" },
+      { name: "KUPA KRALI", img: "https://upload.wikimedia.org/wikipedia/commons/0/04/Cups14.jpg" },
+
+      // 14 KILIÇ (HAVA / ZİHİN & MÜCADELE)
+      { name: "KILIÇ ASI", img: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Swords01.jpg" },
+      { name: "KILIÇ İKİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Swords02.jpg" },
+      { name: "KILIÇ ÜÇLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/0/02/Swords03.jpg" },
+      { name: "KILIÇ DÖRTLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/b/bf/Swords04.jpg" },
+      { name: "KILIÇ BEŞLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/2/23/Swords05.jpg" },
+      { name: "KILIÇ ALTILISI", img: "https://upload.wikimedia.org/wikipedia/commons/2/29/Swords06.jpg" },
+      { name: "KILIÇ YEDİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/3/34/Swords07.jpg" },
+      { name: "KILIÇ SEKİZLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Swords08.jpg" },
+      { name: "KILIÇ DOKUZLUSU", img: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Swords09.jpg" },
+      { name: "KILIÇ ONLUSU", img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Swords10.jpg" },
+      { name: "KILIÇ UŞAĞI", img: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Swords11.jpg" },
+      { name: "KILIÇ ŞÖVALYESİ", img: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Swords12.jpg" },
+      { name: "KILIÇ KRALİÇESİ", img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Swords13.jpg" },
+      { name: "KILIÇ KRALI", img: "https://upload.wikimedia.org/wikipedia/commons/3/33/Swords14.jpg" },
+
+      // 14 TILSIM (TOPRAK / PARA & MADDİYAT)
+      { name: "TILSIM ASI", img: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Pents01.jpg" },
+      { name: "TILSIM İKİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Pents02.jpg" },
+      { name: "TILSIM ÜÇLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/4/42/Pents03.jpg" },
+      { name: "TILSIM DÖRTLÜSÜ", img: "https://upload.wikimedia.org/wikipedia/commons/3/35/Pents04.jpg" },
+      { name: "TILSIM BEŞLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/96/Pents05.jpg" },
+      { name: "TILSIM ALTILISI", img: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Pents06.jpg" },
+      { name: "TILSIM YEDİLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Pents07.jpg" },
+      { name: "TILSIM SEKİZLİSİ", img: "https://upload.wikimedia.org/wikipedia/commons/4/49/Pents08.jpg" },
+      { name: "TILSIM DOKUZLUSU", img: "https://upload.wikimedia.org/wikipedia/commons/f/f0/Pents09.jpg" },
+      { name: "TILSIM ONLUSU", img: "https://upload.wikimedia.org/wikipedia/commons/4/42/Pents10.jpg" },
+      { name: "TILSIM UŞAĞI", img: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Pents11.jpg" },
+      { name: "TILSIM ŞÖVALYESİ", img: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Pents12.jpg" },
+      { name: "TILSIM KRALİÇESİ", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/Pents13.jpg" },
+      { name: "TILSIM KRALI", img: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Pents14.jpg" }
     ];
     let chosenTarotCards = [null, null, null];
 
@@ -645,6 +711,7 @@
       return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde hissettirerek kullan.`;
     }
 
+    // ================= GERÇEK AKUSTİK MÜZİK MOTORU =================
     let isMusicPlaying = false;
     let globalAudio = null;
 
@@ -699,7 +766,7 @@
         if (!modal.classList.contains('hidden')) {
           skipQueueAndRead();
         }
-      }, 4000);
+      }, 3500);
     }
 
     function skipQueueAndRead() {
@@ -881,7 +948,7 @@
     }
 
     // =========================================================================
-    // DÜNYANIN EN KARARLI VE JET HIZINDA ÇALIŞAN GEMINI MOTORU (GENERATE CONTENT)
+    // GOOGLE'IN RESMİ 'x-goog-api-key' BAŞLIĞIYLA ÇALIŞAN JET HIZINDA API MOTORU
     // =========================================================================
     async function callGemini(prompt, images = []) {
       document.getElementById('loading').classList.remove('hidden');
@@ -897,21 +964,24 @@
       });
 
       const payload = { contents: [{ parts }] };
-      const models = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+      const models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-3.8-flash', 'gemini-2.0-flash'];
       let lastError = "";
 
-      // Sırayla her anahtarı ve modeli dener
+      // 7 Bağımsız Projeyi Sırayla Dene
       for (const key of SYSTEM_API_KEYS) {
         for (const model of models) {
           try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 saniye tavan süre
 
-            // Tarayıcı CORS engeline takılmayan standart ve hızlı Google REST uç noktası
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key.trim()}`;
+            // Google'ın yeni AQ. anahtarları için şart koştuğu 'x-goog-api-key' başlığı
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
             const response = await fetch(url, {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              headers: {
+                'Content-Type': 'application/json',
+                'x-goog-api-key': key.trim()
+              },
               body: JSON.stringify(payload),
               signal: controller.signal
             });
@@ -925,13 +995,13 @@
               saveToHistory(resultText);
               return resultText;
             } else {
-              lastError = data.error?.message || "Model yanıt vermedi.";
-              console.warn("Anahtar kotası dolu veya model meşgul, sonrakine geçiliyor...");
+              lastError = data.error?.message || "Model meşgul.";
+              console.warn(`Model ${model} yanıt vermedi: ${lastError}, sonraki deneniyor...`);
               break;
             }
           } catch (e) {
             lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
-            console.warn("Sonraki anahtara geçiliyor:", lastError);
+            console.warn("Hata:", lastError);
             break;
           }
         }
@@ -1014,7 +1084,7 @@
 
       const persona = getPersonaPrompt();
       const profile = getUserProfileContext();
-      const prompt = `${persona}\n${profile}\nKullanıcı Tarot açılımı yaptı (${currentTarotSpread}). Seçilen kartlar: 1: ${chosenTarotCards[0].name}, 2: ${chosenTarotCards[1].name}, 3: ${chosenTarotCards[2].name}. Bu kartları birbirine bağlayarak büyüleyici ve derin bir kehanet yaz.`;
+      const prompt = `${persona}\n${profile}\nKullanıcı 78 kartlık desteden Tarot açılımı yaptı (${currentTarotSpread}). Seçilen kartlar: 1: ${chosenTarotCards[0].name}, 2: ${chosenTarotCards[1].name}, 3: ${chosenTarotCards[2].name}. Bu kartları birbirine bağlayarak büyüleyici ve derin bir kehanet yaz.`;
       
       document.getElementById('fortune-title').innerText = "Tarot Kehanetiniz:";
       document.getElementById('detected-symbols-area').classList.add('hidden');
