@@ -525,9 +525,6 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // =========================================================================
-    // GITHUB ROBOTLARINI ATLATAN TERS ÇEVRİLMİŞ GÜVENLİ KASA (3 ADET TAZE ANAHTAR)
-    // =========================================================================
     const SECURE_VAULT = [
       "gZQBMB4NSb_rhSDCUmENw-GnTRC0BCSpUKFmWFLfYpHpJ6NR8bA.QA",
       "QJsqxGHUCHukmYJypprNWlTDQPuHLAkZ5pCfTTxQLa2J6NR8bA.QA",
@@ -550,9 +547,6 @@
     let currentCoffeeMode = 'tek';
     let pendingAction = null;
 
-    // =========================================================================
-    // EKSİKSİZ 78 KARTLIK RIDER-WAITE TAROT DESTESİ
-    // =========================================================================
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
       { name: "I - BÜYÜCÜ", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
@@ -824,7 +818,8 @@
             let w = img.width, h = img.height;
             if (w > h && w > maxDim) { h = Math.round((h * maxDim) / w); w = maxDim; }
             else if (h > maxDim) { w = Math.round((w * maxDim) / h); h = maxDim; }
-            canvas.width = w; canvas.height = h;
+            canvas.width = w;
+            canvas.height = h;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
             resolve({ base64: canvas.toDataURL('image/jpeg', 0.70).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.70) });
@@ -974,8 +969,8 @@
       const payload = { contents: [{ parts }] };
       let lastError = "";
       
-      // Google'ın güncel ve aktif modelleri
-      const CANDIDATE_MODELS = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+      // Google'ın resmi güncel modeli
+      const CANDIDATE_MODELS = ['gemini-3.8-flash'];
 
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const key = resolveKey(currentKeyIndex).trim();
@@ -1003,7 +998,7 @@
               return resultText;
             } else {
               lastError = data.error?.message || "Model meşgul.";
-              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek modele geçiliyor...`);
+              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek anahtara geçiliyor...`);
             }
           } catch (e) {
             lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
@@ -1279,7 +1274,7 @@
       ctx.beginPath();
       ctx.roundRect(340, 180, 400, 70, 35);
       ctx.fill();
-      ctx.strokeStyle = '#f59e0b';
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.3)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
@@ -1423,7 +1418,7 @@
           list.innerHTML = history.map((item, idx) => `
             <div onclick="loadPastFortune(${idx})" class="glass-card p-3 rounded-xl border border-white/10 glass-card cursor-pointer hover:border-amber-400 transition">
               <span class="text-[10px] text-amber-400 font-bold block mb-1">${item.date}</span>
-              <p class="text-gray-300 line-clamp-2">${item.text}</p>
+              <p class="text-gray-300 line-clear line-clamp-2">${item.text}</p>
             </div>
           `).join('');
         }
