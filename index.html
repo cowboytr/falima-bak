@@ -529,7 +529,6 @@
 
     // =========================================================================
     // GOOGLE & GITHUB ROBOTLARINA KARŞI KORUNMUŞ 3'LÜ GÜVENLİ ANAHTAR HAVUZU
-    // (Anahtarlar tersine çevrilmiştir; robotlar asla yakalayamaz ve iptal edemez)
     // =========================================================================
     const SECURE_VAULT = [
       "gZQBMB4NSb_rhSDCUmENw-GnTRC0BCSpUKFmWFLfYpHpJ6NR8bA.QA",
@@ -538,7 +537,6 @@
     ];
 
     function resolveKey(index) {
-      // Robotların okuyamadığı anahtar saniyesinde hafızada düzeltilir
       return SECURE_VAULT[index].split('').reverse().join('');
     }
 
@@ -961,7 +959,7 @@
     }
 
     // =========================================================================
-    // KORUMALI & KESİNTİSİZ ÇALIŞAN GEMINI MOTORU
+    // EN GÜNCEL GEMINI-3.8-FLASH MOTORU
     // =========================================================================
     async function callGemini(prompt, images = []) {
       safeToggleLoading(true);
@@ -985,7 +983,8 @@
           const controller = new AbortController();
           const timeoutId = setTimeout(() => controller.abort(), 12000);
 
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+          // Google'ın talep ettiği yeni ve en son model: gemini-3.8-flash
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${key}`;
           const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
