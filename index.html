@@ -45,11 +45,16 @@
     .tarot-inner.flipped { transform: rotateY(180deg); }
     .tarot-front, .tarot-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 0.875rem; overflow: hidden; }
     .tarot-back { transform: rotateY(180deg); }
+    .symbol-pulse { animation: pulseGlow 2s infinite; }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px #fbbf24); }
+      50% { transform: scale(1.1); filter: drop-shadow(0 0 12px #f59e0b); }
+    }
   </style>
 </head>
 <body class="p-4 max-w-md mx-auto pb-32 selection:bg-amber-500/30">
 
-  <!-- ================= 1. BAŞLIK VE LOGO ================= -->
+  <!-- ================= 1. GÖRKEMLİ BAŞLIK VE LOGO ================= -->
   <header class="text-center pt-2 mb-4 relative">
     <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-48 h-20 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
 
@@ -70,7 +75,6 @@
       <span>🪙</span> <span id="token-balance">150</span> <span class="text-[10px] text-amber-400/80 font-normal">Jeton</span>
     </button>
 
-    <!-- Yeni Duyarlı Mistik Müzik Butonu -->
     <button onclick="toggleAmbientMusic()" id="btn-ambient" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95">
       <i id="music-icon" class="fa-solid fa-volume-xmark text-xs"></i>
       <span id="music-text" class="text-[10px] font-semibold">Mistik Müzik</span>
@@ -137,28 +141,42 @@
     </div>
   </nav>
 
-  <!-- ================= KAHVE FALI MODÜLÜ ================= -->
+  <!-- ================= KAHVE FALI MODÜLÜ (GELİŞMİŞ KAMERA & 8 FOTOĞRAF) ================= -->
   <section id="section-kahve" class="space-y-4">
+    <!-- Tek Fincan / Çift Fincan Seçimi -->
     <div class="flex justify-center gap-2 text-xs font-semibold">
       <button onclick="setCoffeeMode('tek')" id="mode-coffee-tek" class="px-4 py-1.5 rounded-xl border border-amber-400/50 bg-amber-500/20 text-amber-300">Tek Kişilik Fal</button>
       <button onclick="setCoffeeMode('cift')" id="mode-coffee-cift" class="px-4 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400">💑 Çift / Aşk Fincanı</button>
     </div>
 
+    <!-- Fotoğraf Yükleme ve Önizleme Alanı -->
     <div class="glass-card rounded-3xl p-5 text-center relative overflow-hidden">
-      <input type="file" id="cup-photo" accept="image/*" multiple class="hidden" onchange="handleMultipleImages(event)">
-      <label for="cup-photo" class="cursor-pointer flex flex-col items-center py-3">
-        <div id="image-placeholder" class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-purple-600/30 border border-amber-400/30 flex items-center justify-center text-amber-400 text-3xl mb-3 shadow-inner">
-          <i class="fa-solid fa-camera-retro"></i>
-        </div>
-        <span id="coffee-upload-title" class="text-sm font-semibold text-amber-200">Fincan ve Tabak Fotoğraflarını Seç</span>
-        <span id="upload-status" class="text-xs text-purple-300 mt-1">1 - 4 adet fotoğraf yükleyebilirsin</span>
-      </label>
-      <div id="preview-grid" class="hidden grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-amber-500/20"></div>
+      <!-- Gizli Inputlar: Biri Kamera, Biri Galeri -->
+      <input type="file" id="cup-camera" accept="image/*" capture="environment" class="hidden" onchange="handleMultipleImages(event)">
+      <input type="file" id="cup-gallery" accept="image/*" multiple class="hidden" onchange="handleMultipleImages(event)">
+
+      <div class="flex items-center justify-center gap-3 mb-3">
+        <!-- 1. Buton: Doğrudan Fotoğraf Çek -->
+        <label for="cup-camera" class="flex-1 py-3 px-2 rounded-2xl bg-amber-500/20 border border-amber-400/40 text-amber-300 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition">
+          <i class="fa-solid fa-camera text-sm"></i> Fotoğraf Çek
+        </label>
+        <!-- 2. Buton: Galeriden Seç -->
+        <label for="cup-gallery" class="flex-1 py-3 px-2 rounded-2xl bg-purple-600/30 border border-purple-400/40 text-purple-200 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition">
+          <i class="fa-solid fa-images text-sm"></i> Galeriden Seç
+        </label>
+      </div>
+
+      <p id="upload-status" class="text-[11px] text-gray-400">
+        Fincanın içi, tabağı ve kulpu olmak üzere <b class="text-amber-300">en fazla 8 fotoğraf</b> ekleyebilirsin.
+      </p>
+
+      <!-- 8'li Fotoğraf Önizleme Izgarası + Silme Düğmeleri -->
+      <div id="preview-grid" class="hidden grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-amber-500/20"></div>
     </div>
 
     <div class="flex items-center justify-between text-xs text-gray-400 px-1">
       <span>Ücret: <b class="text-amber-400">50 Jeton</b></span>
-      <span class="text-purple-300">Profiliniz otomatik eklenir ✦</span>
+      <span class="text-purple-300">Fincan & Tabak ayrı yorumlanır ✦</span>
     </div>
 
     <button onclick="startQueueAndRead('kahve')" class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 font-bold text-slate-950 shadow-xl shadow-amber-500/25 active:scale-98 transition cinzel text-sm tracking-wider">
@@ -372,6 +390,15 @@
       </div>
     </div>
 
+    <!-- ================= GÖRSEL SEMBOL RADARI (DÜNYADA İLK!) ================= -->
+    <div id="detected-symbols-area" class="hidden mb-5 glass-card rounded-2xl p-4 border border-amber-400/30 bg-purple-950/30">
+      <h4 class="text-xs font-bold text-amber-300 mb-2.5 flex items-center gap-2 cinzel">
+        <i class="fa-solid fa-crosshairs text-amber-400 animate-spin"></i> Fincanda Keşfedilen İşaretler:
+      </h4>
+      <div id="symbols-list" class="flex flex-wrap gap-2 text-xs"></div>
+    </div>
+
+    <!-- Fal Metni -->
     <div id="fortune-output" class="text-[15px] sm:text-base leading-relaxed text-slate-200 whitespace-pre-wrap font-normal"></div>
 
     <!-- 4'lü Aksiyon Barı -->
@@ -499,6 +526,19 @@
       navigator.serviceWorker.register('sw.js');
     }
 
+    // =========================================================================
+    // 7 FARKLI PROJEDEN OLUŞAN KESİNTİSİZ SİSTEM ANAHTAR HAVUZU (140 FAL/GÜN)
+    // =========================================================================
+    const SYSTEM_API_KEYS = [
+      "AIzaSyAleDh0qMds6d0ErS_H8f0-sWjj5Yytvuc",
+      "AQ.Ab8RN6Ik-gx4xQKT8K_imToW2a4s-UMWgvzziyfXdbRIWLFTXw",
+      "AQ.Ab8RN6Kok5Q5YoTlQk-7K9YM5GnJR5j5RwUzcdRPmtiey37log",
+      "AQ.Ab8RN6IwXnSH_dJ0FB2kmJ4QAtf5sIdD8T_u7CywY5XJ3MSYqQ",
+      "AQ.Ab8RN6LHqYNSnSIxLyBhTrviDj-92M-UUeSMaQKlQMG5pW8d-Q",
+      "AQ.Ab8RN6LhE4itDKA1kaYjiNHV2SRYkSfsBHr89gcNrMS_imIZ7Q",
+      "AQ.Ab8RN6KzTMMFGrjymV_kjru_Gq4GBvqf3b93AteAgNF3o3iOuQ"
+    ];
+
     let userTokens = parseInt(localStorage.getItem('fal_tokens') || '150');
     let optimizedImages = [];
     let palmImageBase64 = null;
@@ -608,10 +648,10 @@
       const name = localStorage.getItem('profile_name') || "Mehmet";
       const relation = localStorage.getItem('profile_relation') || "Bekar";
       const job = localStorage.getItem('profile_job') || "Çalışıyor";
-      return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde doğal bir dille hissettir.`;
+      return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde hissettirerek kullan.`;
     }
 
-    // ================= YENİ VE KESİNTİSİZ ÇALAN MİSTİK SES MOTORU =================
+    // ================= GERÇEK AKUSTİK MÜZİK MOTORU =================
     let isMusicPlaying = false;
     let globalAudio = null;
 
@@ -621,14 +661,12 @@
       const btn = document.getElementById('btn-ambient');
 
       if (!globalAudio) {
-        // GitHub'ın global CDN'inden doğrudan açık CORS ile çalışan dinlendirici CC0 ortam müziği
         globalAudio = new Audio('https://raw.githubusercontent.com/farmmer938-lgtm/aeris-cc0-music/main/tracks/quiet-room.mp3');
         globalAudio.loop = true;
         globalAudio.volume = 0.35;
       }
 
       if (!isMusicPlaying) {
-        // Kullanıcı bastığı an butonu canlandır (Gecikmesiz UI)
         isMusicPlaying = true;
         icon.className = "fa-solid fa-volume-high text-xs text-amber-400 animate-pulse";
         text.innerText = "Müzik Açık";
@@ -651,11 +689,9 @@
       if (mode === 'tek') {
         document.getElementById('mode-coffee-tek').className = "px-4 py-1.5 rounded-xl border border-amber-400/50 bg-amber-500/20 text-amber-300";
         document.getElementById('mode-coffee-cift').className = "px-4 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400";
-        document.getElementById('coffee-upload-title').innerText = "Fincan ve Tabak Fotoğraflarını Seç";
       } else {
         document.getElementById('mode-coffee-cift').className = "px-4 py-1.5 rounded-xl border border-pink-400/50 bg-pink-500/20 text-pink-300";
         document.getElementById('mode-coffee-tek').className = "px-4 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400";
-        document.getElementById('coffee-upload-title').innerText = "Senin Fincanın + Partnerinin Fincanını Seç";
       }
     }
 
@@ -709,6 +745,7 @@
       document.getElementById(`tab-${tab}`).className = "h-16 rounded-2xl border glass-tab-active flex flex-col items-center justify-center gap-1 transition";
     }
 
+    // ================= 8 FOTOĞRAFA KADAR GELİŞMİŞ GÖRSEL İŞLEME =================
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -734,22 +771,61 @@
     async function handleMultipleImages(event) {
       const files = Array.from(event.target.files);
       if (!files.length) return;
-      optimizedImages = [];
-      const grid = document.getElementById('preview-grid');
-      grid.innerHTML = "";
-      grid.classList.remove('hidden');
-      document.getElementById('image-placeholder').classList.add('hidden');
+
+      if (optimizedImages.length + files.length > 8) {
+        alert("En fazla 8 adet fotoğraf ekleyebilirsiniz!");
+        return;
+      }
+
       document.getElementById('upload-status').innerText = "Fotoğraflar hızla optimize ediliyor...";
 
       for (const file of files) {
         const res = await compressImage(file);
-        optimizedImages.push(res.base64);
-        const img = document.createElement('img');
-        img.src = res.preview;
-        img.className = "w-full h-28 object-cover rounded-xl border border-amber-400/30 shadow";
-        grid.appendChild(img);
+        optimizedImages.push(res);
       }
-      document.getElementById('upload-status').innerText = `✨ ${optimizedImages.length} fotoğraf incelenmeye hazır!`;
+
+      renderPreviewGrid();
+    }
+
+    function renderPreviewGrid() {
+      const grid = document.getElementById('preview-grid');
+      grid.innerHTML = "";
+
+      if (optimizedImages.length === 0) {
+        grid.classList.add('hidden');
+        document.getElementById('upload-status').innerHTML = "Fincanın içi, tabağı ve kulpu olmak üzere <b class='text-amber-300'>en fazla 8 fotoğraf</b> ekleyebilirsin.";
+        return;
+      }
+
+      grid.classList.remove('hidden');
+      optimizedImages.forEach((item, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = "relative rounded-xl overflow-hidden border border-amber-400/40 shadow";
+
+        const img = document.createElement('img');
+        img.src = item.preview;
+        img.className = "w-full h-24 object-cover";
+
+        // Silme Butonu (✕)
+        const delBtn = document.createElement('button');
+        delBtn.innerHTML = "&times;";
+        delBtn.className = "absolute top-1 right-1 w-6 h-6 rounded-full bg-black/80 text-amber-300 font-bold flex items-center justify-center text-sm shadow hover:bg-rose-600 transition";
+        delBtn.onclick = (e) => {
+          e.preventDefault();
+          removeImage(index);
+        };
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(delBtn);
+        grid.appendChild(wrapper);
+      });
+
+      document.getElementById('upload-status').innerHTML = `✨ <b class="text-amber-300">${optimizedImages.length}/8 fotoğraf</b> hazır!`;
+    }
+
+    function removeImage(index) {
+      optimizedImages.splice(index, 1);
+      renderPreviewGrid();
     }
 
     async function previewPalmImage(event) {
@@ -813,16 +889,9 @@
       btn.classList.remove('opacity-50');
     }
 
+    // ================= 7 PROJELİ SESSİZ VE KESİNTİSİZ ÇALIŞAN API MOTORU =================
     async function callGemini(prompt, images = []) {
-      const rawKeys = localStorage.getItem('gemini_api_key') || '';
-      const apiKeys = rawKeys.split(',').map(k => k.trim()).filter(Boolean);
-
-      if (apiKeys.length === 0) {
-        alert("Lütfen önce bir API anahtarı girin!");
-        const k = prompt("Google Gemini API Anahtarınızı yapıştırın:");
-        if (k) localStorage.setItem('gemini_api_key', k.trim());
-        throw new Error("API anahtarı eksik.");
-      }
+      document.getElementById('loading').classList.remove('hidden');
 
       let inputPayload;
       if (images.length > 0) {
@@ -837,12 +906,12 @@
       const modelsToTry = ["gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite"];
       let lastErrorMsg = "";
 
-      for (const key of apiKeys) {
+      for (const key of SYSTEM_API_KEYS) {
         for (const modelName of modelsToTry) {
           try {
             const response = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
               method: "POST",
-              headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+              headers: { "Content-Type": "application/json", "x-goog-api-key": key.trim() },
               body: JSON.stringify({ model: modelName, input: inputPayload, store: false })
             });
 
@@ -863,13 +932,15 @@
               }
 
               if (resultText) {
+                document.getElementById('loading').classList.add('hidden');
                 saveToHistory(resultText);
                 return resultText;
               }
             } else {
               lastErrorMsg = data.error?.message || JSON.stringify(data);
-              if (lastErrorMsg.includes("Rate limit") || lastErrorMsg.includes("429")) {
-                continue;
+              if (lastErrorMsg.includes("Rate limit") || lastErrorMsg.includes("429") || lastErrorMsg.includes("RESOURCE_EXHAUSTED")) {
+                console.warn(`Proje kotası dolu, sıradaki bağımsız projeye sessizce geçiliyor...`);
+                break;
               }
             }
           } catch (e) {
@@ -878,26 +949,78 @@
         }
       }
 
-      alert("Bağlantı Uyarısı: " + lastErrorMsg);
+      document.getElementById('loading').classList.add('hidden');
+      alert("Kozmik enerji şu an çok yoğun. Falcılarımız dinleniyor, lütfen birkaç dakika sonra tekrar deneyin!");
       throw new Error(lastErrorMsg);
     }
 
+    // ================= FİNCAN & TABAK AYRI YORUMLAYAN + ŞEKİL İŞARETLEYEN KAHVE FALI =================
     async function executeCoffeeFortune() {
-      if (!optimizedImages.length) { alert("Lütfen önce fincan fotoğrafı yükleyin!"); return; }
+      if (!optimizedImages.length) { alert("Lütfen en az bir fincan veya tabak fotoğrafı ekleyin!"); return; }
       if (!spendTokens(50)) return;
 
       const persona = getPersonaPrompt();
       const profile = getUserProfileContext();
-      let modeText = currentCoffeeMode === 'cift' 
-        ? "Bu bir ÇİFT / AŞK FİNCANI FALIDIR. Kullanıcı iki ayrı fincan yükledi. İki fincanın enerjisini, telvelerin uyumunu, aralarındaki çekimi ve evlilik/gelecek potansiyelini kıyaslayarak detaylıca yorumla."
-        : "Bu kişisel kahve falıdır. Fincandaki telveleri şu 4 başlıkta açıkla: 1. Genel Enerjin, 2. Aşk ve Kalp, 3. İş ve Para, 4. Fincanın En Belirgin Şekli.";
 
-      const prompt = `${persona}\n${profile}\n${modeText}`;
-      const title = currentCoffeeMode === 'cift' ? "Çift & Aşk Kahve Falı:" : "Özel Kahve Falınız:";
-      document.getElementById('fortune-title').innerText = title;
+      let modeDesc = currentCoffeeMode === 'cift'
+        ? "Bu bir ÇİFT / AŞK FİNCANI FALIDIR. Kullanıcı hem kendi hem partnerinin fincanını yükledi. İki fincanı karşılaştırıp aşk bağını yorumla."
+        : "Bu kişisel kahve falıdır.";
 
-      const text = await callGemini(prompt, optimizedImages);
-      showResult(text);
+      const prompt = `${persona}\n${profile}\n${modeDesc}
+      Sana yüklenen tüm fincan ve tabak fotoğraflarını dikkatle incele.
+      Falını net olarak şu 4 ana başlık altında topla:
+      1. ☕ FİNCAN İÇİ ANALİZİ (Ruh halin, kalbindeki harfler, aşk, çıkacak yollar ve engeller)
+      2. 🍽️ TABAK ANALİZİ (Hane içi durumu, aile, varsa nazar/gözler, haneye girecek para ve ferahlama)
+      3. 💼 İŞ VE GELECEK KAPILARI
+      4. ⏳ 3 VAKTE KADAR GERÇEKLEŞECEK NET BİR ALAMET
+
+      ÖNEMLİ: Fal metninin EN SONUNA fincanda tespit ettiğin en belirgin 2-3 telve şeklini ve fincanın neresinde gördüğünü tam olarak şu formatta JSON olarak ekle:
+      ###SEMBOLLER###
+      [
+        {"sembol": "Şahlanan At", "konum": "Fincan ağzının sağında", "anlam": "Çok tez bir kısmet ve terfi kapıda"},
+        {"sembol": "Çatallı Yol", "konum": "Fincanın orta kısmında", "anlam": "Önünde iki seçenek belirecek"}
+      ]
+      ###SEMBOLLER_SONU###`;
+
+      document.getElementById('fortune-title').innerText = currentCoffeeMode === 'cift' ? "Çift & Aşk Kahve Falı:" : "Özel Kahve Falınız:";
+      const rawText = await callGemini(prompt, optimizedImages.map(i => i.base64));
+      parseAndShowFortuneWithSymbols(rawText);
+    }
+
+    // Fincanda Şekilleri Ayrıştırıp Radar Butonlarına Dönüştürme
+    function parseAndShowFortuneWithSymbols(rawText) {
+      let displayText = rawText;
+      let symbols = [];
+
+      if (rawText.includes("###SEMBOLLER###")) {
+        const parts = rawText.split("###SEMBOLLER###");
+        displayText = parts[0].trim();
+        const jsonPart = parts[1].split("###SEMBOLLER_SONU###")[0].trim();
+        try {
+          symbols = JSON.parse(jsonPart);
+        } catch(e) {
+          console.warn("Sembol JSON parse hatası:", e);
+        }
+      }
+
+      showResult(displayText);
+
+      // Radar Alanını Güncelle
+      const radarArea = document.getElementById('detected-symbols-area');
+      const symbolsList = document.getElementById('symbols-list');
+      symbolsList.innerHTML = "";
+
+      if (symbols && symbols.length > 0) {
+        symbols.forEach(s => {
+          const badge = document.createElement('div');
+          badge.className = "px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 text-amber-200 flex items-center gap-1.5 symbol-pulse";
+          badge.innerHTML = `<i class="fa-solid fa-sparkles text-amber-400"></i> <b>${s.sembol}:</b> ${s.konum} - <i>${s.anlam}</i>`;
+          symbolsList.appendChild(badge);
+        });
+        radarArea.classList.remove('hidden');
+      } else {
+        radarArea.classList.add('hidden');
+      }
     }
 
     async function executeTarotFortune() {
@@ -909,6 +1032,7 @@
       const prompt = `${persona}\n${profile}\nKullanıcı Tarot açılımı yaptı (${currentTarotSpread}). Seçilen kartlar: 1: ${chosenTarotCards[0].name}, 2: ${chosenTarotCards[1].name}, 3: ${chosenTarotCards[2].name}. Bu kartları birbirine bağlayarak büyüleyici ve derin bir kehanet yaz.`;
       
       document.getElementById('fortune-title').innerText = "Tarot Kehanetiniz:";
+      document.getElementById('detected-symbols-area').classList.add('hidden');
       const text = await callGemini(prompt);
       showResult(text);
     }
@@ -922,6 +1046,7 @@
       const prompt = `${persona}\n${profile}\nAvuç içi fotoğrafındaki Hayat, Akıl, Kalp çizgilerini ve el tepelerini inceleyerek mistik, derin bir el falı yorumu yap.`;
       
       document.getElementById('fortune-title').innerText = "El Falı Çizgi Analizi:";
+      document.getElementById('detected-symbols-area').classList.add('hidden');
       const text = await callGemini(prompt, [palmImageBase64]);
       showResult(text);
     }
@@ -935,6 +1060,7 @@
       const prompt = `${persona}\n${profile}\nBurç: ${selectedZodiacSign}. Günün gökyüzü gezegen transitlerini dikkate alarak Aşk, Kariyer, Şanslı Rengi ve Sayısını içeren bir günlük burç kehaneti yaz.`;
       
       document.getElementById('fortune-title').innerText = `${selectedZodiacSign} Burcu Kehaneti:`;
+      document.getElementById('detected-symbols-area').classList.add('hidden');
       const text = await callGemini(prompt);
       showResult(text);
     }
@@ -948,6 +1074,7 @@
       const prompt = `${persona}\n${s1} ve ${s2} burçlarının aşk, tutku ve evlilik uyumunu analiz et. - Aşk Uyum Yüzdesi: % (Net bir yüzde ver), - Çekim Alanları, - Dikkat Edilmesi Gereken Fırtınalar, - Kozmik Aşk Tavsiyesi şeklinde hazırla.`;
       
       document.getElementById('fortune-title').innerText = `${s1} & ${s2} Aşk Uyumu:`;
+      document.getElementById('detected-symbols-area').classList.add('hidden');
       const text = await callGemini(prompt);
       showResult(text);
     }
@@ -962,6 +1089,7 @@
       const prompt = `${persona}\n${profile}\nKullanıcının rüyası: "${dream}". Sembolleri ve bilinçaltı mesajını derinlemesine tabir et.`;
       
       document.getElementById('fortune-title').innerText = "Rüya Tabiri Kehaneti:";
+      document.getElementById('detected-symbols-area').classList.add('hidden');
       const text = await callGemini(prompt);
       showResult(text);
     }
