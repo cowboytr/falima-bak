@@ -967,7 +967,7 @@
       const payload = { contents: [{ parts }] };
       let lastError = "";
       
-      const CANDIDATE_MODELS = ['gemini-3.8-flash', 'gemini-2.5-flash'];
+      const CANDIDATE_MODELS = ['gemini-3.8-flash']
 
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const key = resolveKey(currentKeyIndex).trim();
