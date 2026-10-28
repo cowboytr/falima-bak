@@ -951,9 +951,6 @@
       btn.classList.remove('opacity-50');
     }
 
-    // =========================================================================
-    // DÜNYANIN EN KARARLI VE JET HIZINDA ÇALIŞAN GÜVENLİ GEMINI MOTORU (3.8-FLASH)
-    // =========================================================================
     async function callGemini(prompt, images = []) {
       safeToggleLoading(true);
 
@@ -970,7 +967,7 @@
       const payload = { contents: [{ parts }] };
       let lastError = "";
       
-      const CANDIDATE_MODELS = ['gemini-3.8-flash'];
+      const CANDIDATE_MODELS = ['gemini-3.8-flash', 'gemini-2.5-flash'];
 
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const key = resolveKey(currentKeyIndex).trim();
@@ -998,7 +995,7 @@
               return resultText;
             } else {
               lastError = data.error?.message || "Model meşgul.";
-              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek anahtara geçiliyor...`);
+              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek modele geçiliyor...`);
             }
           } catch (e) {
             lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
