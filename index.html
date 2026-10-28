@@ -527,9 +527,9 @@
     }
 
     const SECURE_VAULT = [
-      "Ab8RN6JrbGLrrX6pQdhRtmikwb_4xP-lUBj3lsCS0OkmBBwaKA.QA",
-      "Ab8RN6Lw0f5KJdSmbZE2oYZF5pdMmoa-6t1yzRO2MW33qT7mRA.QA",
-      "Ab8RN6K8uXyEFaAGp53YwvFU-3_VVbosc9dqcrCyFU2uhK5euw.QA"
+      "gZQBMB4NSb_rhSDCUmENw-GnTRC0BCSpUKFmWFLfYpHpJ6NR8bA.QA",
+      "QJsqxGHUCHukmYJypprNWlTDQPuHLAkZ5pCfTTxQLa2J6NR8bA.QA",
+      "w8WSMgtB038KWE8RwLTk8zwOgm5v3A99AC_LRJJ-6CIL6NR8bA.QA"
     ];
 
     function resolveKey(index) {
@@ -952,13 +952,11 @@
     }
 
     // =========================================================================
-    // 3.8-FLASH MODELİ VE EZBERE YANITI ÖNLEYEN RASTGELE ENERJİ MOTORU İLE 
-    // GÜNCELLENMİŞ VE TAM OLAN CALLGEMİNİ FONKSİYONU
+    // KUSURSUZ ÇALIŞAN GEMİNİ 3.8-FLASH ENTEGRASYONU VE RASTGELE ENERJİ MOTORU
     // =========================================================================
     async function callGemini(prompt, images = []) {
       safeToggleLoading(true);
 
-      // Her çağrıda ezbere kalıpları bozan rastgele mistik frekans ve derinlik enjekte edilir
       const cosmicSeeds = [
         "Bugün gökyüzünde sıra dışı bir enerji var. Kehanetlerinde asla klasik, birbirini tekrar eden kalıplar kullanma; nokta atışı, keskin ve şaşırtıcı detaylar ver.",
         "Bugün telveler ve semboller çok gizemli mesajlar fısıldıyor. Benzersiz, daha önce duyulmamış metaforlar kur.",
@@ -967,31 +965,39 @@
       const seed = cosmicSeeds[Math.floor(Math.random() * cosmicSeeds.length)];
       const finalPrompt = `${seed}\n\n${prompt}`;
 
-      const parts = [{ text: finalPrompt }];
-      images.forEach(b64 => {
-        parts.push({
-          inlineData: {
-            mimeType: "image/jpeg",
-            data: b64
-          }
-        });
-      });
+      let partsList = [{ text: finalPrompt }];
 
-      const payload = { contents: [{ parts }] };
+      if (images && images.length > 0) {
+        images.forEach(b64 => {
+          partsList.push({
+            inline_data: {
+              mime_type: "image/jpeg",
+              data: b64
+            }
+          });
+        });
+      }
+
+      const payload = {
+        contents: [
+          {
+            parts: partsList
+          }
+        ]
+      };
+
       let lastError = "";
-      
-      // İstediğin gibi en güncel gemini-3.8-flash modeli kullanılıyor
       const modelName = 'gemini-3.8-flash';
 
-      // 3 farklı API anahtarını sırayla dener (Biri kota verirse otomatik diğerine geçer)
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const key = resolveKey(currentKeyIndex).trim();
 
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 20000);
+          const timeoutId = setTimeout(() => controller.abort(), 25000);
 
           const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
+          
           const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1008,19 +1014,19 @@
             saveToHistory(resultText);
             return resultText;
           } else {
-            lastError = data.error?.message || "Model meşgul veya kota sınırı.";
-            console.warn(`[Anahtar Index: ${currentKeyIndex}] sınırda, yedek anahtara geçiliyor...`);
+            lastError = data.error?.message || "Model yanıt veremedi.";
+            console.warn(`[Anahtar Index: ${currentKeyIndex}] hata döndürdü, sıradakine geçiliyor...`, data);
           }
         } catch (e) {
-          lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
-          console.warn(`Bağlantı hatası: ${lastError}`);
+          lastError = e.name === 'AbortError' ? "Bağlantı zaman aşımına uğradı." : e.message;
+          console.warn(`Bağlantı hatası:`, lastError);
         }
 
         currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
       }
 
       safeToggleLoading(false);
-      alert("Ücretsiz test kotası yoğunluktan dolayı doldu! Lütfen 1 dakika bekleyip tekrar deneyin.");
+      alert("Yapay Zeka Bağlantı Uyarısı: " + lastError);
       throw new Error(lastError);
     }
 
