@@ -519,6 +519,7 @@
   </div>
 
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
+  <canvas id="icon-canvas" width="512" height="512" class="hidden"></canvas>
 
   <script>
     if ('serviceWorker' in navigator) {
@@ -969,7 +970,6 @@
       const payload = { contents: [{ parts }] };
       let lastError = "";
       
-      // Google'ın güncel ve kesin modeli
       const CANDIDATE_MODELS = ['gemini-3.8-flash'];
 
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
