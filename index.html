@@ -520,8 +520,6 @@
 
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
 
-  <canvas id="icon-canvas" width="512" height="512" class="hidden"></canvas>
-
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
@@ -953,7 +951,7 @@
     }
 
     // =========================================================================
-    // DÜNYANIN EN KARARLI VE JET HIZINDA ÇALIŞAN GÜVENLİ GEMINI MOTORU (GÜNCEL MODEL)
+    // DÜNYANIN EN KARARLI VE JET HIZINDA ÇALIŞAN GÜVENLİ GEMINI MOTORU (3.8-FLASH)
     // =========================================================================
     async function callGemini(prompt, images = []) {
       safeToggleLoading(true);
@@ -971,7 +969,7 @@
       const payload = { contents: [{ parts }] };
       let lastError = "";
       
-      // Google'ın resmi güncel modeli (3.8-flash)
+      // Google'ın güncel ve kesin modeli
       const CANDIDATE_MODELS = ['gemini-3.8-flash'];
 
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
