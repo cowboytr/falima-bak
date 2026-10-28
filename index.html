@@ -10,6 +10,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Google Gemini SDK (AQ. tipi anahtarların hatasız çalışması için şarttır) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.run/@google/genai"
+      }
+    }
+  </script>
 
   <style>
     body {
@@ -521,19 +530,26 @@
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
   <canvas id="icon-canvas" width="512" height="512" class="hidden"></canvas>
 
-  <script>
+  <script type="module">
+    import { GoogleGenAI } from "@google/genai";
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
 
-    // AI Studio'dan aldığın 3 gerçek anahtarı buraya ekle (Ters çevirme kaldırıldı)
+    // AI Studio'dan aldığın 3 gerçek AQ. veya AIza... tipi anahtarı buraya yazıyorsun
     const SECURE_VAULT = [
-      "AIzaSy... (1. Anahtar)",
-      "AIzaSy... (2. Anahtar)",
-      "AIzaSy... (3. Anahtar)"
+      "AQ.Ab8RN6JPHpYfLWmFKUpSCB0CRTnG-wNEmUCDShr_bSN4BMBQZg",
+      "AQ.Ab8RN6J2aLQxTTfCp5ZkALHuPQDTlWNrppyJYmkuHCUHGxqsJQ",
+      "AQ.Ab8RN6LIC6-JJRL_CA99A3v5mgOwz8kTLwR8EWK830BtgMSW8w"
     ];
 
     let currentKeyIndex = 0;
+    function getActiveAI() {
+      const apiKey = SECURE_VAULT[currentKeyIndex];
+      return new GoogleGenAI({ apiKey });
+    }
+
     let userTokens = parseInt(localStorage.getItem('fal_tokens') || '150');
     let optimizedImages = [];
     let palmImageBase64 = null;
@@ -755,7 +771,7 @@
       }
     }
 
-    function startQueueAndRead(actionType) {
+    window.startQueueAndRead = function(actionType) {
       pendingAction = actionType;
       const modal = document.getElementById('queue-modal');
       const num = Math.floor(Math.random() * 8) + 4;
@@ -769,7 +785,7 @@
       }, 3500);
     }
 
-    function skipQueueAndRead() {
+    window.skipQueueAndRead = function() {
       document.getElementById('queue-modal').classList.add('hidden');
       if (pendingAction === 'kahve') executeCoffeeFortune();
       else if (pendingAction === 'tarot') executeTarotFortune();
@@ -779,7 +795,7 @@
       else if (pendingAction === 'ruya') executeDreamFortune();
     }
 
-    function setPersona(persona) {
+    window.setPersona = function(persona) {
       currentPersona = persona;
       ['gulfem', 'melchior', 'ece'].forEach(p => {
         document.getElementById(`persona-${p}`).className = "px-2.5 py-1 rounded-xl border border-white/10 glass-card text-gray-400 font-semibold transition";
@@ -796,7 +812,7 @@
       return "Sen Falcı Gülfem Abla'sın. Samimi, anaç, 'canım benim', 'güzel kalplim' diyen sıcacık bir Türk kahvesi ve kısmet falcısısın.";
     }
 
-    function setTab(tab) {
+    window.setTab = function(tab) {
       ['kahve', 'tarot', 'el', 'astro', 'uyum', 'ruya', 'niyet'].forEach(t => {
         document.getElementById(`section-${t}`).classList.add('hidden');
         document.getElementById(`tab-${t}`).className = "h-16 rounded-2xl border border-white/10 glass-card text-gray-300 flex flex-col items-center justify-center gap-1 transition";
@@ -812,7 +828,7 @@
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            const maxDim = 850;
+            const maxDim = 800;
             let w = img.width, h = img.height;
             if (w > h && w > maxDim) { h = Math.round((h * maxDim) / w); w = maxDim; }
             else if (h > maxDim) { w = Math.round((w * maxDim) / h); h = maxDim; }
@@ -820,7 +836,7 @@
             canvas.height = h;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
-            resolve({ base64: canvas.toDataURL('image/jpeg', 0.70).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.70) });
+            resolve({ base64: canvas.toDataURL('image/jpeg', 0.65).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.65) });
           };
           img.src = e.target.result;
         };
@@ -828,7 +844,7 @@
       });
     }
 
-    async function handleMultipleImages(event) {
+    window.handleMultipleImages = async function(event) {
       const files = Array.from(event.target.files);
       if (!files.length) return;
 
@@ -871,7 +887,8 @@
         delBtn.className = "absolute top-1 right-1 w-6 h-6 rounded-full bg-black/80 text-amber-300 font-bold flex items-center justify-center text-sm shadow hover:bg-rose-600 transition";
         delBtn.onclick = (e) => {
           e.preventDefault();
-          removeImage(index);
+          optimizedImages.splice(index, 1);
+          renderPreviewGrid();
         };
 
         wrapper.appendChild(img);
@@ -882,12 +899,7 @@
       document.getElementById('upload-status').innerHTML = `✨ <b class="text-amber-300">${optimizedImages.length}/8 fotoğraf</b> hazır!`;
     }
 
-    function removeImage(index) {
-      optimizedImages.splice(index, 1);
-      renderPreviewGrid();
-    }
-
-    async function previewPalmImage(event) {
+    window.previewPalmImage = async function(event) {
       const file = event.target.files[0];
       if (!file) return;
       const res = await compressImage(file);
@@ -898,7 +910,7 @@
       prev.classList.remove('hidden');
     }
 
-    function setTarotSpread(type) {
+    window.setTarotSpread = function(type) {
       currentTarotSpread = type;
       ['genel', 'ask', 'kariyer'].forEach(s => {
         document.getElementById(`spread-${s}`).className = "px-3 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400";
@@ -925,7 +937,7 @@
       }
     }
 
-    function flipTarot(num) {
+    window.flipTarot = function(num) {
       const cardEl = document.getElementById(`tarot-card-${num}`);
       if (cardEl.classList.contains('flipped')) return;
 
@@ -938,7 +950,7 @@
       cardEl.classList.add('flipped');
     }
 
-    function selectZodiac(name, symbol) {
+    window.selectZodiac = function(name, symbol) {
       selectedZodiacSign = name;
       document.querySelectorAll('.zodiac-btn').forEach(b => b.classList.remove('border-amber-400', 'bg-amber-500/20'));
       event.currentTarget.classList.add('border-amber-400', 'bg-amber-500/20');
@@ -948,76 +960,43 @@
       btn.classList.remove('opacity-50');
     }
 
-    async function callGemini(prompt, images = []) {
+    // ⭐ Resmi Google Gen AI SDK kullanarak istek atan kusursuz fonksiyon ⭐
+    async function callGemini(promptText, imagesB64 = []) {
       safeToggleLoading(true);
 
-      const cosmicSeeds = [
-        "Bugün gökyüzünde sıra dışı bir enerji var. Kehanetlerinde asla klasik, birbirini tekrar eden kalıplar kullanma; nokta atışı, keskin ve şaşırtıcı detaylar ver.",
-        "Bugün telveler ve semboller çok gizemli mesajlar fısıldıyor. Benzersiz, daha önce duyulmamış metaforlar kur.",
-        "Kader çarkı bugün çok hızlı dönüyor. Tarihlere, harflere ve ani gelişmelere odaklanarak tamamen özgün ve sarsıcı bir kehanet yaz."
-      ];
-      const seed = cosmicSeeds[Math.floor(Math.random() * cosmicSeeds.length)];
-      const finalPrompt = `${seed}\n\n${prompt}`;
+      let lastError = "";
+      for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
+        try {
+          const ai = getActiveAI();
+          
+          let contentsArray = [promptText];
+          if (imagesB64 && imagesB64.length > 0) {
+            imagesB64.forEach(b64 => {
+              contentsArray.push({
+                inlineData: {
+                  mimeType: "image/jpeg",
+                  data: b64
+                }
+              });
+            });
+          }
 
-      let partsList = [{ text: finalPrompt }];
-
-      if (images && images.length > 0) {
-        images.forEach(b64 => {
-          partsList.push({
-            inline_data: {
-              mime_type: "image/jpeg",
-              data: b64
+          const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: contentsArray,
+            config: {
+              systemInstruction: "Sen profesyonel ve mistik bir falcısın."
             }
           });
-        });
-      }
 
-      const payload = {
-        contents: [
-          {
-            parts: partsList
-          }
-        ]
-      };
-
-      let lastError = "";
-      const modelName = 'gemini-3.8-flash';
-
-      for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
-        const key = resolveKey(currentKeyIndex).trim();
-
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 25000);
-
-          // Google AI Studio resmi standardı: Anahtarı x-goog-api-key header'ı ile gönderiyoruz
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent`;
-          
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-goog-api-key': key
-            },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-          });
-
-          clearTimeout(timeoutId);
-          const data = await response.json();
-
-          if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+          if (response && response.text) {
             safeToggleLoading(false);
-            const resultText = data.candidates[0].content.parts[0].text;
-            saveToHistory(resultText);
-            return resultText;
-          } else {
-            lastError = data.error?.message || "Model yanıt veremedi.";
-            console.warn(`[Anahtar Index: ${currentKeyIndex}] hata döndürdü, sıradakine geçiliyor...`, data);
+            saveToHistory(response.text);
+            return response.text;
           }
         } catch (e) {
-          lastError = e.name === 'AbortError' ? "Bağlantı zaman aşımına uğradı." : e.message;
-          console.warn(`Bağlantı hatası:`, lastError);
+          lastError = e.message;
+          console.warn(`Key ${currentKeyIndex} hata verdi, sonrakine geçiliyor...`, e);
         }
 
         currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
@@ -1070,9 +1049,7 @@
         const jsonPart = parts[1].split("###SEMBOLLER_SONU###")[0].trim();
         try {
           symbols = JSON.parse(jsonPart);
-        } catch(e) {
-          console.warn("Sembol JSON parse hatası:", e);
-        }
+        } catch(e) {}
       }
 
       showResult(displayText);
@@ -1165,7 +1142,7 @@
       showResult(text);
     }
 
-    async function crackCookie() {
+    window.crackCookie = async function() {
       const persona = getPersonaPrompt();
       const prompt = `${persona}\nKullanıcı için 2 cümlelik derin bir 'Günün Mistik Kehaneti & Olumlaması' yaz. Altına bir şanslı sayı ve uğurlu renk ekle.`;
       const text = await callGemini(prompt);
@@ -1182,7 +1159,7 @@
       document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
     }
 
-    async function askFollowupQuestion() {
+    window.askFollowupQuestion = async function() {
       const qInput = document.getElementById('followup-question');
       const question = qInput.value.trim();
       if (!question) return;
@@ -1227,22 +1204,22 @@
       btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Sor`;
     }
 
-    function changeFontSize(delta) {
+    window.changeFontSize = function(delta) {
       currentFontSize = Math.min(22, Math.max(13, currentFontSize + delta));
       document.getElementById('fortune-output').style.fontSize = currentFontSize + 'px';
     }
 
-    async function shareWhatsAppFull() {
+    window.shareWhatsAppFull = function() {
       const shareTitle = document.getElementById('fortune-title').innerText;
       const fullShareText = `🔮 Falıma Bak'tan Kehanetim Çıktı!\n\n👑 ${shareTitle}\n\n${currentFortune}\n\n✨ Sen de falına baktır: https://cowboytr.github.io/falima-bak/`;
       if (navigator.share) {
-        try { await navigator.share({ title: 'Falıma Bak Kehaneti', text: fullShareText }); } catch (err) {}
+        try { navigator.share({ title: 'Falıma Bak Kehaneti', text: fullShareText }); } catch (err) {}
       } else {
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(fullShareText)}`, '_blank');
       }
     }
 
-    function generateStoryCard() {
+    window.generateStoryCard = function() {
       const canvas = document.getElementById('story-canvas');
       const ctx = canvas.getContext('2d');
 
@@ -1370,7 +1347,7 @@
     }
 
     let isSpeaking = false;
-    function toggleVoice() {
+    window.toggleVoice = function() {
       if (!('speechSynthesis' in window)) { alert("Cihazınız ses sentezini desteklemiyor."); return; }
       if (window.speechSynthesis.speaking) {
         window.speechSynthesis.cancel();
@@ -1404,7 +1381,7 @@
       playNextSentence();
     }
 
-    function copyFortune() {
+    window.copyFortune = function() {
       navigator.clipboard.writeText(currentFortune).then(() => {
         alert("Fal metninin tamamı panoya kopyalandı!");
       });
@@ -1421,7 +1398,7 @@
       localStorage.setItem('fal_history', JSON.stringify(history));
     }
 
-    function toggleHistoryModal() {
+    window.toggleHistoryModal = function() {
       const modal = document.getElementById('history-modal');
       const list = document.getElementById('history-list');
       if (modal.classList.contains('hidden')) {
@@ -1442,7 +1419,7 @@
       }
     }
 
-    function loadPastFortune(idx) {
+    window.loadPastFortune = function(idx) {
       let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
       if (history[idx]) {
         toggleHistoryModal();
