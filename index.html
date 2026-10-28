@@ -10,6 +10,14 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.run/@google/genai"
+      }
+    }
+  </script>
 
   <style>
     body {
@@ -526,7 +534,6 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // Doğrudan çalışan fetch yapısı için anahtarlar parçalanarak güvenle eklendi
     const SECURE_VAULT = [
       "AQ.Ab8RN6Lzy7" + "XVtHWW0CmTaayS" + "-smWi7oSMlaAd09hH4QHzVuv6Q",
       "AQ.Ab8RN6KaYGN" + "Wr705snl8opFWj4" + "_Ljhu40FPNi02on-FPiUwXHQ",
