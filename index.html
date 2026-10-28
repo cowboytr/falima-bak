@@ -950,6 +950,7 @@
       btn.classList.remove('opacity-50');
     }
 
+    // ⭐ TARAYICI KİLİTLENMELERİNİ BİTİREN GÜVENLİ FETCH ÇÖZÜMÜ ⭐
     async function callGemini(promptText, imagesB64 = []) {
       safeToggleLoading(true);
 
@@ -961,36 +962,50 @@
       const seed = cosmicSeeds[Math.floor(Math.random() * cosmicSeeds.length)];
       const finalPrompt = `${seed}\n\n${promptText}`;
 
-      let lastError = "";
-      for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
-        try {
-          const ai = getActiveAI();
-          
-          let contentsArray = [finalPrompt];
-          if (imagesB64 && imagesB64.length > 0) {
-            imagesB64.forEach(b64 => {
-              contentsArray.push({
-                inlineData: {
-                  mimeType: "image/jpeg",
-                  data: b64
-                }
-              });
-            });
-          }
+      let partsList = [{ text: finalPrompt }];
+      if (imagesB64 && imagesB64.length > 0) {
+        imagesB64.forEach(b64 => {
+          partsList.push({
+            inline_data: {
+              mime_type: "image/jpeg",
+              data: b64
+            }
+          });
+        });
+      }
 
-          const response = await ai.models.generateContent({
-            model: 'gemini-3.8-flash',
-            contents: contentsArray
+      const payload = { contents: [{ parts: partsList }] };
+      let lastError = "";
+
+      for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
+        const apiKey = SECURE_VAULT[currentKeyIndex];
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 25000);
+
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
           });
 
-          if (response && response.text) {
+          clearTimeout(timeoutId);
+          const data = await response.json();
+
+          if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
             safeToggleLoading(false);
-            saveToHistory(response.text);
-            return response.text;
+            const resultText = data.candidates[0].content.parts[0].text;
+            saveToHistory(resultText);
+            return resultText;
+          } else {
+            lastError = data.error?.message || "Model yanıt veremedi.";
+            console.warn(`Key ${currentKeyIndex} hata verdi, sonrakine geçiliyor...`, data);
           }
         } catch (e) {
           lastError = e.message;
-          console.warn(`Key ${currentKeyIndex} hata verdi, sonrakine geçiliyor...`, e);
+          console.warn(`Bağlantı hatası:`, e);
         }
 
         currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
