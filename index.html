@@ -526,14 +526,15 @@
       navigator.serviceWorker.register('sw.js');
     }
 
+    // Doğrudan AI Studio'dan aldığın anahtarları buraya düz metin olarak yazdık (Ters çevirme iptal edildi)
     const SECURE_VAULT = [
-      "hJB6NR8bA.QA_bSN4BMBQZg.AQ.Ab8RN6JPHpYfLWmFKUpSCB0CRTnG-wNEmUCDShr",
-      "hJB6NR8bA.QA_bSN4BMBQZg.AQ.Ab8RN6J2aLQxTTfCp5ZkALHuPQDTlWNrppyJYmkuHCUHGxqsJQ",
-      "hJB6NR8bA.QA_bSN4BMBQZg.AQ.Ab8RN6LIC6-JJRL_CA99A3v5mgOwz8kTLwR8EWK830BtgMSW8w"
+      "AIzaSy... (Buraya 1. anahtarını tam yapıştır)",
+      "AIzaSy... (Buraya 2. anahtarını tam yapıştır)",
+      "AIzaSy... (Buraya 3. anahtarını tam yapıştır)"
     ];
 
     function resolveKey(index) {
-      return SECURE_VAULT[index].split('').reverse().join('');
+      return SECURE_VAULT[index]; // Artık ters çevirmiyor, doğrudan anahtarı veriyor
     }
 
     let currentKeyIndex = 0;
