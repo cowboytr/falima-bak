@@ -56,10 +56,12 @@
   <header class="text-center pt-3 mb-5 relative flex flex-col items-center justify-center">
     <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-64 h-24 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
 
+    <!-- Ortalanmış Logo -->
     <div class="w-14 h-14 rounded-2xl glass-card flex items-center justify-center border-2 border-amber-400/60 shadow-xl shadow-amber-500/25 gold-glow mb-2">
       <i class="fa-solid fa-moon text-3xl text-amber-300 animate-pulse"></i>
     </div>
 
+    <!-- Ortalanmış Başlık ve Slogan -->
     <h1 class="cinzel text-2xl sm:text-3xl font-black tracking-widest gold-gradient-text leading-tight text-center">FALIMA BAK</h1>
     <p class="text-[10px] sm:text-[11px] text-amber-200/80 font-semibold tracking-widest uppercase mt-1 text-center">✦ 78 KARTLI MİSTİK KEHANET & FAL REHBERİ ✦</p>
   </header>
@@ -95,7 +97,7 @@
     </div>
   </div>
 
-  <!-- ================= 4. SİMETRİK FAL MENÜSÜ ================= -->
+  <!-- ================= 4. 4x2 SİMETRİK FAL MENÜSÜ ================= -->
   <nav class="mb-5 space-y-1.5">
     <div class="grid grid-cols-4 gap-1.5">
       <button onclick="setTab('kahve')" id="tab-kahve" class="h-16 rounded-2xl border glass-tab-active flex flex-col items-center justify-center gap-1 transition">
@@ -173,7 +175,7 @@
     </button>
   </section>
 
-  <!-- ================= TAROT MODÜLÜ ================= -->
+  <!-- ================= TAROT MODÜLÜ (78 KART) ================= -->
   <section id="section-tarot" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center">
       <div class="flex justify-center gap-2 mb-4 text-xs font-medium">
@@ -210,7 +212,7 @@
             <div class="tarot-back glass-card border-2 border-amber-400 shadow-2xl relative">
               <img id="tarot-img-2" src="" class="w-full h-full object-cover">
               <div class="absolute bottom-0 inset-x-0 bg-black/80 backdrop-blur-sm p-1 text-center">
-                <span id="tarot-name-2" class="cinzel text-[9px] text-amber-300 font-bold block leading-tight"></span>
+                <span id="tarot-name-2" class="cinzel text-[9px] text-amber-200 font-bold block leading-tight"></span>
               </div>
             </div>
           </div>
@@ -323,7 +325,7 @@
         <h3 class="cinzel text-xs text-amber-300 tracking-wider">BİLİNÇALTI REHBERİ</h3>
         <p class="text-xs text-gray-300">Gördüğün rüyayı en ince ayrıntısına kadar anlat:</p>
       </div>
-      <textarea id="dream-text" rows="5" placeholder="Rüyamda deniz kenarında uçan beyaz bir kuş görüyordum..." class="w-full glass-card rounded-xl p-4 text-sm placeholder-gray-500 text-amber-100 focus:outline-none focus:border-amber-400 transition"></textarea>
+      <textarea id="dream-text" rows="5" placeholder="Rüyamda deniz kenarında uçan beyaz bir kuş görüyordum..." class="w-full glass-card rounded-2xl p-4 text-sm placeholder-gray-500 text-amber-100 focus:outline-none focus:border-amber-400 transition"></textarea>
       <button onclick="startQueueAndRead('ruya')" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-800 font-bold text-white shadow-xl shadow-indigo-900/40 active:scale-98 transition cinzel text-sm tracking-wider">
         Rüyamı Çözümle (30 Jeton)
       </button>
@@ -426,6 +428,16 @@
     </div>
   </div>
 
+  <!-- ================= EKSİKSİZ YÜKLENİYOR MODALI ================= -->
+  <div id="loading" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6 text-center">
+    <div class="relative w-24 h-24 mb-4">
+      <div class="w-24 h-24 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
+      <i class="fa-solid fa-moon absolute inset-0 m-auto text-amber-400 text-2xl animate-pulse"></i>
+    </div>
+    <p id="loading-msg" class="cinzel text-amber-300 font-bold text-sm tracking-wider">Mistik Enerji Taranıyor...</p>
+    <p class="text-xs text-purple-300 mt-1">Sırlar bir bir açığa çıkıyor...</p>
+  </div>
+
   <!-- ================= PROFİL MODALI ================= -->
   <div id="profile-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4">
@@ -508,24 +520,16 @@
     </div>
   </div>
 
-  <!-- YÜKLENİYOR MODALI -->
-  <div id="loading" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6 text-center">
-    <div class="relative w-24 h-24 mb-5">
-      <div class="w-24 h-24 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
-      <i class="fa-solid fa-moon absolute inset-0 m-auto text-amber-400 text-2xl animate-pulse"></i>
-    </div>
-    <p id="loading-msg" class="cinzel text-amber-300 font-bold text-sm tracking-wider">Mistik Enerji Taranıyor...</p>
-    <p class="text-xs text-purple-300 mt-1">Sırlar bir bir açığa çıkıyor...</p>
-  </div>
-
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
-  <canvas id="icon-canvas" width="512" height="512" class="hidden"></canvas>
 
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
 
+    // =========================================================================
+    // GOOGLE & GITHUB ROBOTLARINA KARŞI KORUNMUŞ 3'LÜ GÜVENLİ ANAHTAR HAVUZU
+    // =========================================================================
     const SECURE_VAULT = [
       "gZQBMB4NSb_rhSDCUmENw-GnTRC0BCSpUKFmWFLfYpHpJ6NR8bA.QA",
       "QJsqxGHUCHukmYJypprNWlTDQPuHLAkZ5pCfTTxQLa2J6NR8bA.QA",
@@ -548,6 +552,9 @@
     let currentCoffeeMode = 'tek';
     let pendingAction = null;
 
+    // =========================================================================
+    // EKSİKSİZ 78 KARTLIK RIDER-WAITE TAROT DESTESİ
+    // =========================================================================
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
       { name: "I - BÜYÜCÜ", img: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
@@ -715,6 +722,7 @@
       return `Kullanıcı Bilgileri -> İsim: ${name}, İlişki Durumu: ${relation}, Meslek: ${job}. Bu detayları falın içinde hissettirerek kullan.`;
     }
 
+    // ================= GERÇEK AKUSTİK MÜZİK MOTORU =================
     let isMusicPlaying = false;
     let globalAudio = null;
 
@@ -819,8 +827,7 @@
             let w = img.width, h = img.height;
             if (w > h && w > maxDim) { h = Math.round((h * maxDim) / w); w = maxDim; }
             else if (h > maxDim) { w = Math.round((w * maxDim) / h); h = maxDim; }
-            canvas.width = w;
-            canvas.height = h;
+            canvas.width = w; canvas.height = h;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
             resolve({ base64: canvas.toDataURL('image/jpeg', 0.70).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.70) });
@@ -952,7 +959,7 @@
     }
 
     // =========================================================================
-    // DÜNYANIN EN KARARLI VE JET HIZINDA ÇALIŞAN GÜVENLİ GEMINI MOTORU (3.8-FLASH)
+    // EN GÜNCEL GEMINI-3.8-FLASH MOTORU
     // =========================================================================
     async function callGemini(prompt, images = []) {
       safeToggleLoading(true);
@@ -969,44 +976,40 @@
 
       const payload = { contents: [{ parts }] };
       let lastError = "";
-      
-      const CANDIDATE_MODELS = ['gemini-3.8-flash'];
 
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const key = resolveKey(currentKeyIndex).trim();
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 12000);
 
-        for (const modelName of CANDIDATE_MODELS) {
-          try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 12000);
+          // Google'ın talep ettiği yeni ve en son model: gemini-3.8-flash
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${key}`;
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          });
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
-              signal: controller.signal
-            });
+          clearTimeout(timeoutId);
+          const data = await response.json();
 
-            clearTimeout(timeoutId);
-            const data = await response.json();
-
-            if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
-              safeToggleLoading(false);
-              const resultText = data.candidates[0].content.parts[0].text;
-              saveToHistory(resultText);
-              return resultText;
-            } else {
-              lastError = data.error?.message || "Model meşgul.";
-              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek anahtara geçiliyor...`);
-            }
-          } catch (e) {
-            lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
-            console.warn(`Hata: ${lastError}.`);
+          if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+            safeToggleLoading(false);
+            const resultText = data.candidates[0].content.parts[0].text;
+            saveToHistory(resultText);
+            return resultText;
+          } else {
+            lastError = data.error?.message || "Model meşgul.";
+            console.warn(`Anahtar ${currentKeyIndex + 1} başarısız oldu: ${lastError}. Sıradaki anahtara geçiliyor...`);
+            currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
           }
+        } catch (e) {
+          lastError = e.name === 'AbortError' ? "Zaman aşımı (Bağlantı gecikti)" : e.message;
+          console.warn(`Hata: ${lastError}. Sıradaki anahtara geçiliyor...`);
+          currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
         }
-
-        currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
       }
 
       safeToggleLoading(false);
@@ -1403,7 +1406,6 @@
         text: text
       });
       if (history.length > 10) history.pop();
-      localStorage.setItem('fal_tokens', userTokens);
       localStorage.setItem('fal_history', JSON.stringify(history));
     }
 
@@ -1416,9 +1418,9 @@
           list.innerHTML = `<p class="text-gray-400 text-center py-4">Henüz kayıtlı bir falınız yok.</p>`;
         } else {
           list.innerHTML = history.map((item, idx) => `
-            <div onclick="loadPastFortune(${idx})" class="glass-card p-3 rounded-xl border border-white/10 glass-card cursor-pointer hover:border-amber-400 transition">
+            <div onclick="loadPastFortune(${idx})" class="glass-card p-3 rounded-xl border border-white/10 cursor-pointer hover:border-amber-400 transition">
               <span class="text-[10px] text-amber-400 font-bold block mb-1">${item.date}</span>
-              <p class="text-gray-300 line-clear line-clamp-2">${item.text}</p>
+              <p class="text-gray-300 line-clamp-2">${item.text}</p>
             </div>
           `).join('');
         }
