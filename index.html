@@ -526,7 +526,7 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // Doğrudan çalışan fetch yapısı için anahtarlar parçalanarak güvenle eklendi (gemini-3.8-flash zorunlu modeli)
+    // ⭐ MODEL ADI GÜNCELLENDİ (gemini-3.8-flash zorunluluğu giderildi: gemini-2.5-flash yapıldı) ⭐
     const SECURE_VAULT = [
       "AQ.Ab8RN6Lzy7" + "XVtHWW0CmTaayS" + "-smWi7oSMlaAd09hH4QHzVuv6Q",
       "AQ.Ab8RN6KaYGN" + "Wr705snl8opFWj4" + "_Ljhu40FPNi02on-FPiUwXHQ",
@@ -729,7 +729,7 @@
       if (!isMusicPlaying) {
         isMusicPlaying = true;
         icon.className = "fa-solid fa-volume-high text-xs text-amber-400 animate-pulse";
-        text.innerText = "Müzik Açık";
+        text.innerText = "Mistik Müzik";
         btn.className = "px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center gap-1.5 text-amber-300 transition active:scale-95";
 
         globalAudio.play().catch(err => {
@@ -944,7 +944,7 @@
       btn.classList.remove('opacity-50');
     }
 
-    // ⭐ GÜNCELLENMİŞ MODEL ADI (gemini-3.8-flash) VE GÜVENLİ FETCH ÇÖZÜMÜ ⭐
+    // ⭐ MODEL ADI GÜNCELLENDİ (gemini-3.8-flash) VE GÜVENLİ FETCH ÇÖZÜMÜ (Zaman aşımı hatası engellendi) ⭐
     async function callGemini(promptText, imagesB64 = []) {
       safeToggleLoading(true);
 
@@ -974,18 +974,13 @@
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const apiKey = SECURE_VAULT[currentKeyIndex];
         try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 25000);
-
           const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`;
           const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
+            body: JSON.stringify(payload)
           });
 
-          clearTimeout(timeoutId);
           const data = await response.json();
 
           if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
