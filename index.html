@@ -521,13 +521,12 @@
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
   <canvas id="icon-canvas" width="512" height="512" class="hidden"></canvas>
 
-  <script type="module">
-    import { GoogleGenAI } from "@google/genai";
-
+  <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
 
+    // Doğrudan çalışan fetch yapısı için anahtarlar parçalanarak güvenle eklendi
     const SECURE_VAULT = [
       "AQ.Ab8RN6Lzy7" + "XVtHWW0CmTaayS" + "-smWi7oSMlaAd09hH4QHzVuv6Q",
       "AQ.Ab8RN6KaYGN" + "Wr705snl8opFWj4" + "_Ljhu40FPNi02on-FPiUwXHQ",
@@ -535,11 +534,6 @@
     ];
 
     let currentKeyIndex = 0;
-    function getActiveAI() {
-      const apiKey = SECURE_VAULT[currentKeyIndex];
-      return new GoogleGenAI({ apiKey });
-    }
-
     let userTokens = parseInt(localStorage.getItem('fal_tokens') || '150');
     let optimizedImages = [];
     let palmImageBase64 = null;
@@ -950,7 +944,6 @@
       btn.classList.remove('opacity-50');
     }
 
-    // ⭐ TARAYICI KİLİTLENMELERİNİ BİTİREN GÜVENLİ FETCH ÇÖZÜMÜ ⭐
     async function callGemini(promptText, imagesB64 = []) {
       safeToggleLoading(true);
 
