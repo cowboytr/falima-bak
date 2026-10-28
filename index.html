@@ -526,16 +526,12 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // Doğrudan AI Studio'dan aldığın anahtarları buraya düz metin olarak yazdık (Ters çevirme iptal edildi)
+    // AI Studio'dan aldığın 3 gerçek anahtarı buraya ekle (Ters çevirme kaldırıldı)
     const SECURE_VAULT = [
-      "AIzaSy... (Buraya 1. anahtarını tam yapıştır)",
-      "AIzaSy... (Buraya 2. anahtarını tam yapıştır)",
-      "AIzaSy... (Buraya 3. anahtarını tam yapıştır)"
+      "AIzaSy... (1. Anahtar)",
+      "AIzaSy... (2. Anahtar)",
+      "AIzaSy... (3. Anahtar)"
     ];
-
-    function resolveKey(index) {
-      return SECURE_VAULT[index]; // Artık ters çevirmiyor, doğrudan anahtarı veriyor
-    }
 
     let currentKeyIndex = 0;
     let userTokens = parseInt(localStorage.getItem('fal_tokens') || '150');
@@ -994,11 +990,15 @@
           const controller = new AbortController();
           const timeoutId = setTimeout(() => controller.abort(), 25000);
 
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
+          // Google AI Studio resmi standardı: Anahtarı x-goog-api-key header'ı ile gönderiyoruz
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent`;
           
           const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'x-goog-api-key': key
+            },
             body: JSON.stringify(payload),
             signal: controller.signal
           });
