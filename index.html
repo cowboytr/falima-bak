@@ -951,10 +951,23 @@
       btn.classList.remove('opacity-50');
     }
 
+    // =========================================================================
+    // 3.8-FLASH MODELİ VE EZBERE YANITI ÖNLEYEN RASTGELE ENERJİ MOTORU İLE 
+    // GÜNCELLENMİŞ VE TAM OLAN CALLGEMİNİ FONKSİYONU
+    // =========================================================================
     async function callGemini(prompt, images = []) {
       safeToggleLoading(true);
 
-      const parts = [{ text: prompt }];
+      // Her çağrıda ezbere kalıpları bozan rastgele mistik frekans ve derinlik enjekte edilir
+      const cosmicSeeds = [
+        "Bugün gökyüzünde sıra dışı bir enerji var. Kehanetlerinde asla klasik, birbirini tekrar eden kalıplar kullanma; nokta atışı, keskin ve şaşırtıcı detaylar ver.",
+        "Bugün telveler ve semboller çok gizemli mesajlar fısıldıyor. Benzersiz, daha önce duyulmamış metaforlar kur.",
+        "Kader çarkı bugün çok hızlı dönüyor. Tarihlere, harflere ve ani gelişmelere odaklanarak tamamen özgün ve sarsıcı bir kehanet yaz."
+      ];
+      const seed = cosmicSeeds[Math.floor(Math.random() * cosmicSeeds.length)];
+      const finalPrompt = `${seed}\n\n${prompt}`;
+
+      const parts = [{ text: finalPrompt }];
       images.forEach(b64 => {
         parts.push({
           inlineData: {
@@ -967,47 +980,47 @@
       const payload = { contents: [{ parts }] };
       let lastError = "";
       
-      const CANDIDATE_MODELS = ['gemini-3.8-flash']
+      // İstediğin gibi en güncel gemini-3.8-flash modeli kullanılıyor
+      const modelName = 'gemini-3.8-flash';
 
+      // 3 farklı API anahtarını sırayla dener (Biri kota verirse otomatik diğerine geçer)
       for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
         const key = resolveKey(currentKeyIndex).trim();
 
-        for (const modelName of CANDIDATE_MODELS) {
-          try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 12000);
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload),
-              signal: controller.signal
-            });
+          const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${key}`;
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+          });
 
-            clearTimeout(timeoutId);
-            const data = await response.json();
+          clearTimeout(timeoutId);
+          const data = await response.json();
 
-            if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
-              safeToggleLoading(false);
-              const resultText = data.candidates[0].content.parts[0].text;
-              saveToHistory(resultText);
-              return resultText;
-            } else {
-              lastError = data.error?.message || "Model meşgul.";
-              console.warn(`[${modelName}] yanıt veremedi (${lastError}), yedek modele geçiliyor...`);
-            }
-          } catch (e) {
-            lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
-            console.warn(`Hata: ${lastError}.`);
+          if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+            safeToggleLoading(false);
+            const resultText = data.candidates[0].content.parts[0].text;
+            saveToHistory(resultText);
+            return resultText;
+          } else {
+            lastError = data.error?.message || "Model meşgul veya kota sınırı.";
+            console.warn(`[Anahtar Index: ${currentKeyIndex}] sınırda, yedek anahtara geçiliyor...`);
           }
+        } catch (e) {
+          lastError = e.name === 'AbortError' ? "Zaman aşımı" : e.message;
+          console.warn(`Bağlantı hatası: ${lastError}`);
         }
 
         currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
       }
 
       safeToggleLoading(false);
-      alert("Yapay Zeka Bağlantı Uyarısı: " + lastError);
+      alert("Ücretsiz test kotası yoğunluktan dolayı doldu! Lütfen 1 dakika bekleyip tekrar deneyin.");
       throw new Error(lastError);
     }
 
