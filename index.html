@@ -536,7 +536,6 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // GİDEREK ÇOĞALTILAN VE BOTLARI ATLATMAK İÇİN PARÇALANAN GÜVENLİ KASA
     const SECURE_VAULT = [
       "AQ.Ab8RN6Lzy7" + "XVtHWW0CmTaayS" + "-smWi7oSMlaAd09hH4QHzVuv6Q",
       "AQ.Ab8RN6KaYGN" + "Wr705snl8opFWj4" + "_Ljhu40FPNi02on-FPiUwXHQ",
@@ -988,7 +987,7 @@
           }
 
           const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-3.8-flash',
             contents: contentsArray
           });
 
