@@ -526,7 +526,6 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // ⭐ MODEL ADI GÜNCELLENDİ (gemini-3.8-flash zorunluluğu giderildi: gemini-2.5-flash yapıldı) ⭐
     const SECURE_VAULT = [
       "AQ.Ab8RN6Lzy7" + "XVtHWW0CmTaayS" + "-smWi7oSMlaAd09hH4QHzVuv6Q",
       "AQ.Ab8RN6KaYGN" + "Wr705snl8opFWj4" + "_Ljhu40FPNi02on-FPiUwXHQ",
@@ -944,7 +943,6 @@
       btn.classList.remove('opacity-50');
     }
 
-    // ⭐ MODEL ADI GÜNCELLENDİ (gemini-3.8-flash) VE GÜVENLİ FETCH ÇÖZÜMÜ (Zaman aşımı hatası engellendi) ⭐
     async function callGemini(promptText, imagesB64 = []) {
       safeToggleLoading(true);
 
@@ -1373,7 +1371,7 @@
         utter.lang = 'tr-TR';
         utter.rate = 1.0;
         utter.onend = () => { index++; playNextSentence(); };
-        utter.onerror = () => { index++; playNextSentence(); };
+        utter.onerror = () => { index++; play/nextSentence(); };
         window.speechSynthesis.speak(utter);
       }
       playNextSentence();
