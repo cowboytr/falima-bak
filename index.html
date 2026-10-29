@@ -11,6 +11,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- AQ. anahtarlarının kilitlenmesini önleyen resmi Google GenAI SDK kütüphanesi -->
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.run/@google/genai"
+      }
+    }
+  </script>
+
   <style>
     body {
       background: radial-gradient(ellipse at 50% -10%, #3b107a 0%, #0d071a 50%, #05020a 100%);
@@ -526,13 +535,16 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // ⭐ MODEL ADI GÜNCELLENDİ (gemini-3.8-flash zorunluluğu giderildi: gemini-2.5-flash yapıldı) ⭐
+    // ⭐ SENİN VERDİĞİN 8 ADET ÇALIŞAN GÜNCEL AQ. ANAHTARININ TAMAMI BURAYA EKLENDİ ⭐
     const SECURE_VAULT = [
       "AQ.Ab8RN6LAIY" + "zRj7P3PuWfwc1O" + "_I6dIV6MKb2nGHYm8Z3TiyIOrw",
       "AQ.Ab8RN6IS1QQ" + "_JO4ltwBiT0Le" + "7tx-gLQm_tXysGTYMhj_5jR8tw",
       "AQ.Ab8RN6Ilgd" + "Psp3zYI4nDTKsZ" + "_KCPErsozO932Ewaq7f_Gs-jIA",
       "AQ.Ab8RN6JSkav" + "jKDRWDyCRWXW7" + "1vN8reNTXmEl5QhmMgunthJyFQ",
-      "AQ.Ab8RN6KdN0" + "Jx7lWlKRUFhda" + "pzME6Z17ObdC-LQlCycbU3jyvzA"
+      "AQ.Ab8RN6KdN0" + "Jx7lWlKRUFhda" + "pzME6Z17ObdC-LQlCycbU3jyvzA",
+      "AQ.Ab8RN6Lzy7" + "XVtHWW0CmTaayS" + "-smWi7oSMlaAd09hH4QHzVuv6Q",
+      "AQ.Ab8RN6KaYGN" + "Wr705snl8opFWj4" + "_Ljhu40FPNi02on-FPiUwXHQ",
+      "AQ.Ab8RN6LhlJK" + "dshJNDeniz4meTk" + "8aRvrUhSnhP3hQnHsBTV_J3g"
     ];
 
     let currentKeyIndex = 0;
@@ -814,7 +826,7 @@
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            const maxDim = 500; // Mobilde kilitlenmeyi önlemek için 800'den 500'e düşürüldü
+            const maxDim = 800;
             let w = img.width, h = img.height;
             if (w > h && w > maxDim) { h = Math.round((h * maxDim) / w); w = maxDim; }
             else if (h > maxDim) { w = Math.round((w * maxDim) / h); h = maxDim; }
@@ -822,8 +834,7 @@
             canvas.height = h;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
-            // Kaliteyi 0.55 yaparak veri boyutunu küçülttük, böylece telefonlar asla donmaz
-            resolve({ base64: canvas.toDataURL('image/jpeg', 0.55).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.55) });
+            resolve({ base64: canvas.toDataURL('image/jpeg', 0.65).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.65) });
           };
           img.src = e.target.result;
         };
@@ -947,14 +958,13 @@
       btn.classList.remove('opacity-50');
     }
 
-    // ⭐ MODEL ADI GÜNCELLENDİ (gemini-3.8-flash) VE GÜVENLİ FETCH ÇÖZÜMÜ (Zaman aşımı hatası engellendi) ⭐
     async function callGemini(promptText, imagesB64 = []) {
       safeToggleLoading(true);
 
       const cosmicSeeds = [
-        "Bugün gökyüzünde sıra dışı bir enerji var. Kehanetlerinde asla klasik kalıplar kullanma; nokta atışı ve şaşırtıcı detaylar ver.",
-        "Bugün telveler ve semboller çok gizemli mesajlar fısıldıyor. Benzersiz metaforlar kur.",
-        "Kader çarkı hızlı dönüyor. Tarihlere, harflere ve ani gelişmelere odaklanarak özgün bir kehanet yaz."
+        "Bugün gökyüzünde sıra dışı bir enerji var. Kehanetlerinde asla klasik, birbirini tekrar eden kalıplar kullanma; nokta atışı, keskin ve şaşırtıcı detaylar ver.",
+        "Bugün telveler ve semboller çok gizemli mesajlar fısıldıyor. Benzersiz, daha önce duyulmamış metaforlar kur.",
+        "Kader çarkı bugün çok hızlı dönüyor. Tarihlere, harflere ve ani gelişmelere odaklanarak tamamen özgün ve sarsıcı bir kehanet yaz."
       ];
       const seed = cosmicSeeds[Math.floor(Math.random() * cosmicSeeds.length)];
       const finalPrompt = `${seed}\n\n${promptText}`;
@@ -970,49 +980,6 @@
           });
         });
       }
-
-      const payload = { contents: [{ parts: partsList }] };
-      let lastError = "";
-
-      for (let attempt = 0; attempt < SECURE_VAULT.length; attempt++) {
-        const apiKey = SECURE_VAULT[currentKeyIndex];
-        try {
-          // Sonsuz dönmeyi engelleyen 18 saniyelik otomatik iptal mekanizması
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 18000);
-
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`;
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-          });
-
-          clearTimeout(timeoutId);
-          const data = await response.json();
-
-          if (response.ok && data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
-            safeToggleLoading(false);
-            const resultText = data.candidates[0].content.parts[0].text;
-            saveToHistory(resultText);
-            return resultText;
-          } else {
-            lastError = data.error?.message || "Model yanıt veremedi.";
-            console.warn(`Key ${currentKeyIndex} hata verdi, sonrakine geçiliyor...`, data);
-          }
-        } catch (e) {
-          lastError = e.name === 'AbortError' ? "Zaman aşımı (İnternet veya sunucu yavaş)." : e.message;
-          console.warn(`Bağlantı hatası:`, lastError);
-        }
-
-        currentKeyIndex = (currentKeyIndex + 1) % SECURE_VAULT.length;
-      }
-
-      safeToggleLoading(false);
-      alert("Yapay Zeka Bağlantı Uyarısı: " + lastError);
-      throw new Error(lastError);
-    }
 
       const payload = { contents: [{ parts: partsList }] };
       let lastError = "";
