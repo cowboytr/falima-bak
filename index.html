@@ -492,14 +492,15 @@
       <div class="py-2">
         <span class="text-3xl font-black text-amber-400" id="modal-token-display">150</span>
         <span class="text-xs text-gray-400 block mt-1">Mevcut Jetonunuz</span>
+        <span class="text-[11px] text-amber-300/90 block mt-1">✦ Her gün 150 Jeton otomatik yenilenir ✦</span>
       </div>
 
-      <button onclick="claimDailyReward()" id="btn-daily-claim" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition">
-        <i class="fa-solid fa-gift"></i> Günlük Giriş Hediyeni Al (+50 Jeton)
+      <button onclick="claimDailyReward()" id="btn-daily-claim" class="w-full py-3 rounded-xl bg-purple-600/30 border border-purple-400/40 text-purple-200 font-bold text-xs flex items-center justify-center gap-2 transition">
+        <i class="fa-solid fa-calendar-check"></i> Günlük 150 Jeton Paketi (Aktif)
       </button>
 
       <button onclick="watchRewardedAd()" id="btn-watch-ad" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-gray-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition">
-        <i class="fa-solid fa-play"></i> Kısa Video İzle (+50 Jeton Kazan)
+        <i class="fa-solid fa-play"></i> Ekstra Video İzle (+50 Jeton) (Günde 1 Kez)
       </button>
     </div>
   </div>
@@ -527,6 +528,11 @@
     <p class="text-xs text-purple-300 mt-1">Sırlar bir bir açığa çıkıyor...</p>
   </div>
 
+  <!-- SÜRÜM BİLGİSİ -->
+  <div class="text-center text-[10px] text-gray-500 py-3 mt-4">
+    ✦ Falıma Bak v1.3 (Güncel) ✦
+  </div>
+
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
   <canvas id="icon-canvas" width="512" height="512" class="hidden"></canvas>
 
@@ -535,7 +541,7 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // ⭐ SENİN VERDİĞİN 8 ADET ÇALIŞAN GÜNCEL AQ. ANAHTARININ TAMAMI BURAYA EKLENDİ ⭐
+    // ⭐ 8 ADET ÇALIŞAN GÜNCEL AQ. ANAHTAR HAVUZU ⭐
     const SECURE_VAULT = [
       "AQ.Ab8RN6LAIY" + "zRj7P3PuWfwc1O" + "_I6dIV6MKb2nGHYm8Z3TiyIOrw",
       "AQ.Ab8RN6IS1QQ" + "_JO4ltwBiT0Le" + "7tx-gLQm_tXysGTYMhj_5jR8tw",
@@ -545,10 +551,26 @@
       "AQ.Ab8RN6LE-8" + "j05WWAbn5q4DE" + "QV99krmiMcD152QMiKctnOA9Jaw",
       "AQ.Ab8RN6JjRB9" + "KuhtNjyKJ37f" + "8azStcmGPfOEKfaZToMpFqOZr7g",
       "AQ.Ab8RN6L7glRL" + "jMM5tZTMzgVD" + "qrTrWKJbjpqKRhFUEAKMHgf7aw"
-     ];
+    ];
 
     let currentKeyIndex = 0;
-    let userTokens = parseInt(localStorage.getItem('fal_tokens') || '150');
+
+    // =========================================================================
+    // GÜNLÜK 150 JETON VE TEK SEFERLİK REKLAM KONTROL SİSTEMİ
+    // =========================================================================
+    const todayStr = new Date().toDateString();
+    const lastDailyGrant = localStorage.getItem('last_daily_grant');
+
+    let userTokens;
+    // Yeni bir güne geçildiyse jetonu otomatik 150 yap:
+    if (lastDailyGrant !== todayStr) {
+      userTokens = 150;
+      localStorage.setItem('fal_tokens', userTokens);
+      localStorage.setItem('last_daily_grant', todayStr);
+    } else {
+      userTokens = parseInt(localStorage.getItem('fal_tokens') || '150');
+    }
+
     let optimizedImages = [];
     let palmImageBase64 = null;
     let currentFortune = "";
@@ -661,7 +683,7 @@
     function spendTokens(cost) {
       if (userTokens < cost) {
         openTokenModal();
-        alert(`Bu işlem için ${cost} jeton gerekiyor! Lütfen ücretsiz jeton kazanın.`);
+        alert(`Bu işlem için ${cost} jeton gerekiyor! Günlük jeton limitiniz dolmuş olabilir.`);
         return false;
       }
       userTokens -= cost;
@@ -669,33 +691,44 @@
       return true;
     }
 
-    window.openTokenModal = function() { document.getElementById('token-modal').classList.remove('hidden'); }
+    window.openTokenModal = function() { 
+      const adBtn = document.getElementById('btn-watch-ad');
+      const today = new Date().toDateString();
+      if (localStorage.getItem('last_ad_watch') === today) {
+        adBtn.innerHTML = `<i class="fa-solid fa-check"></i> Bugün İzlendi (+50 Jeton Alındı)`;
+        adBtn.classList.add('opacity-50', 'pointer-events-none');
+      } else {
+        adBtn.innerHTML = `<i class="fa-solid fa-play"></i> Ekstra Video İzle (+50 Jeton) (Günde 1 Kez)`;
+        adBtn.classList.remove('opacity-50', 'pointer-events-none');
+      }
+      document.getElementById('token-modal').classList.remove('hidden'); 
+    }
     window.closeTokenModal = function() { document.getElementById('token-modal').classList.add('hidden'); }
 
     window.claimDailyReward = function() {
-      const lastClaim = localStorage.getItem('last_daily_claim');
-      const today = new Date().toDateString();
-      if (lastClaim === today) {
-        alert("Bugünkü giriş hediyenizi zaten aldınız! Yarın tekrar gelin.");
-        return;
-      }
-      userTokens += 50;
-      localStorage.setItem('last_daily_claim', today);
-      updateTokenUI();
-      alert("Tebrikler! Günlük 50 Mistik Jeton kazandınız!");
+      alert(`Her gün 150 Mistik Jetonunuz otomatik olarak yenilenir. Şu anki bakiyeniz: ${userTokens} Jeton.`);
     }
 
+    // GÜNDE SADECE 1 KEZ İZLENEBİLEN KONTROLLÜ REKLAM FONKSİYONU:
     window.watchRewardedAd = function() {
+      const today = new Date().toDateString();
+      if (localStorage.getItem('last_ad_watch') === today) {
+        alert("Bugünkü video izleme hakkınızı zaten kullandınız! Yarın tekrar bekleriz.");
+        return;
+      }
+
       const btn = document.getElementById('btn-watch-ad');
       btn.innerText = "Video Reklam Oynatılıyor (5 sn)...";
       btn.disabled = true;
 
       setTimeout(() => {
         userTokens += 50;
+        localStorage.setItem('last_ad_watch', today);
         updateTokenUI();
-        btn.innerHTML = `<i class="fa-solid fa-play"></i> Kısa Video İzle (+50 Jeton Kazan)`;
+        btn.innerHTML = `<i class="fa-solid fa-check"></i> Bugün İzlendi (+50 Jeton Alındı)`;
+        btn.classList.add('opacity-50', 'pointer-events-none');
         btn.disabled = false;
-        alert("Harika! Reklamı tamamladınız ve +50 Jeton hesabınıza eklendi!");
+        alert("Tebrikler! Günlük ekstra +50 Jeton hesabınıza eklendi!");
         closeTokenModal();
       }, 5000);
     }
@@ -829,7 +862,6 @@
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            // Maliyeti yarı yarıya düşürmek için 800'den 600'e çekildi:
             const maxDim = 600;
             let w = img.width, h = img.height;
             if (w > h && w > maxDim) { h = Math.round((h * maxDim) / w); w = maxDim; }
@@ -838,7 +870,6 @@
             canvas.height = h;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, w, h);
-            // Kalite 0.65'ten 0.55'e çekildi:
             resolve({ base64: canvas.toDataURL('image/jpeg', 0.55).split(',')[1], preview: canvas.toDataURL('image/jpeg', 0.55) });
           };
           img.src = e.target.result;
@@ -1444,7 +1475,4 @@
     }
   </script>
 </body>
-<div class="text-center text-[10px] text-gray-500 py-4">
-  ✦ Falıma Bak v1.2 (Güncel) ✦
-</div>
 </html>
