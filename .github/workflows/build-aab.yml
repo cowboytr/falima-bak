@@ -20,7 +20,7 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Check Keystore and Accept Android Licenses
+      - name: Install Android 36 Platform & Accept Licenses
         run: |
           if [ ! -f "signing.keystore" ]; then
             echo "::error::signing.keystore bulunamadı!"
@@ -28,6 +28,7 @@ jobs:
           fi
           echo "signing.keystore başarıyla doğrulandı!"
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" || true
 
       - name: Create Android WebView Project
         run: |
@@ -41,7 +42,7 @@ jobs:
             cp icon.png android-project/app/src/main/res/drawable/ic_launcher.png
           fi
 
-          # 2. gradle.properties (HATAYI ÇÖZEN HAYATİ DOSYA)
+          # 2. gradle.properties
           cat << 'EOF' > android-project/gradle.properties
           android.useAndroidX=true
           android.nonTransitiveRClass=true
@@ -71,11 +72,11 @@ jobs:
           # 4. root build.gradle
           cat << 'EOF' > android-project/build.gradle
           plugins {
-              id 'com.android.application' version '8.3.0' apply false
+              id 'com.android.application' version '8.4.0' apply false
           }
           EOF
 
-          # 5. app/build.gradle
+          # 5. app/build.gradle (HEDEF SDK: 36, SÜRÜM KODU: 3)
           cat << 'EOF' > android-project/app/build.gradle
           plugins {
               id 'com.android.application'
@@ -83,14 +84,14 @@ jobs:
 
           android {
               namespace 'io.github.cowboytr.twa'
-              compileSdk 34
+              compileSdk 36
 
               defaultConfig {
                   applicationId "io.github.cowboytr.twa"
                   minSdk 24
-                  targetSdk 34
-                  versionCode 2
-                  versionName "1.0.1"
+                  targetSdk 36
+                  versionCode 3
+                  versionName "1.0.2"
               }
 
               signingConfigs {
