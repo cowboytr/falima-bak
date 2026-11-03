@@ -32,7 +32,7 @@ jobs:
 
       - name: Create Android WebView Project
         run: |
-          mkdir -p android-project/app/src/main/java/io/github/cowboytr/twa
+          mkdir -p android-project/app/src/main/java/com/zirvelabs/falimabak
           mkdir -p android-project/app/src/main/res/drawable
           mkdir -p android-project/app/src/main/res/values
 
@@ -76,22 +76,22 @@ jobs:
           }
           EOF
 
-          # 5. app/build.gradle (HEDEF SDK: 36, SÜRÜM KODU: 3)
+          # 5. app/build.gradle (YENİ TERTEMİZ PAKET ADI)
           cat << 'EOF' > android-project/app/build.gradle
           plugins {
               id 'com.android.application'
           }
 
           android {
-              namespace 'io.github.cowboytr.twa'
+              namespace 'com.zirvelabs.falimabak'
               compileSdk 36
 
               defaultConfig {
-                  applicationId "io.github.cowboytr.twa"
+                  applicationId "com.zirvelabs.falimabak"
                   minSdk 24
                   targetSdk 36
-                  versionCode 3
-                  versionName "1.0.2"
+                  versionCode 1
+                  versionName "1.0.0"
               }
 
               signingConfigs {
@@ -171,8 +171,8 @@ jobs:
           EOF
 
           # 8. MainActivity.java
-          cat << 'EOF' > android-project/app/src/main/java/io/github/cowboytr/twa/MainActivity.java
-          package io.github.cowboytr.twa;
+          cat << 'EOF' > android-project/app/src/main/java/com/zirvelabs/falimabak/MainActivity.java
+          package com.zirvelabs.falimabak;
 
           import android.annotation.SuppressLint;
           import android.app.Activity;
@@ -268,7 +268,7 @@ jobs:
           }
           EOF
 
-      # 9. Build AAB Bundle (Gradle 8.7 ile tam uyumlu)
+      # 9. Build AAB Bundle
       - name: Build AAB Bundle
         run: |
           wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
