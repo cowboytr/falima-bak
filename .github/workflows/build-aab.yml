@@ -20,6 +20,15 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Check Keystore and Accept Android Licenses
+        run: |
+          if [ ! -f "signing.keystore" ]; then
+            echo "::error::DIKKAT: signing.keystore dosyasi GitHub ana dizininde bulunamadi! Lutfen once Add file -> Upload files ile bu dosyayi yukleyin."
+            exit 1
+          fi
+          echo "signing.keystore bulundu!"
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
       - name: Create Android WebView Project
         run: |
           mkdir -p android-project/app/src/main/java/io/github/cowboytr/twa
@@ -155,7 +164,7 @@ jobs:
           </vector>
           EOF
 
-          # 7. MainActivity.java (Kamera, Galeri ve WebView Tam Entegrasyon)
+          # 7. MainActivity.java
           cat << 'EOF' > android-project/app/src/main/java/io/github/cowboytr/twa/MainActivity.java
           package io.github.cowboytr.twa;
 
@@ -259,7 +268,7 @@ jobs:
           unzip -q gradle-8.5-bin.zip
           export PATH=$PWD/gradle-8.5/bin:$PATH
           cd android-project
-          gradle bundleRelease --stacktrace
+          gradle bundleRelease --no-daemon
 
       - name: Upload Signed AAB Artifact
         uses: actions/upload-artifact@v4
