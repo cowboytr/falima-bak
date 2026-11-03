@@ -72,7 +72,7 @@ jobs:
           # 4. root build.gradle
           cat << 'EOF' > android-project/build.gradle
           plugins {
-              id 'com.android.application' version '8.4.0' apply false
+              id 'com.android.application' version '8.4.2' apply false
           }
           EOF
 
@@ -268,11 +268,12 @@ jobs:
           }
           EOF
 
+      # 9. Build AAB Bundle (Gradle 8.7 ile tam uyumlu)
       - name: Build AAB Bundle
         run: |
-          wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
-          unzip -q gradle-8.5-bin.zip
-          export PATH=$PWD/gradle-8.5/bin:$PATH
+          wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
+          unzip -q gradle-8.7-bin.zip
+          export PATH=$PWD/gradle-8.7/bin:$PATH
           cd android-project
           gradle bundleRelease --no-daemon
 
