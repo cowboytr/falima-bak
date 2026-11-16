@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- AQ. anahtarlarının kilitlenmesini önleyen resmi Google GenAI SDK kütüphanesi -->
   <script type="importmap">
     {
       "imports": {
@@ -73,20 +72,26 @@
     <p class="text-[10px] sm:text-[11px] text-amber-200/80 font-semibold tracking-widest uppercase mt-1 text-center">✦ 78 KARTLI MİSTİK KEHANET & FAL REHBERİ ✦</p>
   </header>
 
-  <!-- ================= 2. KULLANICI KONTROL BARI ================= -->
+  <!-- ================= 2. KULLANICI KONTROL BARI (YENİ PAYLAŞ VE REHBER BUTONLARI EKLENDİ) ================= -->
   <div class="glass-card rounded-2xl p-2 mb-4 flex items-center justify-between gap-1 text-xs">
-    <button onclick="openTokenModal()" class="px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center gap-1.5 text-xs text-amber-300 font-bold active:scale-95 transition">
+    <button onclick="openTokenModal()" class="px-2.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center gap-1 text-xs text-amber-300 font-bold active:scale-95 transition">
       <span>🪙</span> <span id="token-balance">150</span> <span class="text-[10px] text-amber-400/80 font-normal">Jeton</span>
     </button>
 
-    <button onclick="toggleAmbientMusic()" id="btn-ambient" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95">
+    <button onclick="toggleAmbientMusic()" id="btn-ambient" class="px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1 text-gray-300 hover:text-amber-300 transition active:scale-95">
       <i id="music-icon" class="fa-solid fa-volume-xmark text-xs"></i>
-      <span id="music-text" class="text-[10px] font-semibold">Mistik Müzik</span>
+      <span id="music-text" class="text-[10px] font-semibold">Müzik</span>
     </button>
 
     <div class="flex items-center gap-1">
-      <button onclick="openProfileModal()" title="Profilim" class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-300 hover:bg-white/10 active:scale-95 transition">
-        <i class="fa-solid fa-user text-xs"></i>
+      <button onclick="openWalkthroughModal()" title="Nasıl Kullanılır? (Rehber)" class="w-8 h-8 rounded-xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-200 hover:bg-purple-500/30 active:scale-95 transition">
+        <i class="fa-solid fa-circle-question text-xs"></i>
+      </button>
+      <button onclick="shareApp()" title="Uygulamayı Paylaş" class="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300 hover:bg-amber-500/30 active:scale-95 transition">
+        <i class="fa-solid fa-share-nodes text-xs"></i>
+      </button>
+      <button onclick="openProfileModal()" title="Profilim & Ayarlar" class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-300 hover:bg-white/10 active:scale-95 transition">
+        <i class="fa-solid fa-gear text-xs"></i>
       </button>
       <button onclick="toggleHistoryModal()" title="Fal Geçmişi" class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-amber-300 hover:bg-white/10 active:scale-95 transition">
         <i class="fa-solid fa-clock-rotate-left text-xs"></i>
@@ -388,7 +393,6 @@
       </div>
     </div>
 
-    <!-- Görsel Sembol Radarı -->
     <div id="detected-symbols-area" class="hidden mb-5 glass-card rounded-2xl p-4 border border-amber-400/30 bg-purple-950/30">
       <h4 class="text-xs font-bold text-amber-300 mb-2.5 flex items-center gap-2 cinzel">
         <i class="fa-solid fa-crosshairs text-amber-400 animate-spin"></i> Fincanda Keşfedilen İşaretler:
@@ -396,10 +400,8 @@
       <div id="symbols-list" class="flex flex-wrap gap-2 text-xs"></div>
     </div>
 
-    <!-- Fal Metni -->
     <div id="fortune-output" class="text-[15px] sm:text-base leading-relaxed text-slate-200 whitespace-pre-wrap font-normal"></div>
 
-    <!-- 4'lü Aksiyon Barı -->
     <div class="grid grid-cols-2 gap-2 mt-6 pt-4 border-t border-white/10 text-xs font-semibold">
       <button onclick="toggleVoice()" id="btn-voice" class="py-3 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-300 flex items-center justify-center gap-1.5 active:scale-95 transition">
         <i class="fa-solid fa-volume-high"></i> <span id="voice-text">Sesli Oku</span>
@@ -435,12 +437,12 @@
     </div>
   </div>
 
-  <!-- ================= PROFİL MODALI ================= -->
+  <!-- ================= PROFİL & AYARLAR MODALI (PUANLA, PAYLAŞ VE REHBER EKLENDİ) ================= -->
   <div id="profile-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
-    <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4">
+    <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
         <h4 class="cinzel text-sm text-amber-300 font-bold flex items-center gap-2">
-          <i class="fa-solid fa-user-gear"></i> Falcı Bilgileriniz
+          <i class="fa-solid fa-user-gear"></i> Falcı Bilgileriniz & Ayarlar
         </h4>
         <button onclick="closeProfileModal()" class="text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -476,6 +478,23 @@
       <button onclick="saveUserProfile()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 font-bold text-gray-950 text-xs transition">
         Bilgileri Kaydet
       </button>
+
+      <!-- TEST RAPORU İLE İSTENEN AYARLAR VE ETKİLEŞİM BUTONLARI -->
+      <div class="pt-3 border-t border-white/10 space-y-2 text-xs">
+        <span class="text-[10px] text-amber-300/80 font-bold block uppercase tracking-wider">Uygulama & Destek:</span>
+        
+        <button onclick="rateApp()" class="w-full py-2.5 rounded-xl bg-amber-500/15 border border-amber-400/40 text-amber-300 font-semibold flex items-center justify-center gap-2 active:scale-95 transition">
+          <i class="fa-solid fa-star text-amber-400"></i> Bizi Play Store'da Puanla (5 Yıldız)
+        </button>
+
+        <button onclick="shareApp()" class="w-full py-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-200 font-semibold flex items-center justify-center gap-2 hover:bg-white/10 active:scale-95 transition">
+          <i class="fa-solid fa-share-nodes text-purple-300"></i> Uygulamayı Arkadaşlarınla Paylaş
+        </button>
+
+        <button onclick="openWalkthroughModal()" class="w-full py-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-300 font-medium flex items-center justify-center gap-2 hover:bg-white/10 active:scale-95 transition">
+          <i class="fa-solid fa-compass text-amber-300"></i> Mistik Kullanım Rehberini Aç
+        </button>
+      </div>
     </div>
   </div>
 
@@ -505,6 +524,52 @@
     </div>
   </div>
 
+  <!-- ================= TEST RAPORU İLE İSTENEN DİNAMİK YENİ KULLANICI REHBERİ (WALKTHROUGH) ================= -->
+  <div id="walkthrough-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4">
+    <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 text-center border-2 border-amber-400/50 shadow-2xl">
+      <div class="w-16 h-16 rounded-2xl glass-card mx-auto flex items-center justify-center border border-amber-400/60 text-amber-300 text-3xl shadow-lg gold-glow">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+      </div>
+
+      <h3 class="cinzel text-lg font-black text-amber-300 gold-gradient-text tracking-wide">
+        FALIMA BAK'A HOŞ GELDİNİZ!
+      </h3>
+      <p class="text-xs text-purple-200 leading-relaxed">
+        Görsel yapay zeka ile telvelerin gizemini çözmeye hazır mısınız? İşte 3 kolay adımda mistik rehberiniz:
+      </p>
+
+      <div class="space-y-2.5 text-left text-xs">
+        <div class="p-3 rounded-2xl glass-card border border-white/10 flex items-start gap-3">
+          <span class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold shrink-0">1</span>
+          <div>
+            <b class="text-amber-200 block">Fincan veya El Fotoğrafını Yükle</b>
+            <span class="text-gray-300 text-[11px]">Telve şekillerini, sembolleri ve avuç içi çizgilerini yapay zeka anında tarasın.</span>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl glass-card border border-white/10 flex items-start gap-3">
+          <span class="w-6 h-6 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold shrink-0">2</span>
+          <div>
+            <b class="text-purple-200 block">Falcını ve Modülünü Seç</b>
+            <span class="text-gray-300 text-[11px]">Gülfem Abla, Melchior veya Astrolog Ece arasından falcını belirle; Tarot, Rüya ve Aşk Uyumunu keşfet.</span>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl glass-card border border-white/10 flex items-start gap-3">
+          <span class="w-6 h-6 rounded-lg bg-pink-500/20 text-pink-300 flex items-center justify-center font-bold shrink-0">3</span>
+          <div>
+            <b class="text-pink-200 block">Günlük 150 Jetonun Hazır</b>
+            <span class="text-gray-300 text-[11px]">Her gün hesabına 150 mistik jeton ücretsiz tanımlanır. Dilediğin gibi kehanetlerini al!</span>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="closeWalkthroughModal()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 font-bold text-slate-950 text-xs cinzel tracking-wider shadow-lg active:scale-95 transition">
+        ✦ MİSTİK YOLCULUĞA BAŞLA ✦
+      </button>
+    </div>
+  </div>
+
   <!-- FAL GEÇMİŞİ MODALI -->
   <div id="history-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-5 w-full max-w-sm max-h-[80vh] flex flex-col">
@@ -528,9 +593,9 @@
     <p class="text-xs text-purple-300 mt-1">Sırlar bir bir açığa çıkıyor...</p>
   </div>
 
-  <!-- SÜRÜM BİLGİSİ -->
+  <!-- GÜNCELLENMİŞ SÜRÜM BİLGİSİ -->
   <div class="text-center text-[10px] text-gray-500 py-3 mt-4">
-    ✦ Falıma Bak v1.3 (Güncel) ✦
+    ✦ Falıma Bak v1.4 (Geri Bildirim Güncellemesi) ✦
   </div>
 
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
@@ -541,7 +606,7 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // ⭐ 8 ADET ÇALIŞAN GÜNCEL AQ. ANAHTAR HAVUZU ⭐
+    // ⭐ 8 ADET GÜNCEL KORUMALI ANAHTAR HAVUZU ⭐
     const SECURE_VAULT = [
       "AQ.Ab8RN6LAIY" + "zRj7P3PuWfwc1O" + "_I6dIV6MKb2nGHYm8Z3TiyIOrw",
       "AQ.Ab8RN6IS1QQ" + "_JO4ltwBiT0Le" + "7tx-gLQm_tXysGTYMhj_5jR8tw",
@@ -555,14 +620,11 @@
 
     let currentKeyIndex = 0;
 
-    // =========================================================================
-    // GÜNLÜK 150 JETON VE TEK SEFERLİK REKLAM KONTROL SİSTEMİ
-    // =========================================================================
+    // ================= GÜNLÜK 150 JETON SİSTEMİ =================
     const todayStr = new Date().toDateString();
     const lastDailyGrant = localStorage.getItem('last_daily_grant');
 
     let userTokens;
-    // Yeni bir güne geçildiyse jetonu otomatik 150 yap:
     if (lastDailyGrant !== todayStr) {
       userTokens = 150;
       localStorage.setItem('fal_tokens', userTokens);
@@ -580,6 +642,42 @@
     let currentPersona = 'gulfem';
     let currentCoffeeMode = 'tek';
     let pendingAction = null;
+
+    // ================= YENİ KULLANICI REHBERİ (WALKTHROUGH) KONTROLÜ =================
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!localStorage.getItem('fal_walkthrough_seen')) {
+        setTimeout(openWalkthroughModal, 800);
+      }
+    });
+
+    window.openWalkthroughModal = function() {
+      document.getElementById('walkthrough-modal').classList.remove('hidden');
+    };
+
+    window.closeWalkthroughModal = function() {
+      localStorage.setItem('fal_walkthrough_seen', 'true');
+      document.getElementById('walkthrough-modal').classList.add('hidden');
+    };
+
+    // ================= TEST RAPORU İLE İSTENEN PAYLAŞ VE PUANLA MOTORU =================
+    window.shareApp = function() {
+      const shareData = {
+        title: 'Falıma Bak - Kahve Falı & Tarot',
+        text: '🔮 Fincanının fotoğrafını çek, telveleri yapay zeka analiz etsin! Gülfem Abla ve Tarot açılımları tamamen ücretsiz. Sen de hemen dene:\n',
+        url: 'https://play.google.com/store/apps/details?id=com.zirvelabs.falimabak'
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        const fullMsg = `${shareData.text} ${shareData.url}`;
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(fullMsg)}`, '_blank');
+      }
+    };
+
+    window.rateApp = function() {
+      window.open('https://play.google.com/store/apps/details?id=com.zirvelabs.falimabak', '_blank');
+    };
 
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
@@ -702,14 +800,13 @@
         adBtn.classList.remove('opacity-50', 'pointer-events-none');
       }
       document.getElementById('token-modal').classList.remove('hidden'); 
-    }
-    window.closeTokenModal = function() { document.getElementById('token-modal').classList.add('hidden'); }
+    };
+    window.closeTokenModal = function() { document.getElementById('token-modal').classList.add('hidden'); };
 
     window.claimDailyReward = function() {
       alert(`Her gün 150 Mistik Jetonunuz otomatik olarak yenilenir. Şu anki bakiyeniz: ${userTokens} Jeton.`);
-    }
+    };
 
-    // GÜNDE SADECE 1 KEZ İZLENEBİLEN KONTROLLÜ REKLAM FONKSİYONU:
     window.watchRewardedAd = function() {
       const today = new Date().toDateString();
       if (localStorage.getItem('last_ad_watch') === today) {
@@ -731,15 +828,15 @@
         alert("Tebrikler! Günlük ekstra +50 Jeton hesabınıza eklendi!");
         closeTokenModal();
       }, 5000);
-    }
+    };
 
     window.openProfileModal = function() {
       document.getElementById('profile-name').value = localStorage.getItem('profile_name') || "";
       document.getElementById('profile-relation').value = localStorage.getItem('profile_relation') || "Bekar";
       document.getElementById('profile-job').value = localStorage.getItem('profile_job') || "Çalışıyor";
       document.getElementById('profile-modal').classList.remove('hidden');
-    }
-    window.closeProfileModal = function() { document.getElementById('profile-modal').classList.add('hidden'); }
+    };
+    window.closeProfileModal = function() { document.getElementById('profile-modal').classList.add('hidden'); };
 
     window.saveUserProfile = function() {
       const name = document.getElementById('profile-name').value.trim() || "Mehmet";
@@ -750,7 +847,7 @@
       localStorage.setItem('profile_job', job);
       alert("Profiliniz kaydedildi! Artık tüm kehanetler size özel olacak.");
       closeProfileModal();
-    }
+    };
 
     function getUserProfileContext() {
       const name = localStorage.getItem('profile_name') || "Mehmet";
@@ -776,8 +873,8 @@
       if (!isMusicPlaying) {
         isMusicPlaying = true;
         icon.className = "fa-solid fa-volume-high text-xs text-amber-400 animate-pulse";
-        text.innerText = "Mistik Müzik";
-        btn.className = "px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center gap-1.5 text-amber-300 transition active:scale-95";
+        text.innerText = "Müzik Açık";
+        btn.className = "px-2.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center gap-1 text-amber-300 transition active:scale-95";
 
         globalAudio.play().catch(err => {
           console.warn("Otomatik oynatma engeli:", err);
@@ -786,10 +883,10 @@
         globalAudio.pause();
         isMusicPlaying = false;
         icon.className = "fa-solid fa-volume-xmark text-xs";
-        text.innerText = "Mistik Müzik";
-        btn.className = "px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1.5 text-gray-300 hover:text-amber-300 transition active:scale-95";
+        text.innerText = "Müzik";
+        btn.className = "px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1 text-gray-300 hover:text-amber-300 transition active:scale-95";
       }
-    }
+    };
 
     window.setCoffeeMode = function(mode) {
       currentCoffeeMode = mode;
@@ -800,7 +897,7 @@
         document.getElementById('mode-coffee-cift').className = "px-4 py-1.5 rounded-xl border border-pink-400/50 bg-pink-500/20 text-pink-300";
         document.getElementById('mode-coffee-tek').className = "px-4 py-1.5 rounded-xl border border-white/10 glass-card text-gray-400";
       }
-    }
+    };
 
     window.startQueueAndRead = function(actionType) {
       pendingAction = actionType;
@@ -814,7 +911,7 @@
           skipQueueAndRead();
         }
       }, 3500);
-    }
+    };
 
     window.skipQueueAndRead = function() {
       document.getElementById('queue-modal').classList.add('hidden');
@@ -824,7 +921,7 @@
       else if (pendingAction === 'astro') executeAstrologyFortune();
       else if (pendingAction === 'uyum') executeCompatibilityFortune();
       else if (pendingAction === 'ruya') executeDreamFortune();
-    }
+    };
 
     window.setPersona = function(persona) {
       currentPersona = persona;
@@ -832,7 +929,7 @@
         document.getElementById(`persona-${p}`).className = "px-2.5 py-1 rounded-xl border border-white/10 glass-card text-gray-400 font-semibold transition";
       });
       document.getElementById(`persona-${persona}`).className = "px-2.5 py-1 rounded-xl border border-amber-400/60 bg-amber-500/20 text-amber-300 font-semibold transition";
-    }
+    };
 
     function getPersonaPrompt() {
       if (currentPersona === 'melchior') {
@@ -850,11 +947,8 @@
       });
       document.getElementById(`section-${tab}`).classList.remove('hidden');
       document.getElementById(`tab-${tab}`).className = "h-16 rounded-2xl border glass-tab-active flex flex-col items-center justify-center gap-1 transition";
-    }
+    };
 
-    // =========================================================================
-    // DÜŞÜK MALİYET & YÜKSEK HIZ İÇİN OPTİMİZE EDİLMİŞ GÖRSEL MOTORU
-    // =========================================================================
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -895,7 +989,7 @@
       }
 
       renderPreviewGrid();
-    }
+    };
 
     function renderPreviewGrid() {
       const grid = document.getElementById('preview-grid');
@@ -942,7 +1036,7 @@
       const prev = document.getElementById('palm-preview');
       prev.src = res.preview;
       prev.classList.remove('hidden');
-    }
+    };
 
     window.setTarotSpread = function(type) {
       currentTarotSpread = type;
@@ -969,7 +1063,7 @@
         document.getElementById(`tarot-card-${i}`).classList.remove('flipped');
         chosenTarotCards[i - 1] = null;
       }
-    }
+    };
 
     window.flipTarot = function(num) {
       const cardEl = document.getElementById(`tarot-card-${num}`);
@@ -982,7 +1076,7 @@
       document.getElementById(`tarot-name-${num}`).innerText = picked.name;
       document.getElementById(`tarot-img-${num}`).src = picked.img;
       cardEl.classList.add('flipped');
-    }
+    };
 
     window.selectZodiac = function(name, symbol) {
       selectedZodiacSign = name;
@@ -992,7 +1086,7 @@
       const btn = document.getElementById('btn-astro');
       btn.disabled = false;
       btn.classList.remove('opacity-50');
-    }
+    };
 
     async function callGemini(promptText, imagesB64 = []) {
       safeToggleLoading(true);
@@ -1196,7 +1290,7 @@
       document.getElementById('cookie-text').innerText = text;
       document.getElementById('cookie-result').classList.remove('hidden');
       document.getElementById('cookie-icon').className = "fa-solid fa-sparkles text-4xl text-amber-300 animate-spin";
-    }
+    };
 
     function showResult(text) {
       currentFortune = text;
@@ -1249,24 +1343,24 @@
       }
       btn.disabled = false;
       btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Sor`;
-    }
+    };
 
-    window.changeFontSize = function(delta) {
+    function changeFontSize(delta) {
       currentFontSize = Math.min(22, Math.max(13, currentFontSize + delta));
       document.getElementById('fortune-output').style.fontSize = currentFontSize + 'px';
     }
 
-    window.shareWhatsAppFull = function() {
+    async function shareWhatsAppFull() {
       const shareTitle = document.getElementById('fortune-title').innerText;
-      const fullShareText = `🔮 Falıma Bak'tan Kehanetim Çıktı!\n\n👑 ${shareTitle}\n\n${currentFortune}\n\n✨ Sen de falına baktır: https://cowboytr.github.io/falima-bak/`;
+      const fullShareText = `🔮 Falıma Bak'tan Kehanetim Çıktı!\n\n👑 ${shareTitle}\n\n${currentFortune}\n\n✨ Sen de falına baktır: https://play.google.com/store/apps/details?id=com.zirvelabs.falimabak`;
       if (navigator.share) {
-        try { navigator.share({ title: 'Falıma Bak Kehaneti', text: fullShareText }); } catch (err) {}
+        try { await navigator.share({ title: 'Falıma Bak Kehaneti', text: fullShareText }); } catch (err) {}
       } else {
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(fullShareText)}`, '_blank');
       }
     }
 
-    window.generateStoryCard = function() {
+    function generateStoryCard() {
       const canvas = document.getElementById('story-canvas');
       const ctx = canvas.getContext('2d');
 
@@ -1385,7 +1479,7 @@
 
       ctx.fillStyle = '#fbbf24';
       ctx.font = 'bold 34px sans-serif';
-      ctx.fillText('🔮 cowboytr.github.io/falima-bak', 540, 1700);
+      ctx.fillText('🔮 Falıma Bak - Google Play', 540, 1700);
 
       const link = document.createElement('a');
       link.download = 'falima-bak-kehanet.png';
@@ -1426,13 +1520,13 @@
         window.speechSynthesis.speak(utter);
       }
       playNextSentence();
-    }
+    };
 
     window.copyFortune = function() {
       navigator.clipboard.writeText(currentFortune).then(() => {
         alert("Fal metninin tamamı panoya kopyalandı!");
       });
-    }
+    };
 
     function saveToHistory(text) {
       let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
@@ -1464,7 +1558,7 @@
       } else {
         modal.classList.add('hidden');
       }
-    }
+    };
 
     window.loadPastFortune = function(idx) {
       let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
@@ -1472,7 +1566,7 @@
         toggleHistoryModal();
         showResult(history[idx].text);
       }
-    }
+    };
   </script>
 </body>
 </html>
