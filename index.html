@@ -72,7 +72,7 @@
     <p class="text-[10px] sm:text-[11px] text-amber-200/80 font-semibold tracking-widest uppercase mt-1 text-center">✦ 78 KARTLI MİSTİK KEHANET & FAL REHBERİ ✦</p>
   </header>
 
-  <!-- ================= 2. KULLANICI KONTROL BARI (YENİ PAYLAŞ VE REHBER BUTONLARI EKLENDİ) ================= -->
+  <!-- ================= 2. KULLANICI KONTROL BARI ================= -->
   <div class="glass-card rounded-2xl p-2 mb-4 flex items-center justify-between gap-1 text-xs">
     <button onclick="openTokenModal()" class="px-2.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center gap-1 text-xs text-amber-300 font-bold active:scale-95 transition">
       <span>🪙</span> <span id="token-balance">150</span> <span class="text-[10px] text-amber-400/80 font-normal">Jeton</span>
@@ -437,7 +437,7 @@
     </div>
   </div>
 
-  <!-- ================= PROFİL & AYARLAR MODALI (PUANLA, PAYLAŞ VE REHBER EKLENDİ) ================= -->
+  <!-- ================= PROFİL & AYARLAR MODALI (GERİ BİLDİRİM E-POSTASI EKLENDİ) ================= -->
   <div id="profile-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -479,7 +479,7 @@
         Bilgileri Kaydet
       </button>
 
-      <!-- TEST RAPORU İLE İSTENEN AYARLAR VE ETKİLEŞİM BUTONLARI -->
+      <!-- TEST RAPORU İLE İSTENEN GELİŞTİRMELER: PUANLA, PAYLAŞ, REHBER VE GERİ BİLDİRİM -->
       <div class="pt-3 border-t border-white/10 space-y-2 text-xs">
         <span class="text-[10px] text-amber-300/80 font-bold block uppercase tracking-wider">Uygulama & Destek:</span>
         
@@ -493,6 +493,11 @@
 
         <button onclick="openWalkthroughModal()" class="w-full py-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-300 font-medium flex items-center justify-center gap-2 hover:bg-white/10 active:scale-95 transition">
           <i class="fa-solid fa-compass text-amber-300"></i> Mistik Kullanım Rehberini Aç
+        </button>
+
+        <!-- RAPOR SAYFA 8: KULLANICI GERİ BİLDİRİM SEÇENEĞİ -->
+        <button onclick="sendFeedbackEmail()" class="w-full py-2.5 rounded-xl bg-blue-500/10 border border-blue-400/30 text-blue-200 font-medium flex items-center justify-center gap-2 hover:bg-blue-500/20 active:scale-95 transition">
+          <i class="fa-solid fa-envelope text-blue-300"></i> Bize Ulaşın / Geri Bildirim Yaz
         </button>
       </div>
     </div>
@@ -524,7 +529,7 @@
     </div>
   </div>
 
-  <!-- ================= TEST RAPORU İLE İSTENEN DİNAMİK YENİ KULLANICI REHBERİ (WALKTHROUGH) ================= -->
+  <!-- ================= DİNAMİK YENİ KULLANICI REHBERİ (WALKTHROUGH) ================= -->
   <div id="walkthrough-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 text-center border-2 border-amber-400/50 shadow-2xl">
       <div class="w-16 h-16 rounded-2xl glass-card mx-auto flex items-center justify-center border border-amber-400/60 text-amber-300 text-3xl shadow-lg gold-glow">
@@ -659,7 +664,7 @@
       document.getElementById('walkthrough-modal').classList.add('hidden');
     };
 
-    // ================= TEST RAPORU İLE İSTENEN PAYLAŞ VE PUANLA MOTORU =================
+    // ================= TEST RAPORU İLE İSTENEN PAYLAŞ, PUANLA VE GERİ BİLDİRİM MOTORU =================
     window.shareApp = function() {
       const shareData = {
         title: 'Falıma Bak - Kahve Falı & Tarot',
@@ -677,6 +682,13 @@
 
     window.rateApp = function() {
       window.open('https://play.google.com/store/apps/details?id=com.zirvelabs.falimabak', '_blank');
+    };
+
+    window.sendFeedbackEmail = function() {
+      const email = "mehmetkhr@gmail.com";
+      const subject = encodeURIComponent("Falıma Bak - Geri Bildirim & Öneri");
+      const body = encodeURIComponent("Merhaba Falıma Bak Geliştirici Ekibi,\n\nUygulama deneyimim ve önerilerim:\n\n- \n\nCihaz Modeli:\nAndroid Sürümü:");
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     };
 
     const fullTarotDeck = [
