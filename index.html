@@ -437,7 +437,7 @@
     </div>
   </div>
 
-  <!-- ================= PROFİL & AYARLAR MODALI (GERİ BİLDİRİM E-POSTASI EKLENDİ) ================= -->
+  <!-- ================= PROFİL & AYARLAR MODALI ================= -->
   <div id="profile-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -479,7 +479,6 @@
         Bilgileri Kaydet
       </button>
 
-      <!-- TEST RAPORU İLE İSTENEN GELİŞTİRMELER: PUANLA, PAYLAŞ, REHBER VE GERİ BİLDİRİM -->
       <div class="pt-3 border-t border-white/10 space-y-2 text-xs">
         <span class="text-[10px] text-amber-300/80 font-bold block uppercase tracking-wider">Uygulama & Destek:</span>
         
@@ -495,7 +494,6 @@
           <i class="fa-solid fa-compass text-amber-300"></i> Mistik Kullanım Rehberini Aç
         </button>
 
-        <!-- RAPOR SAYFA 8: KULLANICI GERİ BİLDİRİM SEÇENEĞİ -->
         <button onclick="sendFeedbackEmail()" class="w-full py-2.5 rounded-xl bg-blue-500/10 border border-blue-400/30 text-blue-200 font-medium flex items-center justify-center gap-2 hover:bg-blue-500/20 active:scale-95 transition">
           <i class="fa-solid fa-envelope text-blue-300"></i> Bize Ulaşın / Geri Bildirim Yaz
         </button>
@@ -598,9 +596,8 @@
     <p class="text-xs text-purple-300 mt-1">Sırlar bir bir açığa çıkıyor...</p>
   </div>
 
-  <!-- GÜNCELLENMİŞ SÜRÜM BİLGİSİ -->
   <div class="text-center text-[10px] text-gray-500 py-3 mt-4">
-    ✦ Falıma Bak v1.4 (Geri Bildirim Güncellemesi) ✦
+    ✦ Falıma Bak v1.5 (Ses & Üretim Güncellemesi) ✦
   </div>
 
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
@@ -648,7 +645,7 @@
     let currentCoffeeMode = 'tek';
     let pendingAction = null;
 
-    // ================= YENİ KULLANICI REHBERİ (WALKTHROUGH) KONTROLÜ =================
+    // ================= REHBER KONTROLÜ =================
     window.addEventListener('DOMContentLoaded', () => {
       if (!localStorage.getItem('fal_walkthrough_seen')) {
         setTimeout(openWalkthroughModal, 800);
@@ -664,7 +661,7 @@
       document.getElementById('walkthrough-modal').classList.add('hidden');
     };
 
-    // ================= TEST RAPORU İLE İSTENEN PAYLAŞ, PUANLA VE GERİ BİLDİRİM MOTORU =================
+    // ================= PAYLAŞ, PUANLA VE GERİ BİLDİRİM MOTORU =================
     window.shareApp = function() {
       const shareData = {
         title: 'Falıma Bak - Kahve Falı & Tarot',
@@ -690,6 +687,98 @@
       const body = encodeURIComponent("Merhaba Falıma Bak Geliştirici Ekibi,\n\nUygulama deneyimim ve önerilerim:\n\n- \n\nCihaz Modeli:\nAndroid Sürümü:");
       window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     };
+
+    // ================= DÜZELTİLMİŞ VE KESİNTİSİZ SES MOTORU (ONLINE FALLBACK İLE) =================
+    let isSpeaking = false;
+    let currentAudio = null;
+
+    window.toggleVoice = function() {
+      if (isSpeaking) {
+        stopSpeaking();
+        return;
+      }
+
+      const cleanText = currentFortune.replace(/[*#_~]/g, '').trim();
+      if (!cleanText) return;
+
+      const rawSentences = cleanText.match(/[^.!?\n]+[.!?\n]+/g) || [cleanText];
+      const sentences = [];
+      rawSentences.forEach(s => {
+        let trimmed = s.trim();
+        while (trimmed.length > 110) {
+          let cut = trimmed.lastIndexOf(' ', 110);
+          if (cut === -1) cut = 110;
+          sentences.push(trimmed.substring(0, cut));
+          trimmed = trimmed.substring(cut).trim();
+        }
+        if (trimmed.length > 0) sentences.push(trimmed);
+      });
+
+      isSpeaking = true;
+      const btnText = document.getElementById('voice-text');
+      if (btnText) btnText.innerText = "Durdur";
+
+      // Cihaz WebView ise ve speechSynthesis yoksa doğrudan net ses akışına geç:
+      if ('speechSynthesis' in window && window.speechSynthesis.getVoices && window.speechSynthesis.getVoices().length > 0) {
+        try {
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.resume();
+          let index = 0;
+
+          function playNextUtterance() {
+            if (!isSpeaking || index >= sentences.length) {
+              stopSpeaking();
+              return;
+            }
+            const utter = new SpeechSynthesisUtterance(sentences[index]);
+            utter.lang = 'tr-TR';
+            utter.rate = 1.0;
+            utter.onend = () => { index++; playNextUtterance(); };
+            utter.onerror = () => {
+              playAudioStreamFallback(sentences, index);
+            };
+            window.speechSynthesis.speak(utter);
+          }
+          playNextUtterance();
+        } catch (e) {
+          playAudioStreamFallback(sentences, 0);
+        }
+      } else {
+        playAudioStreamFallback(sentences, 0);
+      }
+    };
+
+    function playAudioStreamFallback(sentences, startIndex) {
+      let index = startIndex;
+
+      function playNextChunk() {
+        if (!isSpeaking || index >= sentences.length) {
+          stopSpeaking();
+          return;
+        }
+        const textChunk = encodeURIComponent(sentences[index]);
+        const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${textChunk}`;
+
+        currentAudio = new Audio(url);
+        currentAudio.onended = () => { index++; playNextChunk(); };
+        currentAudio.onerror = () => { stopSpeaking(); };
+        currentAudio.play().catch(() => { stopSpeaking(); });
+      }
+      playNextChunk();
+    }
+
+    function stopSpeaking() {
+      isSpeaking = false;
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+      }
+      const btnText = document.getElementById('voice-text');
+      if (btnText) btnText.innerText = "Sesli Oku";
+    }
 
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
@@ -1498,47 +1587,6 @@
       link.href = canvas.toDataURL('image/png');
       link.click();
     }
-
-    let isSpeaking = false;
-    window.toggleVoice = function() {
-      if (!('speechSynthesis' in window)) { alert("Cihazınız ses sentezini desteklemiyor."); return; }
-      if (window.speechSynthesis.speaking) {
-        window.speechSynthesis.cancel();
-        isSpeaking = false;
-        document.getElementById('voice-text').innerText = "Sesli Oku";
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.resume();
-
-      const cleanText = currentFortune.replace(/[*#_~]/g, '');
-      const sentences = cleanText.match(/[^.!?\n]+[.!?\n]+/g) || [cleanText];
-      let index = 0;
-      isSpeaking = true;
-      document.getElementById('voice-text').innerText = "Durdur";
-
-      function playNextSentence() {
-        if (!isSpeaking || index >= sentences.length) {
-          isSpeaking = false;
-          document.getElementById('voice-text').innerText = "Sesli Oku";
-          return;
-        }
-        const utter = new SpeechSynthesisUtterance(sentences[index].trim());
-        utter.lang = 'tr-TR';
-        utter.rate = 1.0;
-        utter.onend = () => { index++; playNextSentence(); };
-        utter.onerror = () => { index++; playNextSentence(); };
-        window.speechSynthesis.speak(utter);
-      }
-      playNextSentence();
-    };
-
-    window.copyFortune = function() {
-      navigator.clipboard.writeText(currentFortune).then(() => {
-        alert("Fal metninin tamamı panoya kopyalandı!");
-      });
-    };
 
     function saveToHistory(text) {
       let history = JSON.parse(localStorage.getItem('fal_history') || '[]');
