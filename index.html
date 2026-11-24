@@ -60,7 +60,7 @@
 </head>
 <body class="p-4 max-w-md mx-auto pb-32 selection:bg-amber-500/30">
 
-  <!-- ================= 1. TAM ORTALANMIŞ GÖRKEMLİ BAŞLIK VE LOGO ================= -->
+  <!-- 1. BAŞLIK VE LOGO -->
   <header class="text-center pt-3 mb-5 relative flex flex-col items-center justify-center">
     <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-64 h-24 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
 
@@ -72,7 +72,7 @@
     <p class="text-[10px] sm:text-[11px] text-amber-200/80 font-semibold tracking-widest uppercase mt-1 text-center">✦ 78 KARTLI MİSTİK KEHANET & FAL REHBERİ ✦</p>
   </header>
 
-  <!-- ================= 2. KULLANICI KONTROL BARI ================= -->
+  <!-- 2. KULLANICI KONTROL BARI -->
   <div class="glass-card rounded-2xl p-2 mb-4 flex items-center justify-between gap-1 text-xs">
     <button onclick="openTokenModal()" class="px-2.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center gap-1 text-xs text-amber-300 font-bold active:scale-95 transition">
       <span>🪙</span> <span id="token-balance">150</span> <span class="text-[10px] text-amber-400/80 font-normal">Jeton</span>
@@ -99,7 +99,7 @@
     </div>
   </div>
 
-  <!-- ================= 3. FALCI PERSONASI ================= -->
+  <!-- 3. FALCI PERSONASI -->
   <div class="glass-card rounded-2xl p-2.5 mb-4 flex items-center justify-between text-xs">
     <span class="text-[11px] text-gray-400 font-medium ml-1">Falcın:</span>
     <div class="flex gap-1.5">
@@ -109,7 +109,7 @@
     </div>
   </div>
 
-  <!-- ================= 4. SİMETRİK FAL MENÜSÜ ================= -->
+  <!-- 4. MENÜ -->
   <nav class="mb-5 space-y-1.5">
     <div class="grid grid-cols-4 gap-1.5">
       <button onclick="setTab('kahve')" id="tab-kahve" class="h-16 rounded-2xl border glass-tab-active flex flex-col items-center justify-center gap-1 transition">
@@ -150,7 +150,7 @@
     </div>
   </nav>
 
-  <!-- ================= KAHVE FALI MODÜLÜ ================= -->
+  <!-- KAHVE FALI MODÜLÜ -->
   <section id="section-kahve" class="space-y-4">
     <div class="flex justify-center gap-2 text-xs font-semibold">
       <button onclick="setCoffeeMode('tek')" id="mode-coffee-tek" class="px-4 py-1.5 rounded-xl border border-amber-400/50 bg-amber-500/20 text-amber-300">Tek Kişilik Fal</button>
@@ -187,7 +187,7 @@
     </button>
   </section>
 
-  <!-- ================= TAROT MODÜLÜ ================= -->
+  <!-- TAROT MODÜLÜ -->
   <section id="section-tarot" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center">
       <div class="flex justify-center gap-2 mb-4 text-xs font-medium">
@@ -253,7 +253,7 @@
     </div>
   </section>
 
-  <!-- ================= EL FALI ================= -->
+  <!-- EL FALI -->
   <section id="section-el" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 text-center relative overflow-hidden">
       <input type="file" id="palm-photo" accept="image/*" class="hidden" onchange="previewPalmImage(event)">
@@ -271,7 +271,7 @@
     </button>
   </section>
 
-  <!-- ================= ASTROLOJİ & BURÇLAR ================= -->
+  <!-- ASTROLOJİ & BURÇLAR -->
   <section id="section-astro" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5">
       <div class="text-center mb-4">
@@ -301,7 +301,7 @@
     </div>
   </section>
 
-  <!-- ================= AŞK VE BURÇ UYUMU ================= -->
+  <!-- AŞK VE BURÇ UYUMU -->
   <section id="section-uyum" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 space-y-4">
       <div class="text-center">
@@ -330,7 +330,7 @@
     </div>
   </section>
 
-  <!-- ================= RÜYA TABİRİ ================= -->
+  <!-- RÜYA TABİRİ -->
   <section id="section-ruya" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-5 space-y-3">
       <div class="text-center mb-1">
@@ -344,7 +344,7 @@
     </div>
   </section>
 
-  <!-- ================= GÜNÜN MİSTİK KURABİYESİ ================= -->
+  <!-- GÜNÜN MİSTİK KURABİYESİ -->
   <section id="section-niyet" class="hidden space-y-4">
     <div class="glass-card rounded-3xl p-6 text-center space-y-4">
       <h3 class="cinzel text-xs text-amber-300 tracking-wider">GÜNÜN KOZMİK NİYETİ</h3>
@@ -362,7 +362,7 @@
     </div>
   </section>
 
-  <!-- ================= GERÇEKÇİ SIRA VE SOĞUMA SAYACI ================= -->
+  <!-- SIRA VE SOĞUMA SAYACI -->
   <div id="queue-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-6 text-center">
     <div class="relative w-24 h-24 mb-5">
       <div class="w-24 h-24 border-4 border-amber-400/20 border-t-amber-400 rounded-full animate-spin"></div>
@@ -380,7 +380,7 @@
     </button>
   </div>
 
-  <!-- ================= FAL SONUÇ KARTI ================= -->
+  <!-- FAL SONUÇ KARTI -->
   <div id="result-container" class="hidden mt-6 glass-card rounded-3xl p-6 border border-amber-400/40 relative shadow-2xl">
     <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
       <h3 class="cinzel font-bold text-amber-400 text-sm flex items-center gap-2">
@@ -437,7 +437,7 @@
     </div>
   </div>
 
-  <!-- ================= PROFİL & AYARLAR MODALI ================= -->
+  <!-- PROFİL & AYARLAR MODALI -->
   <div id="profile-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -501,7 +501,7 @@
     </div>
   </div>
 
-  <!-- ================= JETON KAZAN MODALI ================= -->
+  <!-- JETON KAZAN MODALI -->
   <div id="token-modal" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 text-center">
       <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -527,7 +527,7 @@
     </div>
   </div>
 
-  <!-- ================= DİNAMİK YENİ KULLANICI REHBERİ (WALKTHROUGH) ================= -->
+  <!-- DİNAMİK YENİ KULLANICI REHBERİ -->
   <div id="walkthrough-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4">
     <div class="glass-card rounded-3xl p-6 w-full max-w-sm space-y-4 text-center border-2 border-amber-400/50 shadow-2xl">
       <div class="w-16 h-16 rounded-2xl glass-card mx-auto flex items-center justify-center border border-amber-400/60 text-amber-300 text-3xl shadow-lg gold-glow">
@@ -597,7 +597,7 @@
   </div>
 
   <div class="text-center text-[10px] text-gray-500 py-3 mt-4">
-    ✦ Falıma Bak v1.5 (Ses & Üretim Güncellemesi) ✦
+    ✦ Falıma Bak v1.6 (Canlı Mağaza Sürümü) ✦
   </div>
 
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
@@ -688,97 +688,50 @@
       window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     };
 
-    // ================= DÜZELTİLMİŞ VE KESİNTİSİZ SES MOTORU (ONLINE FALLBACK İLE) =================
+    // ================= YEREL ANDROID TTS & WEB ÇİFT MOTORLU SESLİ OKUMA =================
     let isSpeaking = false;
-    let currentAudio = null;
 
     window.toggleVoice = function() {
-      if (isSpeaking) {
-        stopSpeaking();
-        return;
-      }
-
       const cleanText = currentFortune.replace(/[*#_~]/g, '').trim();
       if (!cleanText) return;
 
-      const rawSentences = cleanText.match(/[^.!?\n]+[.!?\n]+/g) || [cleanText];
-      const sentences = [];
-      rawSentences.forEach(s => {
-        let trimmed = s.trim();
-        while (trimmed.length > 110) {
-          let cut = trimmed.lastIndexOf(' ', 110);
-          if (cut === -1) cut = 110;
-          sentences.push(trimmed.substring(0, cut));
-          trimmed = trimmed.substring(cut).trim();
-        }
-        if (trimmed.length > 0) sentences.push(trimmed);
-      });
-
-      isSpeaking = true;
       const btnText = document.getElementById('voice-text');
-      if (btnText) btnText.innerText = "Durdur";
 
-      // Cihaz WebView ise ve speechSynthesis yoksa doğrudan net ses akışına geç:
-      if ('speechSynthesis' in window && window.speechSynthesis.getVoices && window.speechSynthesis.getVoices().length > 0) {
-        try {
-          window.speechSynthesis.cancel();
-          window.speechSynthesis.resume();
-          let index = 0;
-
-          function playNextUtterance() {
-            if (!isSpeaking || index >= sentences.length) {
-              stopSpeaking();
-              return;
-            }
-            const utter = new SpeechSynthesisUtterance(sentences[index]);
-            utter.lang = 'tr-TR';
-            utter.rate = 1.0;
-            utter.onend = () => { index++; playNextUtterance(); };
-            utter.onerror = () => {
-              playAudioStreamFallback(sentences, index);
-            };
-            window.speechSynthesis.speak(utter);
-          }
-          playNextUtterance();
-        } catch (e) {
-          playAudioStreamFallback(sentences, 0);
+      // 1. Durum: Android Yerel Köprüsü (AndroidTTS) Varsa Doğrudan Cihazın Sesi Konuşur:
+      if (window.AndroidTTS) {
+        if (isSpeaking) {
+          window.AndroidTTS.stop();
+          isSpeaking = false;
+          if (btnText) btnText.innerText = "Sesli Oku";
+        } else {
+          window.AndroidTTS.speak(cleanText);
+          isSpeaking = true;
+          if (btnText) btnText.innerText = "Durdur";
         }
-      } else {
-        playAudioStreamFallback(sentences, 0);
+        return;
       }
-    };
 
-    function playAudioStreamFallback(sentences, startIndex) {
-      let index = startIndex;
-
-      function playNextChunk() {
-        if (!isSpeaking || index >= sentences.length) {
-          stopSpeaking();
+      // 2. Durum: Tarayıcı / Web Üzerinde Çalışıyorsa:
+      if ('speechSynthesis' in window) {
+        if (window.speechSynthesis.speaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
+          if (btnText) btnText.innerText = "Sesli Oku";
           return;
         }
-        const textChunk = encodeURIComponent(sentences[index]);
-        const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${textChunk}`;
 
-        currentAudio = new Audio(url);
-        currentAudio.onended = () => { index++; playNextChunk(); };
-        currentAudio.onerror = () => { stopSpeaking(); };
-        currentAudio.play().catch(() => { stopSpeaking(); });
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
+        const utter = new SpeechSynthesisUtterance(cleanText);
+        utter.lang = 'tr-TR';
+        utter.rate = 1.0;
+        isSpeaking = true;
+        if (btnText) btnText.innerText = "Durdur";
+        utter.onend = () => { isSpeaking = false; if (btnText) btnText.innerText = "Sesli Oku"; };
+        utter.onerror = () => { isSpeaking = false; if (btnText) btnText.innerText = "Sesli Oku"; };
+        window.speechSynthesis.speak(utter);
       }
-      playNextChunk();
-    }
-
-    function stopSpeaking() {
-      isSpeaking = false;
-      if ('speechSynthesis' in window) {
-        try { window.speechSynthesis.cancel(); } catch (e) {}
-      }
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
-      }
-      const btnText = document.getElementById('voice-text');
-      if (btnText) btnText.innerText = "Sesli Oku";
-    }
+    };
 
     const fullTarotDeck = [
       { name: "0 - DELİ", img: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
@@ -984,7 +937,7 @@
         globalAudio.pause();
         isMusicPlaying = false;
         icon.className = "fa-solid fa-volume-xmark text-xs";
-        text.innerText = "Müzik";
+        text.innerText = "Mistik Müzik";
         btn.className = "px-2.5 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-1 text-gray-300 hover:text-amber-300 transition active:scale-95";
       }
     };
