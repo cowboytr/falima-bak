@@ -522,7 +522,7 @@
       </button>
 
       <button onclick="watchRewardedAd()" id="btn-watch-ad" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-gray-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition">
-        <i class="fa-solid fa-play"></i> Ekstra Video İzle (+50 Jeton) (Günde 1 Kez)
+        <i class="fa-solid fa-play"></i> Kısa Video İzle (+50 Jeton)
       </button>
     </div>
   </div>
@@ -597,7 +597,7 @@
   </div>
 
   <div class="text-center text-[10px] text-gray-500 py-3 mt-4">
-    ✦ Falıma Bak v1.6 (Canlı Mağaza Sürümü) ✦
+    ✦ Falıma Bak v1.7 (Canlı Mağaza Sürümü) ✦
   </div>
 
   <canvas id="story-canvas" width="1080" height="1920" class="hidden"></canvas>
@@ -835,7 +835,7 @@
     function spendTokens(cost) {
       if (userTokens < cost) {
         openTokenModal();
-        alert(`Bu işlem için ${cost} jeton gerekiyor! Günlük jeton limitiniz dolmuş olabilir.`);
+        alert(`Bu işlem için ${cost} jeton gerekiyor! Kısa bir video izleyerek +50 Jeton kazanabilirsiniz.`);
         return false;
       }
       userTokens -= cost;
@@ -843,17 +843,17 @@
       return true;
     }
 
-    window.openTokenModal = function() { 
+    function resetWatchAdButton() {
       const adBtn = document.getElementById('btn-watch-ad');
-      const today = new Date().toDateString();
-      if (localStorage.getItem('last_ad_watch') === today) {
-        adBtn.innerHTML = `<i class="fa-solid fa-check"></i> Bugün İzlendi (+50 Jeton Alındı)`;
-        adBtn.classList.add('opacity-50', 'pointer-events-none');
-      } else {
-        adBtn.innerHTML = `<i class="fa-solid fa-play"></i> Ekstra Video İzle (+50 Jeton) (Günde 1 Kez)`;
-        adBtn.classList.remove('opacity-50', 'pointer-events-none');
-      }
-      document.getElementById('token-modal').classList.remove('hidden'); 
+      if (!adBtn) return;
+      adBtn.innerHTML = `<i class="fa-solid fa-play"></i> Kısa Video İzle (+50 Jeton)`;
+      adBtn.classList.remove('opacity-50', 'pointer-events-none');
+      adBtn.disabled = false;
+    }
+
+    window.openTokenModal = function() {
+      resetWatchAdButton();
+      document.getElementById('token-modal').classList.remove('hidden');
     };
     window.closeTokenModal = function() { document.getElementById('token-modal').classList.add('hidden'); };
 
@@ -861,25 +861,50 @@
       alert(`Her gün 150 Mistik Jetonunuz otomatik olarak yenilenir. Şu anki bakiyeniz: ${userTokens} Jeton.`);
     };
 
+    window.onAdMobRewardEarned = function(amount) {
+      const reward = parseInt(amount, 10) || 50;
+      userTokens += reward;
+      updateTokenUI();
+      resetWatchAdButton();
+      alert(`Tebrikler! +${reward} Jeton hesabınıza eklendi!`);
+      closeTokenModal();
+    };
+
+    window.onAdMobRewardClosed = function(earned) {
+      resetWatchAdButton();
+      if (!earned) {
+        alert("Ödül kazanmak için reklam videosunu sonuna kadar izlemelisiniz.");
+      }
+    };
+
+    window.onAdMobRewardFailed = function(msg) {
+      resetWatchAdButton();
+      alert(msg || "Reklam şu anda yüklenemedi. Lütfen internet bağlantınızı kontrol edip tekrar deneyin.");
+    };
+
+    window.onAdMobRewardNotReady = function() {
+      resetWatchAdButton();
+      alert("Video reklam hazırlanıyor, lütfen birkaç saniye sonra tekrar dokunun.");
+    };
+
     window.watchRewardedAd = function() {
-      const today = new Date().toDateString();
-      if (localStorage.getItem('last_ad_watch') === today) {
-        alert("Bugünkü video izleme hakkınızı zaten kullandınız! Yarın tekrar bekleriz.");
+      const btn = document.getElementById('btn-watch-ad');
+      if (btn) {
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Reklam Yükleniyor...`;
+        btn.classList.add('opacity-50', 'pointer-events-none');
+        btn.disabled = true;
+      }
+
+      if (window.AndroidAds && typeof window.AndroidAds.showRewardedAd === 'function') {
+        window.AndroidAds.showRewardedAd();
         return;
       }
 
-      const btn = document.getElementById('btn-watch-ad');
-      btn.innerText = "Video Reklam Oynatılıyor (5 sn)...";
-      btn.disabled = true;
-
       setTimeout(() => {
         userTokens += 50;
-        localStorage.setItem('last_ad_watch', today);
         updateTokenUI();
-        btn.innerHTML = `<i class="fa-solid fa-check"></i> Bugün İzlendi (+50 Jeton Alındı)`;
-        btn.classList.add('opacity-50', 'pointer-events-none');
-        btn.disabled = false;
-        alert("Tebrikler! Günlük ekstra +50 Jeton hesabınıza eklendi!");
+        resetWatchAdButton();
+        alert("Tebrikler! Ekstra +50 Jeton hesabınıza eklendi!");
         closeTokenModal();
       }, 5000);
     };
