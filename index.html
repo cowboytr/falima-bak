@@ -608,19 +608,23 @@
       navigator.serviceWorker.register('sw.js');
     }
 
-    // ⭐ 8 ADET GÜNCEL KORUMALI ANAHTAR HAVUZU ⭐
-    const SECURE_VAULT = [
-      "AQ.Ab8RN6LAIY" + "zRj7P3PuWfwc1O" + "_I6dIV6MKb2nGHYm8Z3TiyIOrw",
-      "AQ.Ab8RN6IS1QQ" + "_JO4ltwBiT0Le" + "7tx-gLQm_tXysGTYMhj_5jR8tw",
-      "AQ.Ab8RN6Ilgd" + "Psp3zYI4nDTKsZ" + "_KCPErsozO932Ewaq7f_Gs-jIA",
-      "AQ.Ab8RN6JSkav" + "jKDRWDyCRWXW7" + "1vN8reNTXmEl5QhmMgunthJyFQ",
-      "AQ.Ab8RN6KdN0" + "Jx7lWlKRUFhda" + "pzME6Z17ObdC-LQlCycbU3jyvzA",
-      "AQ.Ab8RN6LE-8" + "j05WWAbn5q4DE" + "QV99krmiMcD152QMiKctnOA9Jaw",
-      "AQ.Ab8RN6JjRB9" + "KuhtNjyKJ37f" + "8azStcmGPfOEKfaZToMpFqOZr7g",
-      "AQ.Ab8RN6L7glRL" + "jMM5tZTMzgVD" + "qrTrWKJbjpqKRhFUEAKMHgf7aw"
-    ];
+    // ⭐ 1 ADET %100 ÜCRETSİZ ANAHTAR + 8 ADET YEDEK HAVUZU ⭐
+        const SECURE_VAULT = [
+            // 🌟 1. ÖNCELİK: KARTSIZ %100 ÜCRETSİZ ANAHTAR (0 TL)
+            "AQ.Ab8RN6LoaK" + "BNQNx6RItoDlI23G" + "ZNsHH37wVtY1k8uoXvwGma9A",
 
-    let currentKeyIndex = 0;
+            // 🛡️ 2. ÖNCELİK: YEDEK ÜCRETLİ ANAHTARLAR (Sadece kota dolarsa devreye girer)
+            "AQ.Ab8RN6LAIY" + "zRj7P3PuWfwc1O" + "_I6dIV6MkB2nGHym8Z3TiyIOrw",
+            "AQ.Ab8RN6ISIQQ" + "_JO4ltwBiT0le" + "7tx-GLQm_tXysGTYMnj_5jR8tw",
+            "AQ.Ab8RN6Ilgd" + "Psp3zYi4nDTKsZ" + "_KCPersoz0932Ewaq7f_Gs-jIA",
+            "AQ.Ab8RN6JSkav" + "JKDRwDyCRWWxW7" + "1vn8reNTXmEl5QhmMgunthJyFQ",
+            "AQ.Ab8RN6KdN0" + "Jx71W1KRUFhda" + "pzME6Z17ObdC-LQ1cycbU3jyvzA",
+            "AQ.Ab8RN6LE-8" + "j05WWAbn5q4DE" + "QV99krmiMcD152QMikctnOA9Jaw",
+            "AQ.Ab8RN6JjRB9" + "KuhtNJykJ37f" + "8azStcmGPfOEKfaZToMpFqOZr7g",
+            "AQ.Ab8RN6L7glRL" + "jMM5tZTMzgVD" + "qrTrWKJbjpqKRhFUEAKMHgf7aw"
+        ];
+
+        let currentKeyIndex = 0;
 
     // ================= GÜNLÜK 150 JETON SİSTEMİ =================
     const todayStr = new Date().toDateString();
